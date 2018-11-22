@@ -1,0 +1,18 @@
+{
+  "extends": ["react-app"],
+  "rules": {
+    "max-len": [2, 120],
+    "semi": [1, "never"],
+    "quotes": [2, "single"],
+    "comma-dangle": [
+      1,
+      {
+        "arrays": "always-multiline",
+        "objects": "always-multiline",
+        "imports": "ignore",
+        "exports": "ignore",
+        "functions": "ignore"
+      }
+    ]
+  }
+}
