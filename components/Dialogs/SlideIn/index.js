@@ -3,6 +3,7 @@ import Modal from 'react-modal'
 import { modalStyles, overlayClass, Blur } from './styles'
 
 class SlideIn extends Component {
+  state = {}
   static getDerivedStateFromProps(props, state) {
     Modal.setAppElement('body')
     return state
