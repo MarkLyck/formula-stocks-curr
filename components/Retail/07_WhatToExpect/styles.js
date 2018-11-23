@@ -1,8 +1,8 @@
 import styled from 'react-emotion'
 import { css } from 'emotion'
 import mq from 'common/utils/mq'
-import Beside from 'components/Section/Beside'
-import { boxStyle } from 'components/Box'
+import Beside from 'ui-components/Section/Beside'
+import { boxStyle } from 'ui-components/Box'
 
 export const BesideContainer = styled.div`
   ${Beside} {

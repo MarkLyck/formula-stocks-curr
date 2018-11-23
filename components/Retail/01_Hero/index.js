@@ -1,33 +1,26 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { css } from "emotion";
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { css } from 'emotion'
 
-import Typed from "typed.js";
-import { Element } from "react-scroll";
-import {
-  HeroContainer,
-  Content,
-  Title,
-  SliderImage,
-  Overlay,
-  Bold
-} from "./styles";
-import Slider from "react-slick";
+import Typed from 'typed.js'
+import { Element } from 'react-scroll'
+import { HeroContainer, Content, Title, SliderImage, Overlay, Bold } from './styles'
+import Slider from 'react-slick'
 
 class Hero extends Component {
-  preStringTyped = arrPos => this.slider.slickGoTo(arrPos);
+  preStringTyped = arrPos => this.slider.slickGoTo(arrPos)
 
   componentDidMount() {
-    const { portfolioReturn, winRatio } = this.props;
+    const { portfolioReturn, winRatio } = this.props
 
     const strings = [
       `^1+${Math.floor(portfolioReturn)}% capital growth since 2009`,
       `^1+${Math.floor(winRatio)}% win ratio`,
-      "^1Less risk",
-      "^1Easy to use",
-      "^1Lower costs",
-      "^1Achieve your goals"
-    ];
+      '^1Less risk',
+      '^1Easy to use',
+      '^1Lower costs',
+      '^1Achieve your goals',
+    ]
 
     const options = {
       strings,
@@ -35,14 +28,14 @@ class Hero extends Component {
       backSpeed: 25,
       backDelay: 5000,
       loop: true,
-      preStringTyped: this.preStringTyped
-    };
+      preStringTyped: this.preStringTyped,
+    }
 
-    this.typed = new Typed(this.el, options);
+    this.typed = new Typed(this.el, options)
   }
 
   componentWillUnmount() {
-    this.typed.destroy();
+    this.typed.destroy()
   }
 
   slickSettings = {
@@ -54,8 +47,8 @@ class Hero extends Component {
     swipe: false,
     arrows: false,
     slidesToShow: 1,
-    slidesToScroll: 1
-  };
+    slidesToScroll: 1,
+  }
 
   render() {
     return (
@@ -135,18 +128,18 @@ class Hero extends Component {
           />
         </Slider>
       </HeroContainer>
-    );
+    )
   }
 }
 
 Hero.defaultProps = {
   winRatio: 90,
-  portfolioReturn: 700
-};
+  portfolioReturn: 700,
+}
 
 Hero.propTypes = {
   portfolioReturn: PropTypes.number.isRequired,
-  winRatio: PropTypes.number
-};
+  winRatio: PropTypes.number,
+}
 
-export default Hero;
+export default Hero

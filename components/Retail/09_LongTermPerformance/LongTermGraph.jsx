@@ -2,10 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import LineGraph from 'components/Charts/LineGraph'
+import LineGraph from 'ui-components/Charts/LineGraph'
 import { formatPrice } from 'common/utils/helpers'
-import { Legends, Legend } from 'components/Charts/Legends/Legends'
-import theme from 'common/utils/theme'
+import { Legends, Legend } from 'ui-components/Charts/Legends'
+import theme from 'common/theme'
 import { GraphContainer } from './styles'
 
 const createChartData = (planData, marketPrices) => {

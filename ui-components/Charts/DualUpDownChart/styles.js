@@ -1,6 +1,6 @@
 import { css } from 'emotion'
 import styled from 'react-emotion'
-import Box from 'components/Box'
+import Box from 'ui-components/Box'
 
 export const ChartBeside = styled.div`
   display: flex;

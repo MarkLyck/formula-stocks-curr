@@ -1,6 +1,6 @@
 import styled from 'react-emotion'
 import { darken } from 'polished'
-import { boxStyle } from 'components/Box'
+import { boxStyle } from 'ui-components/Box'
 
 export const Container = styled.div`
   width: 100%;

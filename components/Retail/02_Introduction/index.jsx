@@ -7,7 +7,7 @@ import mq from 'common/utils/mq'
 import Sect, { Section } from 'ui-components/Section'
 import SectionTitle from 'ui-components/Section/SectionTitle'
 import Beside from 'ui-components/Section/Beside'
-import Disclaimer from 'ui-components/Legal/Disclaimer'
+import Disclaimer from 'ui-components/Disclaimer'
 import DualBarChart from 'ui-components/Charts/DualBarChart'
 
 const SectionContainer = styled('div')`

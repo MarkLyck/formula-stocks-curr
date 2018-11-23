@@ -1,5 +1,5 @@
 import styled from 'react-emotion'
-import { boxStyle } from 'components/Box'
+import { boxStyle } from 'ui-components/Box'
 
 export const List = styled.ul`
   ${boxStyle};
