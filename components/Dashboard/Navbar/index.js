@@ -22,9 +22,9 @@ class NavBar extends Component {
   handleSideMenuToggle = () => this.setState({ sideMenuVisible: !this.state.sideMenuVisible })
 
   render() {
-    const { location, userType } = this.props
+    const { userType } = this.props
     const { sideMenuVisible } = this.state
-    const path = isClient && location ? location.pathname : ''
+    const path = Router.router.pathname || ''
 
     const isPlanPage = path.includes('portfolio') || path.includes('suggestions') || path.includes('trades')
     const isAdminPage = path.includes('admin')
@@ -44,7 +44,7 @@ class NavBar extends Component {
         {/* {isPlanPage && <PlanButtons selectedPlan={selectedPlan} actions={actions} />} */}
         <Logo onClick={() => Router.push('/')} isAdminPage={isAdminPage} />
         <SlideIn isVisible={sideMenuVisible} onRequestClose={this.handleSideMenuToggle}>
-          <SideMenu location={location} userType={userType} isPopOver />
+          <SideMenu userType={userType} isPopOver />
         </SlideIn>
       </Bar>
     )

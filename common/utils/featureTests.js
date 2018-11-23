@@ -13,5 +13,5 @@ export const usingMocks = (function() {
 })()
 
 export const isClient = (function() {
-  return typeof window !== 'undefined'
+  return typeof window !== 'undefined' && window.location
 })()

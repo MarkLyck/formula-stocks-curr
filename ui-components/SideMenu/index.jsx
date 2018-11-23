@@ -1,5 +1,7 @@
 /* eslint max-len: 0 */
 import React, { Component } from 'react'
+import Router from 'next/router'
+import { isClient } from 'common/utils/featureTests'
 import MenuItem from './MenuItem'
 import { MenuList } from './styles'
 
@@ -16,9 +18,9 @@ const routes = [
 
 class SideMenu extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.location) {
+    if (isClient) {
       const route = routes.reduce((acc, curr, i) => {
-        if (nextProps.location.pathname.includes(curr.name)) {
+        if (Router.router.pathname.includes(curr.name)) {
           acc = curr.name
         }
         return acc

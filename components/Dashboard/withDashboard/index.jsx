@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
 import Router from 'next/router'
-import { hasStorage } from 'common/utils/featureTests'
+import { isClient, hasStorage } from 'common/utils/featureTests'
 import PlanContext from 'common/Contexts/PlanContext'
 import SideMenu from 'ui-components/SideMenu'
 import NavBar from 'components/Dashboard/Navbar'
@@ -48,12 +48,13 @@ const withDashboard = WrappedComponent => {
 
     render() {
       const { location } = this.props
+      if (!isClient) return null
       return (
         <Query query={GET_LOGGED_IN_USER}>
           {({ loading, error, data, refetch }) => {
-            if (typeof window !== 'undefined' && data && data.loggedInUser && data.loggedInUser.id === null) {
+            if (data && data.loggedInUser && data.loggedInUser.id === null) {
               // if the token they have is incorrect or expired. Push them to the front page.
-              console.warn('!!! loggedInUser === null')
+              console.warn('!!! loggedInUser.id === null')
               Router.push('/')
             }
 
