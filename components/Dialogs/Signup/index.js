@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import platform from 'platform'
 import gql from 'graphql-tag'
+import Router from 'next/router'
 import { graphql, compose } from 'react-apollo'
 import Modal from 'react-modal'
 import { hasStorage } from 'common/utils/featureTests'
@@ -66,7 +67,7 @@ class SignUp extends Component {
   nextPage = accountInfo => this.setState({ page: this.state.page + 1, accountInfo })
 
   handleSignup = async (name, taxPercent, { token }) => {
-    const { history, apolloClient } = this.props
+    const { apolloClient } = this.props
     const { accountInfo } = this.state
 
     const location =
@@ -104,7 +105,7 @@ class SignUp extends Component {
       if (hasStorage) {
         localStorage.setItem('graphcoolToken', data.signupUser.token)
       }
-      history.push('/dashboard/portfolio')
+      Router.push('/dashboard/portfolio')
     } catch (error) {
       console.error('signup error', error)
       this.setState({ signupError: error.message })

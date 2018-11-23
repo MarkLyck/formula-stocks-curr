@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import gql from 'graphql-tag'
 import { graphql } from 'react-apollo'
 import Modal from 'react-modal'
+import Router from 'next/router'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ModalContainer, overlayClass, modalStyles } from '../styles'
 import { ForgotPassword } from './styles'
@@ -50,13 +51,12 @@ class Login extends Component {
   }
 
   handleLogin = (values, { setSubmitting, setErrors }) => {
-    const { history } = this.props
     return this.props
       .signinUser({ variables: { email: values.email, password: values.password } })
       .then(response => {
         setSubmitting(false)
         localStorage.setItem('graphcoolToken', response.data.authenticateUser.token)
-        history.push('/dashboard/portfolio')
+        Router.push('/dashboard/portfolio')
       })
       .catch(error => {
         console.error(error)

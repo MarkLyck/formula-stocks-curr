@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Query } from 'react-apollo'
+import Router from 'next/router'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import gql from 'graphql-tag'
 import { scroller } from 'react-scroll'
@@ -29,10 +30,7 @@ class Navbar extends Component {
     this.setState({ loggedIn: false })
   }
 
-  goToDashboard = () => {
-    const { history } = this.props
-    if (history) history.push('/dashboard/portfolio')
-  }
+  goToDashboard = () => Router.push('/dashboard/portfolio')
 
   renderLoggedOutLinks = () => (
     <NavLinks>

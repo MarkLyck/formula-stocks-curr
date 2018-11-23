@@ -5,8 +5,6 @@ import business from './business.json'
 import premium from './premium.json'
 import { HistoryContainer, Range } from './styles'
 
-console.log('data', business)
-
 class History extends Component {
   state = {
     startDate: { month: '12', year: '2016' },
@@ -32,8 +30,6 @@ class History extends Component {
 
     const decrease = startBalance - endBalance
     const percentDecrease = (decrease / startBalance) * 100
-
-    console.log('percentIncrease', percentDecrease < 0 ? Math.abs(percentDecrease) : `-${percentDecrease}%`)
 
     return (
       <HistoryContainer>

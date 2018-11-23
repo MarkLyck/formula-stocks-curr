@@ -1,4 +1,4 @@
-![repo-banner](https://github.com/MarkLyck/fs-razzle/blob/master/public/media/icons/logo_horizontal.svg)
+![repo-banner](https://github.com/MarkLyck/fs-razzle/blob/master/public/static/icons/logo_horizontal.svg)
 
 [![Build Status](https://travis-ci.org/MarkLyck/fs-razzle.svg?branch=master)](https://travis-ci.org/MarkLyck/fs-razzle)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)

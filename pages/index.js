@@ -88,7 +88,6 @@ class Retail extends Component {
   toggleFAQModal = () => this.setState(state => ({ FAQVisible: !state.FAQVisible }))
 
   render() {
-    const { history } = this.props
     const { amChartsLoaded, amChartsCoreStatus, signUpVisible, loginVisible, FAQVisible, apolloClient } = this.state
 
     return (
@@ -116,7 +115,6 @@ class Retail extends Component {
           return (
             <div className="retail-page">
               <Navbar
-                history={history}
                 toggleSignUpModal={this.toggleSignUpModal}
                 toggleLoginModal={this.toggleLoginModal}
                 toggleFAQModal={this.toggleFAQModal}
@@ -157,17 +155,10 @@ class Retail extends Component {
                 </React.Fragment>
               ) : null}
               {signUpVisible && (
-                <Signup
-                  history={history}
-                  onRequestClose={this.toggleSignUpModal}
-                  planPrice={Plan.price}
-                  apolloClient={apolloClient}
-                />
+                <Signup onRequestClose={this.toggleSignUpModal} planPrice={Plan.price} apolloClient={apolloClient} />
               )}
-              {loginVisible && (
-                <Login history={history} onRequestClose={this.toggleLoginModal} apolloClient={apolloClient} />
-              )}
-              {FAQVisible && <FAQ history={history} hide={this.toggleFAQModal} />}
+              {loginVisible && <Login onRequestClose={this.toggleLoginModal} apolloClient={apolloClient} />}
+              {FAQVisible && <FAQ hide={this.toggleFAQModal} />}
             </div>
           )
         }}
