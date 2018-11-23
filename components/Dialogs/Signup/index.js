@@ -52,6 +52,11 @@ const SIGNIN_USER_MUTATION = gql`
 `
 
 class SignUp extends Component {
+  static getDerivedStateFromProps(props, state) {
+    Modal.setAppElement('body')
+    return state
+  }
+
   state = {
     accountInfo: {},
     page: 1,

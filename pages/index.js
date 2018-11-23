@@ -60,7 +60,6 @@ class Retail extends Component {
     if (typeof window !== 'undefined' && window.Intercom) {
       window.Intercom('boot', { app_id: 'i194mpvo' })
     }
-    console.log(this.props)
     hasStorage && localStorage.setItem('selectedPlan', 'ENTRY')
     newVisitor(this.props.apolloClient)
   }

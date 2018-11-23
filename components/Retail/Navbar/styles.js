@@ -3,7 +3,7 @@ import { Link } from 'react-scroll'
 import { darken } from 'polished'
 
 export const Logo = styled.div`
-  background-image: url('/media/icons/logo_horizontal.svg');
+  background-image: url('/static/icons/logo_horizontal.svg');
   background-repeat: no-repeat;
   background-position: left;
   background-size: contain;
@@ -17,7 +17,7 @@ export const Logo = styled.div`
 
   @media (max-width: 718px) {
     width: 40px;
-    background-image: url('/media/icons/flask.svg');
+    background-image: url('/static/icons/flask.svg');
   }
   @media (max-width: 356px) {
     width: 0;

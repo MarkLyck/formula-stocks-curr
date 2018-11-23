@@ -73,7 +73,7 @@ class Footer extends Component {
           </Disclaimer>
         </FooterDisclaimer>
         <CopyRightContainer>
-          <img src="media/images/corporate/office.png" alt="office" />
+          <img src="static/images/corporate/office.png" alt="office" />
           <div>
             <p>
               Contact us at: <a href="mailto:info@formulastocks.com">info@formulastocks.com</a>

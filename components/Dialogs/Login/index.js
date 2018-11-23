@@ -21,6 +21,10 @@ const AUTHENTICATE_EMAIL_USER = gql`
 `
 
 class Login extends Component {
+  static getDerivedStateFromProps(props, state) {
+    Modal.setAppElement('body')
+    return state
+  }
   emailValueHasChanged = false
 
   state = {

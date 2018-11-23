@@ -32,9 +32,9 @@ const CorporateProfile = () => (
           <Subtitle>Executive team</Subtitle>
           <Card>
             <ProfileImg
-              srcset="media/images/corporate/Thomas.jpg,
-             media/images/corporate/Thomas@2x.jpg 2x"
-              src="media/images/corporate/Thomas.jpg"
+              srcSet="static/images/corporate/Thomas.jpg,
+              static/images/corporate/Thomas@2x.jpg 2x"
+              src="static/images/corporate/Thomas.jpg"
               alt=""
             />
             <ProfileTextContainer>
@@ -44,9 +44,9 @@ const CorporateProfile = () => (
           </Card>
           <Card>
             <ProfileImg
-              srcset="media/images/corporate/Mark.jpg,
-             media/images/corporate/Mark@2x.jpg 2x"
-              src="media/images/corporate/Mark.jpg"
+              srcSet="static/images/corporate/Mark.jpg,
+              static/images/corporate/Mark@2x.jpg 2x"
+              src="static/images/corporate/Mark.jpg"
               alt=""
             />
             <ProfileTextContainer>
@@ -56,9 +56,9 @@ const CorporateProfile = () => (
           </Card>
           <Card>
             <ProfileImg
-              srcset="media/images/corporate/Marie.jpg,
-             media/images/corporate/Marie@2x.jpg 2x"
-              src="media/images/corporate/Marie.jpg"
+              srcSet="static/images/corporate/Marie.jpg,
+              static/images/corporate/Marie@2x.jpg 2x"
+              src="static/images/corporate/Marie.jpg"
               alt=""
             />
             <ProfileTextContainer>
