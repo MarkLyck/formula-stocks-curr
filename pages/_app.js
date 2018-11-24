@@ -1,5 +1,6 @@
 import App, { Container } from 'next/app'
 import React from 'react'
+import { Head } from 'next/document'
 import withApolloClient from 'lib/with-apollo-client'
 import { ApolloProvider } from 'react-apollo'
 import { ThemeProvider } from 'emotion-theming'
@@ -11,6 +12,9 @@ class MyApp extends App {
     const { Component, pageProps, apolloClient } = this.props
     return (
       <Container>
+        <Head>
+          <title>Formula Stocks</title>
+        </Head>
         <Layout>
           <ApolloProvider client={apolloClient}>
             <Component {...pageProps} apolloClient={apolloClient} />

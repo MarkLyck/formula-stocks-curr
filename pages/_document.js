@@ -1,18 +1,18 @@
-import Document, { Head, Main, NextScript } from "next/document";
-import { extractCritical } from "emotion-server";
+import Document, { Head, Main, NextScript } from 'next/document'
+import { extractCritical } from 'emotion-server'
 
 export default class FSDocument extends Document {
   static async getInitialProps({ renderPage }) {
-    const page = renderPage();
-    const styles = extractCritical(page.html);
-    return { ...page, ...styles };
+    const page = renderPage()
+    const styles = extractCritical(page.html)
+    return { ...page, ...styles }
   }
 
   constructor(props) {
-    super(props);
-    const { __NEXT_DATA__, ids } = props;
+    super(props)
+    const { __NEXT_DATA__, ids } = props
     if (ids) {
-      __NEXT_DATA__.ids = ids;
+      __NEXT_DATA__.ids = ids
     }
   }
 
@@ -27,33 +27,24 @@ export default class FSDocument extends Document {
           <meta name="apple-mobile-web-app-title" content="Formula Stocks" />
           <meta name="application-name" content="Formula Stocks" />
           <meta name="msapplication-TileColor" content="#2d89ef" />
-          <meta
-            name="msapplication-config"
-            content="/favicons/browserconfig.xml"
-          />
+          <meta name="msapplication-config" content="/static/favicons/browserconfig.xml" />
           <meta name="theme-color" content="#ffffff" />
 
           <meta name="description" content="Formula Stocks" />
           <meta property="og:type" content="website" />
-          <meta
-            property="og:description"
-            content="Beat the stock market using quantitative analysis."
-          />
+          <meta property="og:description" content="Beat the stock market using quantitative analysis." />
           <meta property="og:site_name" content="Formula Stocks" />
           <meta property="og:locale" content="en_us" />
           <meta property="og:url" content="Formula Stocks" />
           <meta property="og:title" content="Formula Stocks" />
 
-          {/* <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png" />
-          <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png" />
-          <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png" />
-          <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#4ea4f2" />
-          <link rel="shortcut icon" href="/favicons/favicon.ico" />
-          <link rel="manifest" href="/manifest.json" /> */}
-          <link
-            href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,700"
-            rel="stylesheet"
-          />
+          <link rel="apple-touch-icon" sizes="180x180" href="/static/favicons/apple-touch-icon.png" />
+          <link rel="icon" type="image/png" sizes="32x32" href="/static/favicons/favicon-32x32.png" />
+          <link rel="icon" type="image/png" sizes="16x16" href="/static/favicons/favicon-16x16.png" />
+          <link rel="mask-icon" href="/static/favicons/safari-pinned-tab.svg" color="#4ea4f2" />
+          <link rel="shortcut icon" href="/static/favicons/favicon.ico" />
+          <link rel="manifest" href="/static/manifest.json" />
+          <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,700" rel="stylesheet" />
 
           <style dangerouslySetInnerHTML={{ __html: this.props.css }} />
         </Head>
@@ -63,6 +54,7 @@ export default class FSDocument extends Document {
 
           {/* Intercom */}
           <script
+            async
             dangerouslySetInnerHTML={{
               __html: `
             (function() {var w=window;var ic=w.Intercom;
@@ -71,12 +63,13 @@ export default class FSDocument extends Document {
             w.Intercom=i;function l(){var s=d.createElement('script');s.type='text/javascript';s.async=true;
             s.src='https://widget.intercom.io/widget/i194mpvo';var x=d.getElementsByTagName('script')[0];
             x.parentNode.insertBefore(s,x);}if(w.attachEvent){w.attachEvent('onload',l);}else{
-            w.addEventListener('load',l,false);}}})()`
+            w.addEventListener('load',l,false);}}})()`,
             }}
           />
 
           {/* Hotjar */}
           <script
+            async
             dangerouslySetInnerHTML={{
               __html: `
               (function(h,o,t,j,a,r){
@@ -86,12 +79,13 @@ export default class FSDocument extends Document {
               r=o.createElement('script');r.async=1;
               r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
               a.appendChild(r);
-              })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');`
+              })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');`,
             }}
           />
 
           {/* Google Analytics */}
           <script
+            async
             dangerouslySetInnerHTML={{
               __html: `
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -100,11 +94,11 @@ export default class FSDocument extends Document {
             })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
             ga('create', 'UA-68151102-1', 'auto');
-            ga('send', 'pageview');`
+            ga('send', 'pageview');`,
             }}
           />
         </body>
       </html>
-    );
+    )
   }
 }
