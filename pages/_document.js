@@ -61,7 +61,8 @@ export default class FSDocument extends Document {
               __html: `
               WebFont.load({
                 google: {
-                  families: ['Rubik:300', 'Rubik:400', 'Rubik:500', 'Rubik:700']
+                  families: ['Rubik:300,400,500,700'],
+                  text: 'abcdefghijklmnopqrstuvwxyz0123456789,.$@*"!?/~+-%()'
                 }
               });
              `,
