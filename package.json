@@ -9,7 +9,10 @@
     "start": "NODE_ENV=production node server.js",
     "now-build": "next build",
     "now-start": "next start",
-    "analyze": "BUNDLE_ANALYZE=both yarn build"
+    "analyze": "BUNDLE_ANALYZE=both yarn build",
+    "test-unit": "jest",
+    "test-integration": "next build && start-server-and-test start http://localhost:3000 cypress",
+    "cypress": "$(npm bin)/cypress run --record"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.8",
@@ -63,7 +66,9 @@
     "babel-plugin-polished": "^1.1.0",
     "cypress": "^3.1.2",
     "next-compose-plugins": "^2.1.1",
+    "polished": "^2.3.0",
     "prettier": "^1.15.2",
-    "prettier-eslint": "^8.8.2"
+    "prettier-eslint": "^8.8.2",
+    "start-server-and-test": "^1.7.10"
   }
 }
