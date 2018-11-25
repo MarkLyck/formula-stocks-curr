@@ -1,11 +1,11 @@
-![repo-banner](https://github.com/MarkLyck/fs-razzle/blob/master/public/static/icons/logo_horizontal.svg)
+![repo-banner](https://github.com/MarkLyck/fs-next/blob/master/static/icons/logo_horizontal.svg)
 
-[![Build Status](https://travis-ci.org/MarkLyck/fs-razzle.svg?branch=master)](https://travis-ci.org/MarkLyck/fs-razzle)
+[![Build Status](https://travis-ci.org/MarkLyck/fs-next.svg?branch=master)](https://travis-ci.org/MarkLyck/fs-next)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
 Formula Stocks is a stock recommendation service, that gives you recommendations on what to buy, for how much and when you should sell it. These recommendations are based on a deep learning algorithm that selects winning stocks +90% of the time. With an average annual interest rate of 20-35% depending on the product you choose.
 
-![screenshot](https://github.com/MarkLyck/fs-razzle/blob/master/public/static/images/screenshots/suggestions.png)
+![screenshot](https://github.com/MarkLyck/fs-next/blob/master/static/images/screenshots/suggestions.png)
 
 This is currently in development for version 2, which is NOT live yet.
 
@@ -27,16 +27,16 @@ To see the current production version see here: [https://formulastocks.com](http
 ## Quick Start
 
 ```bash
-git clone https://github.com/MarkLyck/fs-razzle.git
-cd fs-razzle
-yarn && yarn start
+git clone https://github.com/MarkLyck/fs-nexy.git
+cd fs-next
+yarn && yarn dev
 ```
 
 Then open http://localhost:3000/ to see the application.
 
 Useful commands:
 
-### `npm start` or `yarn start`
+### `npm dev` or `yarn dev`
 
 Runs the project in development mode.  
 You can view your application at `http://localhost:3000`
@@ -49,24 +49,24 @@ Builds the app for production to the build folder.
 
 The build is minified and the filenames include the hashes, ready for deployment
 
-### `npm run start:prod` or `yarn start:prod`
+### `npm run start` or `yarn start`
 
 Runs the compiled app in production.
 
 You can again view the application at `http://localhost:3000`
 
-### `npm test` or `yarn test`
+### `npm test-unit` or `yarn test-unit`
 
 Runs the test watcher (Jest) in an interactive mode.
 By default, runs tests related to files changed since the last commit.
 
 ### `npm start -- --inspect` or `yarn start -- --inspect`
 
-To debug the node server, you can use `razzle start --inspect`. This will start the node server and enable the inspector agent. For more information, see [this](https://nodejs.org/en/docs/inspector/).
+To debug the node server, you can use `yarn start --inspect`. This will start the node server and enable the inspector agent. For more information, see [this](https://nodejs.org/en/docs/inspector/).
 
 ### `npm start -- --inspect-brk` or `yarn start -- --inspect-brk`
 
-To debug the node server, you can use `razzle start --inspect-brk`. This will start the node server, enable the inspector agent and Break before user code starts. For more information, see [this](https://nodejs.org/en/docs/inspector/).
+To debug the node server, you can use `yarn start --inspect-brk`. This will start the node server, enable the inspector agent and Break before user code starts. For more information, see [this](https://nodejs.org/en/docs/inspector/).
 
 ---
 
