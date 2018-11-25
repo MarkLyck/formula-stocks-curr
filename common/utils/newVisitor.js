@@ -1,9 +1,9 @@
-import gql from "graphql-tag";
-import platform from "platform";
-import fetchJsonP from "fetch-jsonp";
-import { getDeviceType } from "common/utils/helpers";
-import { hasStorage } from "common/utils/featureTests";
-import { geoAccessKey } from "common/constants";
+import gql from 'graphql-tag'
+import platform from 'platform'
+import fetchJsonP from 'fetch-jsonp'
+import { getDeviceType } from 'common/utils/helpers'
+import { hasStorage } from 'common/utils/featureTests'
+import { geoAccessKey } from 'common/constants'
 
 const CREATE_VISITOR = gql`
   mutation createVisitor($device: Json!, $location: Json!, $referrer: String!) {
@@ -11,20 +11,11 @@ const CREATE_VISITOR = gql`
       id
     }
   }
-`;
+`
 
 const createNewVisit = async (geoApiResponse, apolloClient) => {
-  const {
-    city,
-    zip,
-    country_code,
-    country_name,
-    latitude,
-    longitude,
-    ip,
-    location
-  } = geoApiResponse;
-  const country_flag_emoji = location ? location.country_flag_emoji : undefined;
+  const { city, zip, country_code, country_name, latitude, longitude, ip, location } = geoApiResponse
+  const country_flag_emoji = location ? location.country_flag_emoji : undefined
 
   const response = await apolloClient
     .mutate({
@@ -35,7 +26,7 @@ const createNewVisit = async (geoApiResponse, apolloClient) => {
           os: platform.os.family,
           product: platform.product,
           browser: platform.name,
-          type: getDeviceType()
+          type: getDeviceType(),
         },
         location: {
           city,
@@ -45,29 +36,29 @@ const createNewVisit = async (geoApiResponse, apolloClient) => {
           country_flag_emoji,
           latitude,
           longitude,
-          ip
-        }
-      }
+          ip,
+        },
+      },
     })
-    .catch(err => console.error(err));
-  if (hasStorage && response.data) {
-    localStorage.setItem("visitorID", response.data.createVisitor.id);
+    .catch(err => console.error(err))
+  if (hasStorage && response && response.data) {
+    localStorage.setItem('visitorID', response.data.createVisitor.id)
   }
-};
+}
 
 const newVisitor = apolloClient => {
-  if (hasStorage && localStorage.getItem("visitorID")) return null;
+  if (hasStorage && localStorage.getItem('visitorID')) return null
 
   return fetchJsonP(`https://api.ipapi.com/check?access_key=${geoAccessKey}`)
     .then(response => {
-      return response.json();
+      return response.json()
     })
     .then(geoData => createNewVisit(geoData, apolloClient))
     .catch(err => {
-      console.error(err);
+      console.error(err)
 
-      createNewVisit({}, apolloClient);
-    });
-};
+      createNewVisit({}, apolloClient)
+    })
+}
 
-export default newVisitor;
+export default newVisitor
