@@ -3,6 +3,7 @@
 // See https://github.com/zeit/next.js/issues/1245 for discussions on Universal Webpack or universal Babel
 const { createServer } = require('http')
 const { parse } = require('url')
+const { join } = require('path')
 const next = require('next')
 
 const dev = process.env.NODE_ENV !== 'production'
@@ -16,7 +17,10 @@ app.prepare().then(() => {
     const parsedUrl = parse(req.url, true)
     const { pathname, query } = parsedUrl
 
-    if (pathname.indexOf('dashboard/articles/') > -1) {
+    if (pathname === '/service-worker.js') {
+      const filePath = join(__dirname, '.next', pathname)
+      app.serveStatic(req, res, filePath)
+    } else if (pathname.indexOf('dashboard/articles/') > -1) {
       app.render(req, res, '/dashboard/articles/article', query)
     } else if (pathname.indexOf('articles/') > -1) {
       app.render(req, res, '/articles/article', query)
