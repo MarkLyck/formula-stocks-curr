@@ -1,6 +1,6 @@
 import App, { Container } from 'next/app'
 import React from 'react'
-import { Head } from 'next/document'
+import Head from 'next/head'
 import withApolloClient from 'lib/with-apollo-client'
 import { ApolloProvider } from 'react-apollo'
 import { ThemeProvider } from 'emotion-theming'
