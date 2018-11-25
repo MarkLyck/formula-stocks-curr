@@ -44,13 +44,29 @@ export default class FSDocument extends Document {
           <link rel="mask-icon" href="/static/favicons/safari-pinned-tab.svg" color="#4ea4f2" />
           <link rel="shortcut icon" href="/static/favicons/favicon.ico" />
           <link rel="manifest" href="/static/manifest.json" />
-          <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,700" rel="stylesheet" />
+
+          <link rel="preconnect" href="https://vars.hotjar.com" />
+          <link rel="preconnect" href="https://js.intercomcdn.com" />
 
           <style dangerouslySetInnerHTML={{ __html: this.props.css }} />
         </Head>
         <body>
           <Main />
           <NextScript />
+
+          {/* webfont loader */}
+          <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" />
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+              WebFont.load({
+                google: {
+                  families: ['Rubik:300', 'Rubik:400', 'Rubik:500', 'Rubik:700']
+                }
+              });
+             `,
+            }}
+          />
 
           {/* Intercom */}
           <script
