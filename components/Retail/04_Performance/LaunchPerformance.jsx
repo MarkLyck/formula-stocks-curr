@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import _ from 'lodash'
+import min from 'lodash.min'
+import minBy from 'lodash.minby'
+import maxBy from 'lodash.maxby'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import LineGraph from 'ui-components/Charts/LineGraph'
 import { Legends, Legend } from 'ui-components/Charts/Legends'
@@ -36,11 +38,11 @@ const LaunchPerformance = ({ portfolioYields, marketPrices, planName, amChartsLo
   }
   const chartData = createChartData(portfolioYields, marketPrices)
 
-  const fsMin = _.minBy(chartData, point => point.fs).fs
-  const marMin = chartData[0].market ? _.minBy(chartData, point => point.market).market : 0
+  const fsMin = minBy(chartData, point => point.fs).fs
+  const marMin = chartData[0].market ? minBy(chartData, point => point.market).market : 0
 
-  const minimum = Math.floor(_.min([fsMin, marMin]) / 10) * 10
-  const maximum = Math.ceil(_.maxBy(chartData, point => point.fs).fs / 20) * 20
+  const minimum = Math.floor(min([fsMin, marMin]) / 10) * 10
+  const maximum = Math.ceil(maxBy(chartData, point => point.fs).fs / 20) * 20
 
   const graphs = [
     {

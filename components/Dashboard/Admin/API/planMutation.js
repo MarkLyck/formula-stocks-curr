@@ -1,4 +1,5 @@
-import _ from 'lodash'
+import merge from 'lodash.merge'
+import clone from 'lodash.clone'
 import { planIds } from 'common/constants'
 import plansData from './plansData'
 
@@ -56,11 +57,11 @@ export const mutatePlanData = (file, updatePlan, updateSuccesfullUploads, planNa
     // update percentInCash
     const percentInCash = file.data.portfolio[file.data.portfolio.length - 1].percentage_weight
     // update statistics
-    launchStatistics = _.merge(launchStatistics, file.data.statistics, { percentInCash })
+    launchStatistics = merge(launchStatistics, file.data.statistics, { percentInCash })
   } else if (file.name.includes('annual')) {
-    statistics = _.clone(statistics)
+    statistics = clone(statistics)
     statistics.winRatio = 100 - (statistics.negatives / (statistics.positives + statistics.negatives)) * 100
-    statistics = _.merge(statistics, file.data.statistics)
+    statistics = merge(statistics, file.data.statistics)
     backtestedData = file.data.logs
   }
 
