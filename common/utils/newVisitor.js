@@ -2,7 +2,7 @@ import gql from 'graphql-tag'
 import platform from 'platform'
 import fetchJsonP from 'fetch-jsonp'
 import { getDeviceType } from 'common/utils/helpers'
-import { hasStorage } from 'common/utils/featureTests'
+import { isClient, hasStorage } from 'common/utils/featureTests'
 import { geoAccessKey } from 'common/constants'
 
 const CREATE_VISITOR = gql`
@@ -47,7 +47,7 @@ const createNewVisit = async (geoApiResponse, apolloClient) => {
 }
 
 const newVisitor = apolloClient => {
-  if (hasStorage && localStorage.getItem('visitorID')) return null
+  if (!isClient || (hasStorage && localStorage.getItem('visitorID'))) return null
 
   return fetchJsonP(`https://api.ipapi.com/check?access_key=${geoAccessKey}`)
     .then(response => {
