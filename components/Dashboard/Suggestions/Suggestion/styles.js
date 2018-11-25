@@ -36,6 +36,7 @@ export const SuggestionName = styled.h3`
   padding-right: 64px;
   font-size: 1.2rem;
   color: ${props => props.theme.colors.black};
+  height: 24px;
   width: 100%;
 `
 
