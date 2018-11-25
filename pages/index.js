@@ -88,7 +88,8 @@ class Retail extends Component {
   toggleFAQModal = () => this.setState(state => ({ FAQVisible: !state.FAQVisible }))
 
   render() {
-    const { amChartsLoaded, amChartsCoreStatus, signUpVisible, loginVisible, FAQVisible, apolloClient } = this.state
+    const { apolloClient } = this.props
+    const { amChartsLoaded, amChartsCoreStatus, signUpVisible, loginVisible, FAQVisible } = this.state
 
     return (
       <Query query={GET_ENTRY_AND_MARKET_DATA}>
@@ -166,4 +167,5 @@ class Retail extends Component {
     )
   }
 }
+
 export default Retail
