@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "NODE_ENV=production node server.js",
     "now-build": "next build",
-    "now-start": "next start",
+    "now-start": "NODE_ENV=production node --optimize_for_size --max_old_space_size=920 --gc_interval=100 server.js",
     "analyze": "BUNDLE_ANALYZE=both yarn build",
     "test-unit": "jest",
     "test-integration": "next build && start-server-and-test start http://localhost:3000 cypress",
