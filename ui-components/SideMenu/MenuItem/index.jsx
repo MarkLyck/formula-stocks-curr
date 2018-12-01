@@ -27,7 +27,7 @@ class MenuItem extends Component {
   render() {
     const { route, icon, isActive, userType } = this.props
 
-    if (route === 'admin' && userType !== 'admin') {
+    if ((route === 'admin' || route === 'reports') && userType !== 'admin') {
       return null
     }
 
