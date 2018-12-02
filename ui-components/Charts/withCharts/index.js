@@ -1,5 +1,13 @@
 import React from 'react'
 import Script from 'react-load-script'
+import { isClient } from 'common/utils/featureTests'
+
+const loadAmCharts4 = async () =>
+  Promise.all([
+    import('@amcharts/amcharts4/core'),
+    import('@amcharts/amcharts4/charts'),
+    // import('@amcharts/amcharts4/themes/animated'),
+  ])
 
 const withCharts = (Component, settings = {}) => {
   class WithCharts extends React.Component {
@@ -8,6 +16,7 @@ const withCharts = (Component, settings = {}) => {
       amSerialChartsLoaded: false,
       amPieChartsLoaded: false,
       amChartsLoadingError: false,
+      amCharts4Loaded: !!window.am4core && !!window.am4charts,
     }
 
     amChartsSerialStatus = false
@@ -41,8 +50,27 @@ const withCharts = (Component, settings = {}) => {
       this.areChartDependenciesLoaded()
     }
 
+    componentDidMount() {
+      if (isClient && !window.am4core && !window.am4charts) {
+        if (settings.version === 4) {
+          loadAmCharts4().then(([am4core, am4charts]) => {
+            window.am4core = am4core
+            window.am4charts = am4charts
+            // window.am4core.useTheme(am4themes_animated)
+            this.setState({ amCharts4Loaded: true })
+          })
+        }
+      }
+    }
+
     render() {
-      const { amChartsCoreStatus, amSerialChartsLoaded, amPieChartsLoaded, amChartsLoadingError } = this.state
+      const {
+        amChartsCoreStatus,
+        amSerialChartsLoaded,
+        amPieChartsLoaded,
+        amCharts4Loaded,
+        amChartsLoadingError,
+      } = this.state
 
       return (
         <React.Fragment>
@@ -50,10 +78,13 @@ const withCharts = (Component, settings = {}) => {
             serialChartsReady={amSerialChartsLoaded}
             pieChartsReady={amPieChartsLoaded}
             chartError={amChartsLoadingError}
+            amCharts4Loaded={amCharts4Loaded}
             {...this.props}
           />
-          <Script url="https://www.amcharts.com/lib/3/amcharts.js" onLoad={this.onLoadAmChartsCore} />
-          {amChartsCoreStatus ? (
+          {settings.version !== 4 && (
+            <Script url="https://www.amcharts.com/lib/3/amcharts.js" onLoad={this.onLoadAmChartsCore} />
+          )}
+          {settings.version !== 4 && amChartsCoreStatus ? (
             <React.Fragment>
               <Script url="https://www.amcharts.com/lib/3/serial.js" onLoad={this.onLoadAmChartsSerial} />
               <Script url="https://www.amcharts.com/lib/3/themes/light.js" onLoad={this.onLoadAmChartsTheme} />

@@ -3,7 +3,6 @@ import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
 import hasPermissions from 'common/utils/hasPermissions'
 import withDashboard from 'components/Dashboard/withDashboard'
-import withCharts from 'ui-components/Charts/withCharts'
 import LoadingError from 'ui-components/Error/LoadingError'
 import PlanPermissionError from 'ui-components/Error/PlanPermissionError'
 import Report from 'components/Dashboard/Reports/Report'
@@ -35,4 +34,4 @@ class Reports extends Component {
   }
 }
 
-export default withDashboard(withCharts(Reports))
+export default withDashboard(Reports)

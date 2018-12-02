@@ -4,12 +4,30 @@ import { darken } from 'polished'
 import Box from 'ui-components/Box'
 import theme from 'common/theme'
 
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: ${props => (props.fullWidth ? '100%' : '400px')};
+  margin-left: ${props => (props.fullWidth ? '0' : '8px')};
+`
+
 const ChartContainer = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
-  max-width: 400px;
-  margin-left: 8px;
+`
+
+const Markers = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+`
+
+const Marker = styled.p`
+  color: ${props => props.theme.colors.black};
+  opacity: 0.4;
+  font-size: 0.8rem;
 `
 
 const Section = styled.div`
@@ -46,47 +64,57 @@ const SelectedSection = styled(Section)`
   }
 `
 
-const BulletChart = ({ value, min, max, numberOfSections }) => {
+const BulletChart = ({ value, min, max, numberOfSections, withMarkers, fullWidth }) => {
   const sections = new Array(numberOfSections).fill(0)
   return (
-    <ChartContainer>
-      {sections.map((_, i) => {
-        const halfNumberOfSections = numberOfSections / 2
-        const inNegativeSection = i < Math.floor(numberOfSections / 2)
-        const inPositiveSection = i > Math.floor(numberOfSections / 2)
-        let opacity = 1
-        let currentSectionIsNeutral = false
-        if (inNegativeSection) {
-          opacity = 1 - ((numberOfSections / halfNumberOfSections) * i) / 10
-        } else if (inPositiveSection) {
-          opacity = ((numberOfSections / halfNumberOfSections) * i) / 10 - 1
-        } else {
-          currentSectionIsNeutral = true
-        }
+    <Container fullWidth={fullWidth}>
+      {withMarkers && (
+        <Markers>
+          <Marker>{min}</Marker>
+          <Marker>{0}</Marker>
+          <Marker>+{max}</Marker>
+        </Markers>
+      )}
+      <ChartContainer>
+        {sections.map((_, i) => {
+          const isNegativeSection = i < Math.floor(numberOfSections / 2)
+          const isPositiveSection = i > Math.floor(numberOfSections / 2)
+          const isNeutralSection = !isNegativeSection && !isPositiveSection
+          let opacity = 1
 
-        let sectionColor = '255,255,255'
-        if (inNegativeSection) sectionColor = '243,68,108'
-        else if (inPositiveSection) sectionColor = '18,217,158'
+          if (isNegativeSection) {
+            opacity = 1 - (2 * i) / (numberOfSections - 1)
+          } else if (isPositiveSection) {
+            opacity = (2 * i) / (numberOfSections - 1) - 1
+          }
 
-        const valuesIn1Section = (max * 2) / numberOfSections
-        const valuesUpUntilNextSection = valuesIn1Section * (i + 1)
-        const valueFulLRange = value + max
-        if (valuesUpUntilNextSection - valuesIn1Section < valueFulLRange && valuesUpUntilNextSection > valueFulLRange) {
-          return (
-            <SelectedSection
-              key={i}
-              sectionColor={sectionColor}
-              opacity={opacity}
-              numberOfSections={numberOfSections}
-              value={value > 0 ? `+${value.toFixed(0)}` : value.toFixed(0)}
-              neutral={currentSectionIsNeutral ? true : false}
-            />
-          )
-        }
+          let sectionColor = '255,255,255'
+          if (isNegativeSection) sectionColor = '243,68,108'
+          else if (isPositiveSection) sectionColor = '18,217,158'
 
-        return <Section key={i} sectionColor={sectionColor} opacity={opacity} numberOfSections={numberOfSections} />
-      })}
-    </ChartContainer>
+          const valuesPerSection = (max * 2) / numberOfSections
+          const valuesUpUntilNextSection = valuesPerSection * (i + 1)
+          const valueFulLRange = value + max
+          if (
+            valuesUpUntilNextSection - valuesPerSection < valueFulLRange &&
+            valuesUpUntilNextSection > valueFulLRange
+          ) {
+            return (
+              <SelectedSection
+                key={i}
+                sectionColor={sectionColor}
+                opacity={opacity}
+                numberOfSections={numberOfSections}
+                value={value > 0 ? `+${value.toFixed(0)}` : value.toFixed(0)}
+                neutral={isNeutralSection ? true : false}
+              />
+            )
+          }
+
+          return <Section key={i} sectionColor={sectionColor} opacity={opacity} numberOfSections={numberOfSections} />
+        })}
+      </ChartContainer>
+    </Container>
   )
 }
 

@@ -1,6 +1,7 @@
 import React from 'react'
 import { format } from 'date-fns'
-import BulletChart from 'ui-components/Charts/BulletChart'
+import Score from './Score'
+import AIScore from './AIScore'
 import { ReportContainer, SectionHeader, BesideSection, BoldValue, FadedValue } from './styles'
 
 const Report = ({ report }) => {
@@ -13,34 +14,17 @@ const Report = ({ report }) => {
         <BoldValue>{name}</BoldValue>
         <FadedValue>${stockPrice}</FadedValue>
       </BesideSection>
+      <AIScore value={scores.ai_score} name="AI Score" />
 
       <SectionHeader>Summary</SectionHeader>
-      <BesideSection>
-        <BoldValue>Reward</BoldValue>
-        <BulletChart value={scores.ai_reward * 100} min={-100} max={100} numberOfSections={11} />
-      </BesideSection>
-      <BesideSection>
-        <BoldValue>Safety</BoldValue>
-        <BulletChart value={scores.ai_safety * 100} min={-100} max={100} numberOfSections={11} />
-      </BesideSection>
+      <Score value={scores.ai_reward} name="Reward" />
+      <Score value={scores.ai_safety} name="Safety" />
 
       <SectionHeader>AI Scores</SectionHeader>
-      <BesideSection>
-        <BoldValue>Soundness</BoldValue>
-        <BulletChart value={scores.ai_soundness * 100} min={-100} max={100} numberOfSections={11} />
-      </BesideSection>
-      <BesideSection>
-        <BoldValue>Profitability</BoldValue>
-        <BulletChart value={scores.ai_profitability * 100} min={-100} max={100} numberOfSections={11} />
-      </BesideSection>
-      <BesideSection>
-        <BoldValue>Growth</BoldValue>
-        <BulletChart value={scores.ai_growth * 100} min={-100} max={100} numberOfSections={11} />
-      </BesideSection>
-      <BesideSection>
-        <BoldValue>Value</BoldValue>
-        <BulletChart value={scores.ai_value * 100} min={-100} max={100} numberOfSections={11} />
-      </BesideSection>
+      <Score value={scores.ai_soundness} name="Soundness" />
+      <Score value={scores.ai_profitability} name="Profitability" />
+      <Score value={scores.ai_growth} name="Growth" />
+      <Score value={scores.ai_value} name="Value" />
 
       <BesideSection>
         <BoldValue>Report generated</BoldValue>
