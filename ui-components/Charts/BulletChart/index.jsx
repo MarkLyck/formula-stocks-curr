@@ -88,7 +88,7 @@ const BulletChart = ({ value, min, max, numberOfSections, withMarkers, fullWidth
             opacity = (2 * i) / (numberOfSections - 1) - 1
           }
 
-          let sectionColor = '255,255,255'
+          let sectionColor = '240,244,248'
           if (isNegativeSection) sectionColor = '243,68,108'
           else if (isPositiveSection) sectionColor = '18,217,158'
 

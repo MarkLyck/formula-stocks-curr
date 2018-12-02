@@ -56,3 +56,28 @@ export const Beside = styled.div`
   justify-content: space-between;
   margin-bottom: 16px;
 `
+
+export const AIScoreContainer = styled(ExpandedScore)`
+  position: relative;
+`
+
+export const AIScoreValue = styled.h1`
+  color: ${props => props.theme.colors[props.color]};
+  font-weight: 500;
+  font-size: 2rem;
+  position: absolute;
+  bottom: 56px;
+  left: 50%;
+  transform: translateX(-50%);
+`
+
+export const AIScoreText = styled.h2`
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: ${props => props.theme.colors.black};
+  opacity: 0.5;
+  font-weight: 400;
+  font-size: 1.2rem;
+`

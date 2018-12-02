@@ -1,7 +1,7 @@
 import React from 'react'
 import withCharts from 'ui-components/Charts/withCharts'
 import MultiGaugeChart from 'ui-components/Charts/MultiGaugeChart'
-import { ScoreSection, BoldValue, FadedValue, ExpandedScore, Beside, Value } from './styles'
+import { AIScoreContainer, BoldValue, FadedValue, Beside, AIScoreValue, AIScoreText } from './styles'
 
 const NUM_SECTIONS = 11
 const MAX = 100
@@ -17,10 +17,13 @@ const AIScore = ({ value, name, amCharts4Loaded }) => {
   }
 
   return (
-    <ExpandedScore>
-      <BoldValue>{name}</BoldValue>
+    <AIScoreContainer>
       {amCharts4Loaded && <MultiGaugeChart numberOfSections={NUM_SECTIONS} min={MIN} max={MAX} value={outputValue} />}
-    </ExpandedScore>
+      <AIScoreValue color={valueColor}>
+        {outputValue > 0 ? `+${outputValue.toFixed(0)}` : outputValue.toFixed(0)}
+      </AIScoreValue>
+      <AIScoreText>Overall AI Score</AIScoreText>
+    </AIScoreContainer>
   )
 }
 

@@ -9,7 +9,7 @@ const createChart = settings => {
   const { am4core, am4charts } = window
 
   let chart = am4core.create('mutliGaugeChartDiv', am4charts.GaugeChart)
-  chart.innerRadius = -48
+  chart.innerRadius = -36
 
   const axis = chart.xAxes.push(new am4charts.ValueAxis())
   axis.min = -100
@@ -18,7 +18,6 @@ const createChart = settings => {
   axis.renderer.labels.template.fill = am4core.color(theme.colors.black)
   axis.renderer.labels.template.opacity = 0.5
   axis.renderer.grid.template.disabled = true
-  console.log(axis.renderer.labels.template)
 
   const sections = new Array(numberOfSections).fill(0)
 
@@ -42,7 +41,7 @@ const createChart = settings => {
       opacity = (2 * i) / (numberOfSections - 1) - 1
     }
 
-    let color = 'white'
+    let color = theme.colors.polar
     if (isNegativeSection) color = theme.colors.red
     else if (isPositiveSection) color = theme.colors.green
 
@@ -55,6 +54,14 @@ const createChart = settings => {
   })
 
   const hand = chart.hands.push(new am4charts.ClockHand())
+  hand.fill = am4core.color(theme.colors.black)
+  hand.stroke = am4core.color(theme.colors.black)
+  hand.fillOpacity = 1
+  hand.strokeWidth = 0
+  hand.radius = am4core.percent(98)
+  hand.innerRadius = am4core.percent(60)
+  hand.pin.disabled = true
+  console.log(hand)
   hand.showValue(value, am4core.ease.cubicOut)
 
   return chart
@@ -70,7 +77,7 @@ const MultiGaugeChart = ({ ...settings }) => {
     }
   })
 
-  return <div id="mutliGaugeChartDiv" style={{ width: '100%', height: '200px' }} />
+  return <div id="mutliGaugeChartDiv" style={{ height: '200px' }} />
 }
 
 export default MultiGaugeChart
