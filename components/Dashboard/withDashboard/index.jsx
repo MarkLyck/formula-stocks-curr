@@ -33,7 +33,9 @@ const withDashboard = WrappedComponent => {
         console.warn('!!! NO localStorage token')
         Router.push('/')
       }
-      window.Intercom('shutdown')
+      if (isClient && window.Intercom) {
+        window.Intercom('shutdown')
+      }
     }
 
     setPlan = planName => {

@@ -9,6 +9,7 @@ const routes = [
   { name: 'trades', icon: 'flask' },
   { name: 'portfolio', icon: 'chart-line' },
   { name: 'suggestions', icon: 'tasks' },
+  { name: 'reports', icon: 'tachometer' },
   { name: 'articles', icon: 'newspaper' },
   { name: 'admin', icon: 'tachometer' },
   { name: 'account', icon: 'user' },
