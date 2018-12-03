@@ -1,7 +1,8 @@
 import React from 'react'
 import { format } from 'date-fns'
-import Score from './Score'
+import SearchBar from './SearchBar'
 import AIScore from './AIScore'
+import Score from './Score'
 import { ReportContainer, SectionHeader, BesideSection, BoldValue, FadedValue } from './styles'
 
 const Report = ({ report }) => {
@@ -9,6 +10,8 @@ const Report = ({ report }) => {
   const dateGenerated = format(new Date(date.year, date.month, date.day), 'MM/DD/YYYY')
   return (
     <ReportContainer>
+      <SectionHeader>Search</SectionHeader>
+      <SearchBar />
       <SectionHeader>AI Investment Report</SectionHeader>
       <BesideSection>
         <BoldValue>{name}</BoldValue>
