@@ -55,6 +55,7 @@ const withDashboard = WrappedComponent => {
             if (data && data.loggedInUser && data.loggedInUser.id === null) {
               // if the token they have is incorrect or expired. Push them to the front page.
               console.warn('!!! loggedInUser.id === null')
+              if (hasStorage) localStorage.removeItem('graphcoolToken')
               Router.push('/')
             }
 
