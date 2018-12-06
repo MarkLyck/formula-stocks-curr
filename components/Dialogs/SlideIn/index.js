@@ -8,6 +8,7 @@ class SlideIn extends Component {
     Modal.setAppElement('body')
     return state
   }
+
   render() {
     const { children, isVisible, onRequestClose } = this.props
     return (

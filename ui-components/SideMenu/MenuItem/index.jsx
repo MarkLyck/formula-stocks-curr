@@ -7,25 +7,25 @@ import { Button } from './styles'
 
 class MenuItem extends Component {
   clickHandler = () => {
-    const { route, setActiveRoute } = this.props
+    const { route, setActiveRoute, closeMenu } = this.props
     if (route === 'logout') {
       if (hasStorage) localStorage.removeItem('graphcoolToken')
       Router.push('/')
       return
-    }
-    if (route === 'support') {
+    } else if (route === 'support') {
       window.Intercom('boot', {
         app_id: 'i194mpvo',
       })
       window.Intercom('showNewMessage')
       return
     }
-    setActiveRoute(this.props.route)
-    Router.push(`/dashboard/${this.props.route}`)
+    setActiveRoute(route)
+    closeMenu()
+    Router.push(`/dashboard/${route}`)
   }
 
   render() {
-    const { route, icon, isActive, userType } = this.props
+    const { route, name, icon, isActive, userType } = this.props
 
     if ((route === 'admin' || route === 'reports') && userType !== 'admin') {
       return null
@@ -34,7 +34,7 @@ class MenuItem extends Component {
     return (
       <Button onClick={this.clickHandler} isActive={isActive}>
         <FontAwesomeIcon icon={icon} />
-        <h4>{route}</h4>
+        <h4>{name}</h4>
       </Button>
     )
   }
@@ -45,6 +45,7 @@ MenuItem.propTypes = {
   route: PropTypes.string,
   isActive: PropTypes.bool,
   setActiveRoute: PropTypes.func,
+  closeMenu: PropTypes.func,
 }
 
 export default MenuItem

@@ -6,23 +6,23 @@ import MenuItem from './MenuItem'
 import { MenuList } from './styles'
 
 const routes = [
-  { name: 'trades', icon: 'flask' },
-  { name: 'portfolio', icon: 'chart-line' },
-  { name: 'suggestions', icon: 'tasks' },
-  { name: 'reports', icon: 'tachometer' },
-  { name: 'articles', icon: 'newspaper' },
-  { name: 'admin', icon: 'tachometer' },
-  { name: 'account', icon: 'user' },
-  { name: 'logout', icon: 'sign-out-alt' },
-  { name: 'support', icon: 'question-circle' },
+  { name: 'trades', icon: 'flask', route: 'trades' },
+  { name: 'portfolio', icon: 'chart-line', route: 'portfolio' },
+  { name: 'suggestions', icon: 'tasks', route: 'suggestions' },
+  { name: 'AI reports', icon: 'tachometer', route: 'reports' },
+  { name: 'articles', icon: 'newspaper', route: 'articles' },
+  { name: 'admin', icon: 'tachometer', route: 'admin' },
+  { name: 'account', icon: 'user', route: 'account' },
+  { name: 'logout', icon: 'sign-out-alt', route: 'logout' },
+  { name: 'support', icon: 'question-circle', route: 'support' },
 ]
 
 class SideMenu extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
     if (isClient) {
       const route = routes.reduce((acc, curr, i) => {
-        if (Router.router.pathname.includes(curr.name)) {
-          acc = curr.name
+        if (Router.router.pathname.includes(curr.route)) {
+          acc = curr.route
         }
         return acc
       }, '')
@@ -31,23 +31,27 @@ class SideMenu extends Component {
       return prevState
     }
   }
-  state = { activeRoute: '' }
 
+  state = { activeRoute: '', isVisible: this.props.isPopOver }
   setActiveRoute = route => this.setState({ activeRoute: route })
+  // TODO This also needs to close it's parent model. (then set this to false)
+  closeMenu = () => this.setState({ isVisible: this.state.isVisible })
 
   render() {
-    const { userType, isPopOver } = this.props
-    const { activeRoute } = this.state
+    const { userType } = this.props
+    const { activeRoute, isVisible } = this.state
 
     return (
-      <MenuList isPopOver={isPopOver}>
+      <MenuList isVisible={isVisible}>
         {routes.map(route => (
           <MenuItem
             setActiveRoute={this.setActiveRoute}
-            key={route.name}
+            closeMenu={this.closeMenu}
+            key={route.route}
             icon={route.icon}
-            route={route.name}
-            isActive={route.name === activeRoute}
+            name={route.name}
+            route={route.route}
+            isActive={route.route === activeRoute}
             userType={userType}
           />
         ))}

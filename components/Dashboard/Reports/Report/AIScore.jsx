@@ -6,6 +6,7 @@ import { ExpandedScore, BoldValue, FadedValue, Beside } from './styles'
 
 export const AIScoreContainer = styled(ExpandedScore)`
   position: relative;
+  padding-top: 24px;
 `
 
 export const AIScoreValue = styled.h1`
@@ -29,7 +30,7 @@ export const AIScoreText = styled.h2`
   font-size: 1.2rem;
 `
 
-const NUM_SECTIONS = 11
+const NUM_SECTIONS = 21
 const MAX = 100
 const MIN = -100
 
@@ -48,7 +49,7 @@ const AIScore = ({ value, name, amCharts4Loaded }) => {
       <AIScoreValue color={valueColor}>
         {outputValue > 0 ? `+${outputValue.toFixed(0)}` : outputValue.toFixed(0)}
       </AIScoreValue>
-      <AIScoreText>Overall AI Score</AIScoreText>
+      <AIScoreText>AI Score</AIScoreText>
     </AIScoreContainer>
   )
 }

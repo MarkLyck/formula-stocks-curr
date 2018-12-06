@@ -24,10 +24,11 @@ const Report = ({ report }) => {
       <Score value={scores.ai_safety} name="Safety" />
 
       <SectionHeader>AI Scores</SectionHeader>
-      <Score value={scores.ai_soundness} name="Soundness" />
-      <Score value={scores.ai_profitability} name="Profitability" />
       <Score value={scores.ai_growth} name="Growth" />
       <Score value={scores.ai_value} name="Value" />
+      <Score value={scores.ai_profitability} name="Profitability" />
+      <Score value={scores.ai_soundness} name="Soundness" />
+      <Score value={scores.ai_stewardship} name="Stewardship" />
 
       <BesideSection>
         <BoldValue>Report generated</BoldValue>
