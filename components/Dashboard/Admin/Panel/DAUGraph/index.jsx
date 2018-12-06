@@ -11,7 +11,7 @@ const createChartData = (visitors, users) => {
   const signUpDays = countBy(users, user => format(user.createdAt, 'YYYY-MM-DD'))
 
   const cancelDays = countBy(users, user =>
-    format(new Date(get(user, 'stripe.subscriptions.data[0].canceled_at') * 1000), 'YYYY-MM-DD')
+    format(new Date(get(user, 'stripeSubscription.canceled_at') * 1000), 'YYYY-MM-DD')
   )
 
   const visitorData = countBy(visitors, visitor => format(visitor.createdAt, 'YYYY-MM-DD'))
@@ -42,8 +42,9 @@ const DAUGraph = ({ visitors, users, serialChartsReady }) => {
   const graphs = [
     {
       id: 'firstVisits',
-      lineColor: '#12D99E',
-      fillAlphas: 1,
+      lineColor: '#27A5F9',
+      lineThickness: 2,
+      fillAlphas: 0.4,
       type: 'smoothedLine',
       valueField: 'visitors',
       balloonText: '<div class="suggestion-balloon"><p class="ticker">New visitors</p> <p>[[value]]</p></div>',
@@ -51,8 +52,9 @@ const DAUGraph = ({ visitors, users, serialChartsReady }) => {
     {
       alphaField: 'alpha',
       balloonText: '<div class="suggestion-balloon"><p class="ticker">Signups:</p> <p>[[value]]</p></div>',
-      lineColor: '#27A5F9',
-      fillAlphas: 1,
+      lineColor: '#12D99E',
+      lineThickness: 2,
+      fillAlphas: 0.6,
       type: 'smoothedLine',
       valueField: 'signUps',
     },
@@ -60,7 +62,8 @@ const DAUGraph = ({ visitors, users, serialChartsReady }) => {
       alphaField: 'alpha',
       balloonText: '<div class="suggestion-balloon"><p class="ticker">cancelled:</p> <p>[[value]]</p></div>',
       lineColor: '#EC1B5F',
-      fillAlphas: 1,
+      lineThickness: 2,
+      fillAlphas: 0.6,
       clustered: false,
       type: 'smoothedLine',
       valueField: 'cancelations',
@@ -78,9 +81,9 @@ const DAUGraph = ({ visitors, users, serialChartsReady }) => {
           gridOpacity={0}
           insideX
           insideY
-          labelYOffset={4}
+          labelYOffset={24}
           autoMargins={false}
-          marginLeft={0}
+          marginLeft={-24}
           marginRight={-25}
           marginBottom={-2}
           categoryBoldLabels={true}

@@ -43,6 +43,7 @@ export const Button = styled.button`
     font-size: 10px;
     margin: 0;
     margin-top: 8px;
+    white-space: nowrap;
   }
   &:hover {
     cursor: pointer;

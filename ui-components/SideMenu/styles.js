@@ -59,8 +59,8 @@ export const MenuList = styled.ul`
   }
 
   @media (max-width: 850px) {
-    display: ${props => (props.isPopOver ? 'block' : 'none')};
-    ${props => (props.isPopOver ? expandedMenu : '')};
+    display: ${props => (props.isVisible ? 'block' : 'none')};
+    ${props => (props.isVisible ? expandedMenu : '')};
     transform: translateX(0);
     animation: ${slideIn} 0.2s ease-out;
   }
