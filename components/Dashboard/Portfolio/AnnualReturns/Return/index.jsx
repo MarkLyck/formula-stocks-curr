@@ -12,6 +12,10 @@ const ReturnContainer = styled.div`
   }
 `
 
+const Title = styled.h3`
+  white-space: nowrap;
+`
+
 const ReturnValue = styled.p`
   color: ${props => (props.returnSince >= 0 ? props.theme.colors.secondary : props.theme.colors.error)};
   font-weight: 500;
@@ -19,7 +23,7 @@ const ReturnValue = styled.p`
 
 const Return = ({ title, returnSince, className }) => (
   <ReturnContainer className={className}>
-    <h3>{title}</h3>
+    <Title>{title}</Title>
     <ReturnValue returnSince={returnSince}>
       {returnSince >= 0 ? '+' : ''}
       {returnSince}%

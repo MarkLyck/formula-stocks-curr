@@ -1,6 +1,7 @@
 import styled from 'react-emotion'
 
 export const ArticleContainer = styled.div`
+  box-sizing: border-box;
   background: white;
   width: 100%;
 `
@@ -14,6 +15,7 @@ export const HeaderImage = styled.div`
 `
 
 export const Title = styled.h1`
+  box-sizing: border-box;
   padding: 16px 32px;
   margin: 16px auto 32px;
   width: 100%;
@@ -23,6 +25,7 @@ export const Title = styled.h1`
 `
 
 export const Body = styled.div`
+  box-sizing: border-box;
   padding: 0 32px 16px;
   width: 100%;
   max-width: 800px;
