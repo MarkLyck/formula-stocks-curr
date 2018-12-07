@@ -38,7 +38,7 @@ const PORTFOLIO_QUERY = gql`
 
 class Portfolio extends Component {
   render() {
-    const { serialChartsReady, pieChartsReady, userPlan, userType } = this.props
+    const { amCharts4Loaded, serialChartsReady, pieChartsReady, userPlan, userType } = this.props
 
     return (
       <PlanContext.Consumer>
@@ -59,6 +59,7 @@ class Portfolio extends Component {
                     marketPrices={DJIA.pricesSince2009}
                     portfolio={Plan.portfolio}
                     planName={Plan.name}
+                    amCharts4Loaded={amCharts4Loaded}
                     serialChartsReady={serialChartsReady}
                     pieChartsReady={pieChartsReady}
                   />
@@ -128,4 +129,4 @@ class Portfolio extends Component {
   }
 }
 
-export default withDashboard(withCharts(Portfolio, { loadPieChart: true }))
+export default withDashboard(withCharts(Portfolio, { version: 4, loadPieChart: true }))

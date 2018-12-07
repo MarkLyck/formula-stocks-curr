@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import min from 'lodash.min'
 import minBy from 'lodash.minby'
 import maxBy from 'lodash.maxby'
-import LineGraph from 'ui-components/Charts/LineGraph'
+import LineGraph from 'ui-components/Charts/LineGraph/index_new'
 import { Legends, Legend } from 'ui-components/Charts/Legends'
 import theme from 'common/theme'
 import { formatPrice } from 'common/utils/helpers'
@@ -38,8 +38,8 @@ const createChartData = (portfolioYields, marketPrices) => {
   })
 }
 
-const PortfolioGraph = ({ portfolioYields, marketPrices, planName, serialChartsReady }) => {
-  if (!serialChartsReady || !portfolioYields || !portfolioYields.length) {
+const PortfolioGraph = ({ portfolioYields, marketPrices, planName, amCharts4Loaded, serialChartsReady }) => {
+  if (!amCharts4Loaded || !portfolioYields || !portfolioYields.length) {
     return (
       <div id="result-chart" className="loading">
         <i className="fa fa-circle-o-notch fa-spin fa-3x fa-fw" />
@@ -53,6 +53,29 @@ const PortfolioGraph = ({ portfolioYields, marketPrices, planName, serialChartsR
 
   const minimum = Math.floor(min([fsMin, marMin]) / 10) * 10
   const maximum = Math.ceil(maxBy(chartData, point => point.fs).fs / 20) * 20
+
+  const series = [
+    {
+      valueY: 'fs',
+      color: '#27A5F9',
+      fillOpacity: 0.4,
+      tooltipText: `${planName.toUpperCase()} \n+{fs}%`,
+      //   tooltipHTML: `
+      // <div class="chart-balloon">
+      //     <span class="plan-name">${planName.toUpperCase()}</span>
+      //     <span class="balloon-value">{fs}%</span>
+      // </div>
+      // `,
+    },
+  ]
+  if (marketPrices.length) {
+    series.push({
+      valueY: 'market',
+      color: '#49494A',
+      fillOpacity: 0.4,
+      tooltipText: `DJIA \n+{market}%`,
+    })
+  }
 
   const graphs = [
     {
@@ -96,6 +119,7 @@ const PortfolioGraph = ({ portfolioYields, marketPrices, planName, serialChartsR
       `,
     })
   }
+  console.log(chartData)
 
   return (
     <GraphContainer>
@@ -109,21 +133,19 @@ const PortfolioGraph = ({ portfolioYields, marketPrices, planName, serialChartsR
       </Legends>
       <LineGraph
         id="portfolio-graph"
-        graphs={graphs}
+        series={series}
         data={chartData}
-        unit="%"
-        unitPosition="right"
-        axisAlpha={0}
+        valueSuffix="%"
         gridOpacity={0.02}
-        autoMargins={false}
-        marginRight={-5}
-        marginLeft={-4}
-        marginBottom={-1}
+        paddingRight={-8}
+        paddingBottom={-5}
         insideX
         insideY
-        labelYOffset={8}
-        maximum={maximum}
-        minimum={minimum}
+        labelYOffset={16}
+        strictMinMax
+        max={maximum}
+        min={minimum}
+        extraMax={20}
         baseValue={minimum}
         categoryBoldLabels={true}
         categoryAxisColor="#FFF"
