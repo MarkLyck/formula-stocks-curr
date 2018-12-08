@@ -51,7 +51,7 @@ The total allocation in % of this stock in the portfolio, after this and all pre
 `
 
   render() {
-    const { suggestion, stock, serialChartsReady, suggestionsType, loading, error } = this.props
+    const { suggestion, stock, amCharts4Loaded, suggestionsType, loading, error } = this.props
     const { detailsIsVisible } = this.state
 
     const suggestedPriceName = suggestionsType === 'Trades' ? 'Traded at' : 'Buy below'
@@ -111,10 +111,11 @@ The total allocation in % of this stock in the portfolio, after this and all pre
             sixMonthsPrices={stock ? stock.sixMonthsPrices : []}
             ticker={suggestion.ticker}
             suggestedPrice={suggestion.suggested_price}
+            suggestionsType={suggestionsType}
             action={suggestion.action}
             loading={loading}
             error={error}
-            serialChartsReady={serialChartsReady}
+            amCharts4Loaded={amCharts4Loaded}
           />
         </ContentContainer>
         <DetailsModal suggestion={suggestion} isOpen={detailsIsVisible} onRequestClose={this.toggleDetails} />

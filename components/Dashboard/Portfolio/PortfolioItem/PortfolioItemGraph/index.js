@@ -43,7 +43,6 @@ const StockChart = ({ historicPrices, ticker, costBasisPrice, action, amCharts4L
     {
       valueY: 'price',
       color: color.positive,
-      fillOpacity: 0,
       negativeBase: costBasisPrice + 0.001,
       negativeColor: color.negative,
       tooltipText: `{ticker} \n\${price}`,
