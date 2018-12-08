@@ -1,63 +1,49 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import { useEffect } from 'react'
+import { isClient } from 'common/utils/featureTests'
+import theme from 'common/theme'
 
-class PieChart extends Component {
-  componentDidMount() {
-    this.makeChart()
-  }
+const createChart = settings => {
+  if (!isClient) return () => {}
+  const { id, data, labelText, valueField = 'value', categoryField = 'category', colors = [], tooltipText } = settings
 
-  componentDidUpdate() {
-    this.makeChart()
-  }
+  const { am4core, am4charts } = window
 
-  getConfig = () => {
-    const { data, unit = '', colors = [] } = this.props
+  let chart = am4core.create(id, am4charts.PieChart)
+  chart.data = data
+  chart.innerRadius = am4core.percent(40)
+  chart.radius = am4core.percent(80)
 
-    const config = {
-      type: 'pie',
-      dataProvider: data,
-      titleField: 'title',
-      valueField: 'value',
-      balloonText: `[[title]]<br/>[[value]]${unit}`,
-      radius: '40%',
-      innerRadius: '70%',
-      labelsEnabled: false,
-      balloon: {
-        fillAlpha: 1,
-      },
-      colors,
-    }
+  var label = chart.seriesContainer.createChild(am4core.Label)
+  label.text = labelText
+  label.horizontalCenter = 'middle'
+  label.verticalCenter = 'middle'
+  label.fontSize = 16
 
-    return config
-  }
+  var pieSeries = chart.series.push(new am4charts.PieSeries())
+  pieSeries.innerRadius = am4core.percent(50)
+  pieSeries.dataFields.value = valueField
+  pieSeries.dataFields.category = categoryField
+  pieSeries.ticks.template.disabled = true
+  pieSeries.labels.template.disabled = true
+  pieSeries.colors.list = colors.map(color => am4core.color(color))
+  pieSeries.slices.template.tooltipText = tooltipText
+  pieSeries.tooltip.getFillFromObject = false
+  pieSeries.tooltip.background.fill = am4core.color(theme.colors.white)
+  pieSeries.tooltip.background.adapter.add('stroke', (stroke, target) => target.dataItem.slice.stroke)
+  pieSeries.tooltip.background.strokeWidth = 2
+  pieSeries.tooltip.label.fill = am4core.color(theme.colors.black)
 
-  makeChart = () => {
-    const { id, data } = this.props
-    const config = this.getConfig()
-    if (data.length && typeof window !== 'undefined') {
-      window.AmCharts.makeChart(id, { ...config })
-    }
-  }
-
-  render() {
-    const { id, className } = this.props
-    return <div id={id} className={className} />
-  }
+  return chart
 }
 
-PieChart.defaultProps = {
-  data: [],
-  graphs: [],
-  unit: '',
-  className: '',
-}
+const PieChart = ({ className, ...settings }) => {
+  let chart
+  useEffect(() => {
+    const chart = createChart(settings)
+    return () => (chart ? chart.dispose() : null)
+  })
 
-PieChart.propTypes = {
-  id: PropTypes.string.isRequired,
-  className: PropTypes.string,
-  data: PropTypes.array,
-  unit: PropTypes.string,
-  colors: PropTypes.array,
+  return <div id={settings.id} className={className} style={{ width: '100%' }} />
 }
 
 export default PieChart

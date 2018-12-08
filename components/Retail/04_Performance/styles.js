@@ -10,9 +10,11 @@ export const GraphContainer = styled.div`
     display: none;
   }
   .portfolio-legends {
+    z-index: 10;
     top: 24px;
   }
   #single-launch-performace-graph {
+    overflow: hidden;
     ${boxStyle};
     height: 100%;
   }

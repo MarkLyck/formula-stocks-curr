@@ -32,8 +32,8 @@ const createChartData = (portfolioYields, marketPrices) => {
   })
 }
 
-const LaunchPerformance = ({ portfolioYields, marketPrices, planName, amChartsLoaded }) => {
-  if (!portfolioYields || !marketPrices.length || !portfolioYields.length || !amChartsLoaded) {
+const LaunchPerformance = ({ portfolioYields, marketPrices, planName, amCharts4Loaded }) => {
+  if (!portfolioYields || !marketPrices.length || !portfolioYields.length || !amCharts4Loaded) {
     return <FontAwesomeIcon icon="spinner-third" spin size="4x" />
   }
   const chartData = createChartData(portfolioYields, marketPrices)
@@ -44,44 +44,22 @@ const LaunchPerformance = ({ portfolioYields, marketPrices, planName, amChartsLo
   const minimum = Math.floor(min([fsMin, marMin]) / 10) * 10
   const maximum = Math.ceil(maxBy(chartData, point => point.fs).fs / 20) * 20
 
-  const graphs = [
+  const CapitalizedPlanNAme = planName.charAt(0).toUpperCase() + planName.slice(1)
+
+  const series = [
     {
-      id: 'launch',
-      lineColor: '#27A5F9',
-      fillAlphas: 0.4,
-      bullet: 'square',
-      bulletBorderAlpha: 1,
-      bulletColor: '#27A5F9',
-      bulletSize: 5,
-      hideBulletsCount: 10,
-      lineThickness: 2,
-      useLineColorForBulletBorder: true,
-      valueField: 'fs',
-      balloonText: `
-                <div class="chart-balloon">
-                    <span class="plan-name">${planName}</span>
-                    <span class="balloon-value">[[fsBalloon]]</span>
-                </div>`,
+      valueY: 'fs',
+      color: theme.colors.primary,
+      fillOpacity: 0.4,
+      tooltipText: `${CapitalizedPlanNAme} \n[bold]{fsBalloon}[/]`,
     },
   ]
   if (marketPrices.length) {
-    graphs.push({
-      id: 'market',
-      lineColor: '#49494A',
-      fillAlphas: 0.4,
-      bullet: 'square',
-      bulletBorderAlpha: 1,
-      bulletColor: '#989898',
-      bulletSize: 5,
-      hideBulletsCount: 10,
-      lineThickness: 2,
-      useLineColorForBulletBorder: true,
-      valueField: 'market',
-      balloonText: `
-                <div class="chart-balloon">
-                    <span class="plan-name market-name">DJIA</span>
-                    <span class="balloon-value">[[marketBalloon]]</span>
-                </div>`,
+    series.push({
+      valueY: 'market',
+      color: theme.colors.black,
+      fillOpacity: 0.4,
+      tooltipText: `DJIA \n[bold]{marketBalloon}[/]`,
     })
   }
 
@@ -97,19 +75,19 @@ const LaunchPerformance = ({ portfolioYields, marketPrices, planName, amChartsLo
       </Legends>
       <LineGraph
         id="single-launch-performace-graph"
-        graphs={graphs}
+        series={series}
         data={chartData}
-        unit="%"
-        unitPosition="right"
-        autoMargins={false}
-        marginRight={-3}
-        marginBottom={-6}
+        paddingRight={-10}
+        paddingBottom={-60}
         insideX
         insideY
-        axisAlpha={0}
+        labelYOffset={16}
+        labelXOffset={64}
+        valueSuffix="%"
         gridOpacity={0.02}
         categoryBoldLabels={true}
         categoryAxisColor="#FFF"
+        strictMinMax
         maximum={maximum}
         minimum={minimum}
       />

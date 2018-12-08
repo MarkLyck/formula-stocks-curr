@@ -20,7 +20,7 @@ const GET_LONGTERM_DATA = gql`
   }
 `
 
-const Performance = ({ backtestedData, marketPrices, planName, amChartsLoaded }) => (
+const Performance = ({ backtestedData, marketPrices, planName, amCharts4Loaded }) => (
   <Query query={GET_LONGTERM_DATA}>
     {({ loading, error, data = {} }) => {
       const { Plan = {}, SP500 = {} } = data
@@ -34,7 +34,7 @@ const Performance = ({ backtestedData, marketPrices, planName, amChartsLoaded })
             planData={Plan.backtestedData || []}
             marketPrices={SP500.longtermPrices || []}
             planName={planName}
-            amChartsLoaded={amChartsLoaded}
+            amCharts4Loaded={amCharts4Loaded}
           />
           <Disclaimer>
             Historical numbers are based on backtested data. Since our 2009 launch we have observed similar results in

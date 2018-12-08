@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { format, subDays } from 'date-fns'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import LineGraph from 'ui-components/Charts/LineGraph/v4'
+import LineGraph from 'ui-components/Charts/LineGraph'
 import theme from 'common/theme'
 import { GraphContainer, LoadingContainer, FailedContainer } from './styles'
 

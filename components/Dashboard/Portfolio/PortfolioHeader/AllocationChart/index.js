@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import PieChart from 'ui-components/Charts/PieChart/v4'
+import PieChart from 'ui-components/Charts/PieChart'
 import { adjustBrightness } from 'common/utils/helpers'
 
 const Allocation = ({ portfolio, id, amCharts4Loaded }) => {

@@ -45,28 +45,6 @@ export const ContentContainer = styled.div`
   display: flex;
   border-radius: 6px;
   border-bottom: 6px solid ${props => props.theme.colors[props.type === 'BUY' ? 'primary' : 'secondary']};
-
-  .amcharts-zoom-out-bg {
-    y: 237;
-    height: 33px;
-    width: 92px;
-
-    &:hover {
-      cursor: pointer;
-    }
-  }
-  .amcharts-zoom-out-label {
-    transform: translate(26px, 243px);
-    &:hover {
-      cursor: pointer;
-    }
-  }
-  .amcharts-zoom-out-image {
-    y: 237;
-    &:hover {
-      cursor: pointer;
-    }
-  }
   .failed-container {
     background: ${props => darken(0.02, '#fff')};
     width: 100%;
@@ -109,14 +87,6 @@ export const ContentContainer = styled.div`
       width: 100%;
       justify-content: center;
       margin-top: 8px;
-    }
-
-    .amcharts-zoom-out-bg,
-    .amcharts-zoom-out-image {
-      y: 172;
-    }
-    .amcharts-zoom-out-label {
-      transform: translate(26px, 179px);
     }
   }
 `

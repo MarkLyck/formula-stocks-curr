@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import PieChart from 'ui-components/Charts/PieChart/v4'
+import PieChart from 'ui-components/Charts/PieChart'
 import { Container, PieChartsContainer, ChartContainer } from './styles'
 
 const createChartData = data => Object.entries(data).map(obj => ({ title: obj[0], value: obj[1] }))

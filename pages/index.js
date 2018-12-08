@@ -6,6 +6,7 @@ import Script from 'react-load-script'
 import { planIds } from 'common/constants'
 import { hasStorage, usingMocks } from 'common/utils/featureTests'
 import newVisitor from 'common/utils/newVisitor'
+import withCharts from 'ui-components/Charts/withCharts'
 
 import Signup from 'components/Dialogs/Signup'
 import Login from 'components/Dialogs/Login'
@@ -45,16 +46,10 @@ const GET_ENTRY_AND_MARKET_DATA = gql`
 
 class Retail extends Component {
   state = {
-    amChartsCoreStatus: false,
-    amChartsLoaded: false,
-    amChartsLoadingError: false,
     signUpVisible: false,
     loginVisible: false,
     FAQVisible: false,
   }
-
-  amChartsSerialStatus = false
-  amChartsThemeStatus = false
 
   componentDidMount() {
     if (typeof window !== 'undefined' && window.Intercom) {
@@ -64,32 +59,13 @@ class Retail extends Component {
     newVisitor(this.props.apolloClient)
   }
 
-  areAllChartDependenciesLoaded = () => {
-    if (this.state.amChartsCoreStatus && this.amChartsSerialStatus && this.amChartsThemeStatus) {
-      this.setState({ amChartsLoaded: true })
-    }
-  }
-
-  onLoadAmChartsCore = () => {
-    this.setState({ amChartsCoreStatus: true })
-    this.areAllChartDependenciesLoaded()
-  }
-  onLoadAmChartsSerial = () => {
-    this.amChartsSerialStatus = true
-    this.areAllChartDependenciesLoaded()
-  }
-  onLoadAmChartsTheme = () => {
-    this.amChartsThemeStatus = true
-    this.areAllChartDependenciesLoaded()
-  }
-
   toggleSignUpModal = () => this.setState(state => ({ signUpVisible: !state.signUpVisible }))
   toggleLoginModal = () => this.setState(state => ({ loginVisible: !state.loginVisible }))
   toggleFAQModal = () => this.setState(state => ({ FAQVisible: !state.FAQVisible }))
 
   render() {
-    const { apolloClient } = this.props
-    const { amChartsLoaded, amChartsCoreStatus, signUpVisible, loginVisible, FAQVisible } = this.state
+    const { apolloClient, amCharts4Loaded } = this.props
+    const { signUpVisible, loginVisible, FAQVisible } = this.state
 
     return (
       <Query query={GET_ENTRY_AND_MARKET_DATA}>
@@ -128,12 +104,12 @@ class Retail extends Component {
                 planName={planName}
               />
               <WhatIsIt />
-              <Performance portfolioYields={portfolioYields} planName={planName} amChartsLoaded={amChartsLoaded} />
+              <Performance portfolioYields={portfolioYields} planName={planName} amCharts4Loaded={amCharts4Loaded} />
               <PercentMatters portfolioReturn={portfolioReturn} CAGR={CAGR} />
               <FirstMonthOnUs toggleSignUpModal={this.toggleSignUpModal} price={Plan.price} />
               <WhatToExpect latestSells={latestSells} winRatio={winRatio} />
               <PilotProgram />
-              <LongTermPerformance planName={planName} amChartsLoaded={amChartsLoaded} />
+              <LongTermPerformance planName={planName} amCharts4Loaded={amCharts4Loaded} />
               <Statistics
                 winRatio={winRatio}
                 planName={planName}
@@ -146,15 +122,7 @@ class Retail extends Component {
               <CorporateProfile />
               <ScrolledToBottom toggleSignUpModal={this.toggleSignUpModal} />
               <Footer />
-
-              <Script url="https://www.amcharts.com/lib/3/amcharts.js" onLoad={this.onLoadAmChartsCore} />
               <Script url="https://js.stripe.com/v3/" />
-              {amChartsCoreStatus ? (
-                <React.Fragment>
-                  <Script url="https://www.amcharts.com/lib/3/serial.js" onLoad={this.onLoadAmChartsSerial} />
-                  <Script url="https://www.amcharts.com/lib/3/themes/light.js" onLoad={this.onLoadAmChartsTheme} />
-                </React.Fragment>
-              ) : null}
               {signUpVisible && (
                 <Signup onRequestClose={this.toggleSignUpModal} planPrice={Plan.price} apolloClient={apolloClient} />
               )}
@@ -168,4 +136,4 @@ class Retail extends Component {
   }
 }
 
-export default Retail
+export default withCharts(Retail, { version: 4 })

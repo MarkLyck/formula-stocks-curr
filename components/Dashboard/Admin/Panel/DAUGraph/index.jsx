@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import countBy from 'lodash.countby'
 import get from 'lodash.get'
 import { format, subDays } from 'date-fns'
-import LineGraph from 'ui-components/Charts/LineGraph/v4'
+import LineGraph from 'ui-components/Charts/LineGraph'
 import theme from 'common/theme'
 import { GraphContainer, Container } from './styles'
 
