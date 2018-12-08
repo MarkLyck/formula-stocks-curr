@@ -68,15 +68,13 @@ const getTrialConversionRate = (allUsers, activeTrials) => {
   return conversionRate
 }
 
-const Overview = ({ serialChartsReady, pieChartsReady }) => (
+const Overview = ({ amCharts4Loaded }) => (
   <Query query={PANEL_QUERY}>
     {({ loading, error, data }) => {
       if (loading) return <GenericLoader />
       if (error) return <LoadingError error={error} />
 
       const { allUsers, allVisitors, visitorCount, Statistics } = data
-
-      console.log(allVisitors[allVisitors.length - 1])
 
       const uniqueVisitors = visitorCount ? visitorCount.count + uniqueVisitsFromOldSite : ''
       const activeTrials = getActiveTrials(allUsers)
@@ -93,8 +91,8 @@ const Overview = ({ serialChartsReady, pieChartsReady }) => (
               icon="hourglass-end"
             />
           </StatisticsContainer>
-          <DAUGraph visitors={allVisitors} users={allUsers} serialChartsReady={serialChartsReady} />
-          <VisitorStatistics statistics={Statistics} pieChartsReady={pieChartsReady} />
+          <DAUGraph visitors={allVisitors} users={allUsers} amCharts4Loaded={amCharts4Loaded} />
+          <VisitorStatistics statistics={Statistics} amCharts4Loaded={amCharts4Loaded} />
           <VisitorList visitors={allVisitors && allVisitors.slice().reverse()} />
         </React.Fragment>
       )
@@ -102,4 +100,4 @@ const Overview = ({ serialChartsReady, pieChartsReady }) => (
   </Query>
 )
 
-export default withDashboard(withCharts(Overview, { loadPieChart: true }))
+export default withDashboard(withCharts(Overview, { version: 4 }))

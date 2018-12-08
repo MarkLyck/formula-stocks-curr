@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import countBy from 'lodash.countby'
 import get from 'lodash.get'
 import { format, subDays } from 'date-fns'
-import LineGraph from 'ui-components/Charts/LineGraph'
+import LineGraph from 'ui-components/Charts/LineGraph/v4'
+import theme from 'common/theme'
 import { GraphContainer, Container } from './styles'
 
 const createChartData = (visitors, users) => {
@@ -29,8 +30,8 @@ const createChartData = (visitors, users) => {
   }))
 }
 
-const DAUGraph = ({ visitors, users, serialChartsReady }) => {
-  if (!serialChartsReady || (!visitors.length && !users.length)) {
+const DAUGraph = ({ visitors, users, amCharts4Loaded }) => {
+  if (!amCharts4Loaded) {
     return (
       <div id="result-chart" className="loading">
         <i className="fa fa-circle-o-notch fa-spin fa-3x fa-fw" />
@@ -39,34 +40,27 @@ const DAUGraph = ({ visitors, users, serialChartsReady }) => {
   }
   const chartData = createChartData(visitors, users)
 
-  const graphs = [
+  const series = [
     {
-      id: 'firstVisits',
-      lineColor: '#27A5F9',
-      lineThickness: 2,
-      fillAlphas: 0.4,
-      type: 'smoothedLine',
-      valueField: 'visitors',
-      balloonText: '<div class="suggestion-balloon"><p class="ticker">New visitors</p> <p>[[value]]</p></div>',
+      valueY: 'visitors',
+      color: theme.colors.primary,
+      fillOpacity: 0.4,
+      tension: 0.75,
+      tooltipText: `new visitors: [bold]{visitors}[/]`,
     },
     {
-      alphaField: 'alpha',
-      balloonText: '<div class="suggestion-balloon"><p class="ticker">Signups:</p> <p>[[value]]</p></div>',
-      lineColor: '#12D99E',
-      lineThickness: 2,
-      fillAlphas: 0.6,
-      type: 'smoothedLine',
-      valueField: 'signUps',
+      valueY: 'signUps',
+      color: theme.colors.secondary,
+      fillOpacity: 0.6,
+      tension: 0.75,
+      tooltipText: `Signups: [bold]{signUps}[/]`,
     },
     {
-      alphaField: 'alpha',
-      balloonText: '<div class="suggestion-balloon"><p class="ticker">cancelled:</p> <p>[[value]]</p></div>',
-      lineColor: '#EC1B5F',
-      lineThickness: 2,
-      fillAlphas: 0.6,
-      clustered: false,
-      type: 'smoothedLine',
-      valueField: 'cancelations',
+      valueY: 'cancelations',
+      color: theme.colors.error,
+      fillOpacity: 0.6,
+      tension: 0.75,
+      tooltipText: `cancelations: [bold]{cancelations}[/]`,
     },
   ]
 
@@ -75,17 +69,15 @@ const DAUGraph = ({ visitors, users, serialChartsReady }) => {
       <GraphContainer>
         <LineGraph
           id="dau-graph"
-          graphs={graphs}
+          series={series}
           data={chartData}
-          axisAlpha={0}
           gridOpacity={0}
           insideX
           insideY
-          labelYOffset={24}
-          autoMargins={false}
-          marginLeft={-24}
-          marginRight={-25}
-          marginBottom={-2}
+          labelYOffset={36}
+          paddingLeft={-24}
+          paddingRight={-25}
+          paddingBottom={-2}
           categoryBoldLabels={true}
           categoryAxisColor="#FFF"
         />

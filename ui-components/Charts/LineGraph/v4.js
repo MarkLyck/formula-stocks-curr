@@ -103,6 +103,7 @@ const createChart = settings => {
     series.tooltip.label.fill = am4core.color(theme.colors.black)
     series.tooltipText = serie.tooltipText
     series.fillOpacity = serie.fillOpacity || 0
+    series.tensionX = serie.tension || 1
 
     // if negativeBase
     if (serie.negativeBase) {
