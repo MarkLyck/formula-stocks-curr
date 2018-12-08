@@ -38,7 +38,7 @@ const PORTFOLIO_QUERY = gql`
 
 class Portfolio extends Component {
   render() {
-    const { amCharts4Loaded, serialChartsReady, pieChartsReady, userPlan, userType } = this.props
+    const { amCharts4Loaded, userPlan, userType } = this.props
 
     return (
       <PlanContext.Consumer>
@@ -60,8 +60,6 @@ class Portfolio extends Component {
                     portfolio={Plan.portfolio}
                     planName={Plan.name}
                     amCharts4Loaded={amCharts4Loaded}
-                    serialChartsReady={serialChartsReady}
-                    pieChartsReady={pieChartsReady}
                   />
                   <AnnualReturns portfolioYields={Plan.portfolioYields} />
                   {hasPlanPerms === false && <PlanPermissionError planName={planName} />}
@@ -91,7 +89,7 @@ class Portfolio extends Component {
                       </PortfolioTableHead>
                       <TableBody>
                         {Plan.portfolio.map(stock => (
-                          <PortfolioItem stock={stock} key={stock.ticker} serialChartsReady={serialChartsReady} />
+                          <PortfolioItem stock={stock} key={stock.ticker} amCharts4Loaded={amCharts4Loaded} />
                         ))}
                       </TableBody>
                     </PortfolioTable>

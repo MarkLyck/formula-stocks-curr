@@ -11,8 +11,9 @@ const createChart = settings => {
     min,
     max,
     extraMax = 0,
-    series,
-    data,
+    series = [],
+    guides = [],
+    data = [],
     paddingTop = 0,
     paddingRight = 0,
     paddingBottom = 0,
@@ -23,6 +24,9 @@ const createChart = settings => {
     gridOpacity = 1,
     categoryBoldLabels,
     categoryAxisColor = theme.colors.black,
+    negativeBase,
+    negativeColor,
+    preZoomToDates = [],
   } = settings
   const { am4core, am4charts } = window
 
@@ -67,6 +71,23 @@ const createChart = settings => {
   valueAxis.renderer.labels.template.paddingLeft = labelYOffset
   valueAxis.tooltip.disabled = true
 
+  // set up guides
+  if (guides.length) {
+    guides.forEach(guide => {
+      let axisRange = valueAxis.axisRanges.create()
+      axisRange.value = guide.value
+      axisRange.grid.stroke = am4core.color(guide.color)
+      axisRange.grid.strokeWidth = 1
+      axisRange.grid.strokeOpacity = guide.opacity || 1
+      axisRange.grid.strokeDasharray = guide.dashed ? '3,3' : '0'
+      axisRange.label.inside = true
+      axisRange.label.text = guide.text // <---- This is broken, it inherits adapter from valueAxis
+      axisRange.label.adapter.add('text', text => text)
+      axisRange.label.fill = am4core.color(guide.color)
+      axisRange.label.verticalCenter = 'bottom'
+    })
+  }
+
   // Series
   settings.series.forEach(serie => {
     const series = chart.series.push(new am4charts.LineSeries())
@@ -79,19 +100,19 @@ const createChart = settings => {
     series.tooltip.background.fill = am4core.color('#fff')
     series.tooltip.background.stroke = am4core.color(serie.color)
     series.tooltip.background.strokeWidth = 2
-    series.tooltip.label.fill = am4core.color('#49494a')
+    series.tooltip.label.fill = am4core.color(theme.colors.black)
     series.tooltipText = serie.tooltipText
     series.fillOpacity = serie.fillOpacity || 0
 
-    // const bullet = series.bullets.push(new am4charts.Bullet())
-    // const square = bullet.createChild(am4core.Rectangle)
-    // square.width = 4
-    // square.height = 4
-    // square.horizontalCenter = 'middle'
-    // square.verticalCenter = 'middle'
-    // square.fill = am4core.color('#fff')
-    // square.stroke = am4core.color(serie.color)
-    // square.strokeWidth = 2
+    // if negativeBase
+    if (serie.negativeBase) {
+      const range = valueAxis.createSeriesRange(series)
+      range.value = serie.negativeBase
+      range.endValue = -10000
+      range.contents.stroke = am4core.color(serie.negativeColor)
+      range.contents.fill = range.contents.stroke
+      range.contents.fillOpacity = serie.fillOpacity || 0
+    }
   })
 
   // cursor
@@ -104,18 +125,26 @@ const createChart = settings => {
   chart.zoomOutButton.marginTop = 8
   chart.zoomOutButton.marginRight = 16
   chart.zoomOutButton.background.fill = am4core.color(theme.colors.black)
+  chart.zoomOutButton.background.states.getKey('hover').properties.fill = am4core.color(theme.colors.darkGray)
+  chart.zoomOutButton.background.states.getKey('down').properties.fill = am4core.color('#000')
+
+  if (preZoomToDates.length) {
+    chart.events.on('ready', function() {
+      dateAxis.zoomToDates(preZoomToDates[0], preZoomToDates[1])
+    })
+  }
 
   return chart
 }
 
-const LineChart = ({ ...settings }) => {
+const LineChart = ({ className, ...settings }) => {
   let chart
   useEffect(() => {
     const chart = createChart(settings)
     return () => (chart ? chart.dispose() : null)
   })
 
-  return <div id={settings.id} style={{ width: '100%' }} />
+  return <div id={settings.id} className={className} style={{ width: '100%' }} />
 }
 
 export default LineChart

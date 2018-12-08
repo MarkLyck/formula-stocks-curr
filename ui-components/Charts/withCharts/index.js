@@ -56,8 +56,10 @@ const withCharts = (Component, settings = {}) => {
           loadAmCharts4().then(([am4core, am4charts]) => {
             window.am4core = am4core
             window.am4charts = am4charts
-            // window.am4core.useTheme(am4themes_animated)
-            this.setState({ amCharts4Loaded: true })
+            import('@amcharts/amcharts4/themes/animated').then(am4themes_animated => {
+              window.am4core.useTheme(am4themes_animated.default)
+              this.setState({ amCharts4Loaded: true })
+            })
           })
         }
       }

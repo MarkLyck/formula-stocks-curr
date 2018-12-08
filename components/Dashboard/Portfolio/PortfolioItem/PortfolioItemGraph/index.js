@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { format, subDays } from 'date-fns'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import LineGraph from 'ui-components/Charts/LineGraph'
+import LineGraph from 'ui-components/Charts/LineGraph/v4'
 import theme from 'common/theme'
 import { GraphContainer, LoadingContainer, FailedContainer } from './styles'
 
@@ -11,8 +12,8 @@ const createChartData = historicPrices =>
     date: point[0],
   }))
 
-const StockChart = ({ historicPrices, ticker, costBasisPrice, action, serialChartsReady, loading, error }) => {
-  if (!serialChartsReady || loading) {
+const StockChart = ({ historicPrices, ticker, costBasisPrice, action, amCharts4Loaded, daysOwned, loading, error }) => {
+  if (!amCharts4Loaded || loading) {
     return (
       <LoadingContainer>
         <FontAwesomeIcon icon="spinner-third" spin />
@@ -30,44 +31,32 @@ const StockChart = ({ historicPrices, ticker, costBasisPrice, action, serialChar
   const chartData = createChartData(historicPrices)
 
   let guideColor = theme.colors.primary
-  let color = { positive: theme.colors.primary, negative: theme.colors.black }
+  let color = { negative: theme.colors.primary, positive: theme.colors.black }
   const cursorColor = theme.colors.black
 
   if (action === 'SELL') {
-    color = { negative: theme.colors.secondary, positive: theme.colors.black }
+    color = { positive: theme.colors.secondary, negative: theme.colors.black }
     guideColor = theme.colors.secondary
   }
 
-  const graphs = [
+  const series = [
     {
-      id: ticker,
-      lineColor: color.negative,
-      negativeLineColor: color.positive,
+      valueY: 'price',
+      color: color.positive,
+      fillOpacity: 0,
       negativeBase: costBasisPrice + 0.001,
-      fillAlphas: 0,
-      bullet: 'square',
-      bulletBorderAlpha: 1,
-      bulletColor: '#FFFFFF',
-      bulletSize: 5,
-      hideBulletsCount: 10,
-      lineThickness: 2,
-      useLineColorForBulletBorder: true,
-      valueField: 'price',
-      balloonText: `
-                <div class="chart-balloon">
-                    <span class="${action}-ticker-name ticker-name">${ticker}</span>
-                    <span class="balloon-value">$[[price]]</span>
-                </div>`,
+      negativeColor: color.negative,
+      tooltipText: `{ticker} \n\${price}`,
     },
   ]
 
   const guides = [
     {
       value: costBasisPrice + 0.001,
-      lineColor: guideColor,
+      color: guideColor,
+      dashed: true,
       lineAlpha: 0.4,
-      lineThickness: 1,
-      position: 'right',
+      text: 'Cost Basis',
     },
   ]
 
@@ -76,14 +65,15 @@ const StockChart = ({ historicPrices, ticker, costBasisPrice, action, serialChar
       <LineGraph
         id={`${ticker.toLowerCase()}-stockgraph`}
         className="stock-graph"
-        graphs={graphs}
+        series={series}
         data={chartData}
-        unit="$"
         insideY
-        axisAlpha={0}
+        labelYOffset={16}
         gridOpacity={0.02}
         cursorColor={cursorColor}
         guides={guides}
+        valuePrefix="$"
+        preZoomToDates={[subDays(new Date(), daysOwned), new Date()]}
       />
     </GraphContainer>
   )
