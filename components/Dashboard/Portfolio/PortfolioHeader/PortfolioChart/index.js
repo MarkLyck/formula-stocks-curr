@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import min from 'lodash.min'
 import minBy from 'lodash.minby'
 import maxBy from 'lodash.maxby'
-import LineGraph from 'ui-components/Charts/LineGraph/index_new'
+import LineGraph from 'ui-components/Charts/LineGraph/v4'
 import { Legends, Legend } from 'ui-components/Charts/Legends'
 import theme from 'common/theme'
 import { formatPrice } from 'common/utils/helpers'
@@ -60,12 +60,6 @@ const PortfolioGraph = ({ portfolioYields, marketPrices, planName, amCharts4Load
       color: '#27A5F9',
       fillOpacity: 0.4,
       tooltipText: `${planName.toUpperCase()} \n+{fs}%`,
-      //   tooltipHTML: `
-      // <div class="chart-balloon">
-      //     <span class="plan-name">${planName.toUpperCase()}</span>
-      //     <span class="balloon-value">{fs}%</span>
-      // </div>
-      // `,
     },
   ]
   if (marketPrices.length) {
@@ -76,50 +70,6 @@ const PortfolioGraph = ({ portfolioYields, marketPrices, planName, amCharts4Load
       tooltipText: `DJIA \n+{market}%`,
     })
   }
-
-  const graphs = [
-    {
-      id: 'launch',
-      lineColor: '#27A5F9',
-      fillAlphas: 0.4,
-      bullet: 'square',
-      bulletBorderAlpha: 1,
-      bulletColor: '#FFFFFF',
-      bulletSize: 5,
-      hideBulletsCount: 10,
-      lineThickness: 2,
-      useLineColorForBulletBorder: true,
-      valueField: 'fs',
-      balloonText: `
-        <div class="chart-balloon">
-            <span class="plan-name">${planName.toUpperCase()}</span>
-            <span class="balloon-value">[[fsBalloon]]</span>
-        </div>
-      `,
-    },
-  ]
-  if (marketPrices.length) {
-    graphs.push({
-      id: 'market',
-      lineColor: '#49494A',
-      fillAlphas: 0.4,
-      bullet: 'square',
-      bulletBorderAlpha: 1,
-      bulletColor: '#FFFFFF',
-      bulletSize: 5,
-      hideBulletsCount: 10,
-      lineThickness: 2,
-      useLineColorForBulletBorder: true,
-      valueField: 'market',
-      balloonText: `
-        <div class="chart-balloon">
-            <span class="plan-name market-name">DJIA</span>
-            <span class="balloon-value">[[marketBalloon]]</span>
-        </div>
-      `,
-    })
-  }
-  console.log(chartData)
 
   return (
     <GraphContainer>
@@ -146,9 +96,9 @@ const PortfolioGraph = ({ portfolioYields, marketPrices, planName, amCharts4Load
         max={maximum}
         min={minimum}
         extraMax={20}
-        baseValue={minimum}
+        baseValue={minimum} // not working yet.
         categoryBoldLabels={true}
-        categoryAxisColor="#FFF"
+        categoryAxisColor="#fff"
       />
     </GraphContainer>
   )

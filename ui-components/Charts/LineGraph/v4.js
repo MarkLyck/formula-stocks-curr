@@ -21,6 +21,8 @@ const createChart = settings => {
     valuePrefix = '',
     valueSuffix = '',
     gridOpacity = 1,
+    categoryBoldLabels,
+    categoryAxisColor = theme.colors.black,
   } = settings
   const { am4core, am4charts } = window
 
@@ -38,9 +40,9 @@ const createChart = settings => {
   dateAxis.tooltipDateFormat = 'MMM, yyyy'
   dateAxis.renderer.grid.template.strokeOpacity = gridOpacity
   dateAxis.renderer.line.strokeOpacity = 0
-  dateAxis.renderer.labels.template.fill = am4core.color(theme.colors.white)
+  dateAxis.renderer.labels.template.fill = am4core.color(categoryAxisColor)
   dateAxis.renderer.labels.template.fontSize = 12
-  dateAxis.renderer.labels.template.fontWeight = 600
+  dateAxis.renderer.labels.template.fontWeight = categoryBoldLabels ? 600 : 500
   // dateAxis tooltip
   const dateAxisTooltip = dateAxis.tooltip
   dateAxisTooltip.background.fill = am4core.color(theme.colors.black)
@@ -73,13 +75,23 @@ const createChart = settings => {
     series.stroke = serie.color
     series.fill = serie.color
     series.strokeWidth = serie.strokeWidth || 2
-    series.tooltip.background.fill = am4core.color('#FFFFFF')
-    series.tooltip.background.stroke = am4core.color(theme.colors[serie.color])
+    series.tooltip.getFillFromObject = false
+    series.tooltip.background.fill = am4core.color('#fff')
+    series.tooltip.background.stroke = am4core.color(serie.color)
     series.tooltip.background.strokeWidth = 2
+    series.tooltip.label.fill = am4core.color('#49494a')
     series.tooltipText = serie.tooltipText
-    series.tooltipHTML = serie.tooltipHTML
     series.fillOpacity = serie.fillOpacity || 0
-    console.log(series.tooltip)
+
+    // const bullet = series.bullets.push(new am4charts.Bullet())
+    // const square = bullet.createChild(am4core.Rectangle)
+    // square.width = 4
+    // square.height = 4
+    // square.horizontalCenter = 'middle'
+    // square.verticalCenter = 'middle'
+    // square.fill = am4core.color('#fff')
+    // square.stroke = am4core.color(serie.color)
+    // square.strokeWidth = 2
   })
 
   // cursor
