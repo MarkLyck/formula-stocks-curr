@@ -42,7 +42,7 @@ class PortfolioItem extends Component {
   toggleExpanded = () => this.setState({ expanded: !this.state.expanded })
 
   render() {
-    const { stock, serialChartsReady } = this.props
+    const { stock, amCharts4Loaded } = this.props
     const { expanded } = this.state
 
     const costBasisPrice = stock.purchase_price - stock.dividends
@@ -80,11 +80,12 @@ class PortfolioItem extends Component {
                   <td className="stock-graph-cell" colSpan="6">
                     <PortfolioItemGraph
                       historicPrices={historicPrices}
-                      serialChartsReady={serialChartsReady}
+                      amCharts4Loaded={amCharts4Loaded}
                       loading={loading}
                       error={error}
                       ticker={stock.ticker}
                       costBasisPrice={costBasisPrice}
+                      daysOwned={stock.days_owned}
                     />
                   </td>
                 </ItemRow>

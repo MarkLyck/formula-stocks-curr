@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import PieChart from 'ui-components/Charts/PieChart'
+import PieChart from 'ui-components/Charts/PieChart/v4'
 import { adjustBrightness } from 'common/utils/helpers'
 
-const Allocation = ({ portfolio, id, pieChartsReady }) => {
-  if (!pieChartsReady) return null
+const Allocation = ({ portfolio, id, amCharts4Loaded }) => {
+  if (!amCharts4Loaded) return null
   const colors = []
   const allocation = portfolio.map(stock => {
     if (stock.latest_price > stock.purchase_price - stock.dividends) {
@@ -16,12 +16,25 @@ const Allocation = ({ portfolio, id, pieChartsReady }) => {
       colors.push('#49494A')
     }
     return {
-      title: stock.ticker,
+      ticker: stock.ticker,
       value: Number(stock.percentage_weight.toFixed(2)),
     }
   })
 
-  return <PieChart className="stock-allocation" title="Allocation" colors={colors} data={allocation} id={id} unit="%" />
+  const tooltipText = `{ticker}\n{value}%`
+
+  return (
+    <PieChart
+      className="stock-allocation"
+      labelText="Allocation"
+      valueField="value"
+      categoryField="ticker"
+      colors={colors}
+      data={allocation}
+      id={id}
+      tooltipText={tooltipText}
+    />
+  )
 }
 
 Allocation.propTypes = {
