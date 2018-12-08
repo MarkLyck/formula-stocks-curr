@@ -61,7 +61,6 @@ const createChart = settings => {
   hand.radius = am4core.percent(98)
   hand.innerRadius = am4core.percent(60)
   hand.pin.disabled = true
-  console.log(hand)
   hand.showValue(value, am4core.ease.cubicOut)
 
   return chart
@@ -71,10 +70,7 @@ const MultiGaugeChart = ({ ...settings }) => {
   let chart
   useEffect(() => {
     const chart = createChart(settings)
-
-    return () => {
-      if (chart) chart.dispose()
-    }
+    return () => (chart ? chart.dispose() : null)
   })
 
   return <div id="mutliGaugeChartDiv" style={{ height: '200px' }} />
