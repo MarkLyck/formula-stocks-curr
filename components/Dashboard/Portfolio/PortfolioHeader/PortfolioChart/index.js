@@ -88,13 +88,13 @@ const PortfolioGraph = ({ portfolioYields, marketPrices, planName, amCharts4Load
         valueSuffix="%"
         gridOpacity={0.02}
         paddingRight={-8}
-        paddingBottom={-11}
+        paddingBottom={-5}
         insideX
         insideY
         labelYOffset={16}
         strictMinMax
         max={maximum}
-        min={minimum - 12}
+        min={minimum}
         extraMax={20}
         categoryBoldLabels={true}
         categoryAxisColor="#fff"
