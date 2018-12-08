@@ -88,7 +88,7 @@ const PortfolioGraph = ({ portfolioYields, marketPrices, planName, amCharts4Load
         valueSuffix="%"
         gridOpacity={0.02}
         paddingRight={-8}
-        paddingBottom={0}
+        paddingBottom={-11}
         insideX
         insideY
         labelYOffset={16}

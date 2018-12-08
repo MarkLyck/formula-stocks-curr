@@ -71,20 +71,6 @@ const createChart = settings => {
   valueAxis.renderer.labels.template.paddingLeft = labelYOffset
   valueAxis.tooltip.disabled = true
 
-  if (min < 0) {
-    let fsAxisRange = valueAxis.axisRanges.create()
-    fsAxisRange.value = -100
-    fsAxisRange.endValue = 0
-    fsAxisRange.axisFill.fill = am4core.color(theme.colors.primary)
-    fsAxisRange.axisFill.fillOpacity = 0.4
-
-    let marketAxisRange = valueAxis.axisRanges.create()
-    marketAxisRange.value = -100
-    marketAxisRange.endValue = 0
-    marketAxisRange.axisFill.fill = am4core.color(theme.colors.black)
-    marketAxisRange.axisFill.fillOpacity = 0.4
-  }
-
   // set up guides
   if (guides.length) {
     guides.forEach(guide => {
