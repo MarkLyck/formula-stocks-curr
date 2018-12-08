@@ -1,159 +1,158 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import platform from 'platform'
+import { useEffect } from 'react'
+import { isClient } from 'common/utils/featureTests'
+import theme from 'common/theme'
 
-class LineGraph extends Component {
-  componentDidMount() {
-    this.makeChart()
+const createChart = settings => {
+  const {
+    id = 'lineChartDiv',
+    insideX = false,
+    insideY = false,
+    strictMinMax = false,
+    min,
+    max,
+    extraMax = 0,
+    series = [],
+    guides = [],
+    data = [],
+    paddingTop = 0,
+    paddingRight = 0,
+    paddingBottom = 0,
+    paddingLeft = 0,
+    labelXOffset = 0,
+    labelYOffset = 0,
+    valuePrefix = '',
+    valueSuffix = '',
+    gridOpacity = 1,
+    categoryBoldLabels,
+    categoryAxisColor = theme.colors.black,
+    negativeBase,
+    negativeColor,
+    preZoomToDates = [],
+    logarithmic = false,
+  } = settings
+  const { am4core, am4charts } = window
+
+  if (!am4core || !am4charts) return null
+
+  // chart
+  let chart = am4core.create(settings.id, am4charts.XYChart)
+  chart.data = data
+  chart.paddingTop = paddingTop
+  chart.paddingRight = paddingRight
+  chart.paddingBottom = paddingBottom
+  chart.paddingLeft = paddingLeft
+
+  // dateAxis
+  const dateAxis = chart.xAxes.push(new am4charts.DateAxis())
+  dateAxis.renderer.inside = insideX
+  dateAxis.tooltipDateFormat = 'MMM, yyyy'
+  dateAxis.renderer.grid.template.strokeOpacity = gridOpacity
+  dateAxis.renderer.line.strokeOpacity = 0
+  dateAxis.renderer.labels.template.fill = am4core.color(categoryAxisColor)
+  dateAxis.renderer.labels.template.fontSize = 12
+  dateAxis.renderer.labels.template.fontWeight = categoryBoldLabels ? 600 : 500
+  if (labelXOffset) dateAxis.renderer.labels.template.paddingBottom = labelXOffset
+  // dateAxis tooltip
+  const dateAxisTooltip = dateAxis.tooltip
+  dateAxisTooltip.background.fill = am4core.color(theme.colors.black)
+  dateAxisTooltip.background.pointerLength = 0
+  dateAxisTooltip.background.cornerRadius = 4
+  dateAxisTooltip.fillOpacity = 0.8
+  dateAxisTooltip.fontFamily = 'Rubik'
+  dateAxisTooltip.fontSize = 12
+  if (labelXOffset) dateAxisTooltip.dy = -labelXOffset
+
+  // valueAxis
+  const valueAxis = chart.yAxes.push(new am4charts.ValueAxis())
+  valueAxis.min = min
+  valueAxis.max = max + extraMax
+  valueAxis.renderer.inside = insideY
+  valueAxis.strictMinMax = strictMinMax
+  valueAxis.renderer.labels.template.adapter.add('text', text => valuePrefix + text + valueSuffix)
+  valueAxis.renderer.grid.template.strokeOpacity = gridOpacity
+  valueAxis.renderer.baseGrid.disabled = true // disables zero-line
+  valueAxis.renderer.labels.template.fill = am4core.color(theme.colors.black)
+  valueAxis.renderer.labels.template.fontSize = 12
+  valueAxis.renderer.labels.template.fontWeight = 400
+  valueAxis.renderer.labels.template.paddingLeft = labelYOffset
+  valueAxis.tooltip.disabled = true
+  valueAxis.logarithmic = logarithmic
+
+  // set up guides
+  if (guides.length) {
+    guides.forEach(guide => {
+      let axisRange = valueAxis.axisRanges.create()
+      axisRange.value = guide.value
+      axisRange.grid.stroke = am4core.color(guide.color)
+      axisRange.grid.strokeWidth = 1
+      axisRange.grid.strokeOpacity = guide.opacity || 1
+      axisRange.grid.strokeDasharray = guide.dashed ? '3,3' : '0'
+      axisRange.label.inside = true
+      axisRange.label.text = guide.text // <---- This is broken, it inherits adapter from valueAxis
+      axisRange.label.adapter.add('text', text => text)
+      axisRange.label.fill = am4core.color(guide.color)
+      axisRange.label.verticalCenter = 'bottom'
+    })
   }
 
-  componentDidUpdate() {
-    this.makeChart()
-  }
+  // Series
+  settings.series.forEach(serie => {
+    const series = chart.series.push(new am4charts.LineSeries())
+    series.dataFields.valueY = serie.valueY || 'value'
+    series.dataFields.dateX = serie.dateX || 'date'
+    series.stroke = serie.color
+    series.fill = serie.color
+    series.strokeWidth = serie.strokeWidth || 2
+    series.tooltip.getFillFromObject = false
+    series.tooltip.background.fill = am4core.color('#fff')
+    series.tooltip.background.stroke = am4core.color(serie.color)
+    series.tooltip.background.strokeWidth = 2
+    series.tooltip.label.fill = am4core.color(theme.colors.black)
+    series.tooltipText = serie.tooltipText
+    series.fillOpacity = serie.fillOpacity || 0
+    series.tensionX = serie.tension || 1
 
-  getConfig = () => {
-    const {
-      data,
-      graphs,
-      chartTheme,
-      unit,
-      unitPosition,
-      minimum,
-      maximum,
-      baseValue,
-      logarithmic,
-      minorGridEnabled,
-      autoMargins = true,
-      marginLeft = 0,
-      marginRight = 0,
-      marginTop = 0,
-      marginBottom = 0,
-      guides,
-      axisAlpha,
-      categoryBoldLabels = false,
-      categoryAxisColor = '#000000',
-      gridOpacity = 0.15,
-      cursorColor,
-      insideX,
-      labelYOffset = 0,
-    } = this.props
-    let { insideY } = this.props
-
-    if (!insideY && typeof window !== 'undefined' && window.innerWidth < 550) {
-      insideY = true
+    // if negativeBase
+    if (serie.negativeBase) {
+      const range = valueAxis.createSeriesRange(series)
+      range.value = serie.negativeBase
+      range.endValue = -10000
+      range.contents.stroke = am4core.color(serie.negativeColor)
+      range.contents.fill = range.contents.stroke
+      range.contents.fillOpacity = serie.fillOpacity || 0
     }
-    const config = {
-      type: 'serial',
-      theme: chartTheme || 'light',
-      addClassNames: true,
-      dataProvider: data,
-      autoMargins,
-      marginLeft: marginLeft,
-      marginRight: marginRight,
-      marginTop: marginTop,
-      marginBottom: marginBottom,
-      balloon: {
-        color: '#49494A',
-        fillAlpha: 1,
-        borderColor: '#27A5F9',
-        borderThickness: 2,
-      },
-      graphs,
-      valueAxes: [
-        {
-          axisAlpha: axisAlpha || 0,
-          logarithmic,
-          unit,
-          unitPosition: unitPosition || 'left',
-          gridAlpha: gridOpacity,
-          minorGridEnabled,
-          dashLength: 0,
-          inside: insideY,
-          labelOffset: labelYOffset,
-          baseValue: baseValue || 0,
-          minimum,
-          maximum,
-          strictMinMax: true,
-        },
-      ],
-      guides: guides || [],
-      chartCursor: {
-        valueLineEnabled: true,
-        valueLineAlpha: 0.5,
-        cursorAlpha: 0.5,
-        cursorColor: cursorColor || '#49494A',
-      },
-      categoryField: 'date',
-      categoryAxis: {
-        boldLabels: categoryBoldLabels,
-        color: categoryAxisColor,
-        parseDates: true,
-        equalSpacing: true,
-        inside: insideX,
-        gridAlpha: gridOpacity,
-        axisAlpha: axisAlpha || 0,
-      },
-      export: {
-        enabled: false,
-      },
-    }
-    if (platform.name === 'Safari') {
-      config.dataDateFormat = 'YYYY-M-D'
-      config.categoryAxis = {
-        equalSpacing: false,
-      }
-    }
-    return config
+  })
+
+  // cursor
+  chart.cursor = new am4charts.XYCursor()
+  chart.cursor.lineX.strokeDasharray = ''
+  chart.cursor.lineX.strokeOpacity = 0.2
+  chart.cursor.lineY.strokeDasharray = ''
+  chart.cursor.lineY.strokeOpacity = 0.2
+
+  chart.zoomOutButton.marginTop = 8
+  chart.zoomOutButton.marginRight = 16
+  chart.zoomOutButton.background.fill = am4core.color(theme.colors.black)
+  chart.zoomOutButton.background.states.getKey('hover').properties.fill = am4core.color(theme.colors.darkGray)
+  chart.zoomOutButton.background.states.getKey('down').properties.fill = am4core.color('#000')
+
+  if (preZoomToDates.length) {
+    chart.events.on('ready', function() {
+      dateAxis.zoomToDates(preZoomToDates[0], preZoomToDates[1])
+    })
   }
 
-  makeChart = () => {
-    const { id, data, graphs } = this.props
-    const config = this.getConfig()
-    if (data.length && graphs.length) {
-      if (typeof window !== 'undefined') {
-        window.AmCharts.makeChart(id, { ...config })
-      }
-    }
-  }
-
-  render() {
-    const { id, className } = this.props
-    return <div id={id} className={className} style={{ width: '100%' }} />
-  }
+  return chart
 }
 
-LineGraph.defaultProps = {
-  data: [],
-  graphs: [],
-  className: '',
+const LineChart = ({ className, ...settings }) => {
+  let chart
+  useEffect(() => {
+    const chart = createChart(settings)
+    return () => (chart ? chart.dispose() : null)
+  })
+
+  return <div id={settings.id} className={className} style={{ width: '100%' }} />
 }
 
-LineGraph.propTypes = {
-  id: PropTypes.string.isRequired,
-  className: PropTypes.string,
-  data: PropTypes.array,
-  graphs: PropTypes.array,
-  chartTheme: PropTypes.string,
-  unit: PropTypes.string,
-  unitPosition: PropTypes.any,
-  minimum: PropTypes.number,
-  maximum: PropTypes.number,
-  baseValue: PropTypes.number,
-  logarithmic: PropTypes.bool,
-  minorGridEnabled: PropTypes.bool,
-  autoMargins: PropTypes.bool,
-  marginLeft: PropTypes.number,
-  marginRight: PropTypes.number,
-  marginTop: PropTypes.number,
-  marginBottom: PropTypes.number,
-  guides: PropTypes.array,
-  axisAlpha: PropTypes.number,
-  categoryBoldLabels: PropTypes.bool,
-  categoryAxisColor: PropTypes.string,
-  gridOpacity: PropTypes.number,
-  cursorColor: PropTypes.string,
-  insideY: PropTypes.bool,
-  insideX: PropTypes.bool,
-}
-
-export default LineGraph
+export default LineChart

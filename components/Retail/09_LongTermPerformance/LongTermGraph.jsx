@@ -41,8 +41,8 @@ const createChartData = (planData, marketPrices) => {
   })
 }
 
-const LaunchPerformance = ({ planData, marketPrices, planName, amChartsLoaded }) => {
-  if (!planData || !planData.length || !amChartsLoaded) {
+const LongTermPerformance = ({ planData, marketPrices, planName, amCharts4Loaded }) => {
+  if (!planData || !planData.length || !amCharts4Loaded) {
     return <FontAwesomeIcon icon="spinner-third" spin size="4x" />
   }
   const chartData = createChartData(planData, marketPrices)
@@ -52,6 +52,25 @@ const LaunchPerformance = ({ planData, marketPrices, planName, amChartsLoaded })
 
   // const minimum = Math.floor(_.min([fsMin, marMin]) / 10) * 10
   const maximum = Math.ceil(_.maxBy(chartData, point => point.fs).fs / 20) * 20
+
+  const CapitalizedPlanNAme = planName.charAt(0).toUpperCase() + planName.slice(1)
+
+  const series = [
+    {
+      valueY: 'fs',
+      color: theme.colors.primary,
+      fillOpacity: 0.4,
+      tooltipText: `${CapitalizedPlanNAme} \n[bold]{fsBalloon}[/]`,
+    },
+  ]
+  if (marketPrices.length) {
+    series.push({
+      valueY: 'market',
+      color: theme.colors.black,
+      fillOpacity: 0.4,
+      tooltipText: `DJIA \n[bold]{marketBalloon}[/]`,
+    })
+  }
 
   const graphs = [
     {
@@ -98,7 +117,7 @@ const LaunchPerformance = ({ planData, marketPrices, planName, amChartsLoaded })
 
   return (
     <GraphContainer>
-      <Legends left={40}>
+      <Legends left={40} className="longterm-legends">
         <Legend color={theme.colors.primary}>
           <p className="plan-name">{planName}</p>
         </Legend>
@@ -108,22 +127,20 @@ const LaunchPerformance = ({ planData, marketPrices, planName, amChartsLoaded })
       </Legends>
       <LineGraph
         id="single-long-term-performance-graph"
-        graphs={graphs}
+        series={series}
         data={chartData}
-        unit="$"
-        unitPosition="left"
-        axisAlpha={0}
-        gridOpacity={0}
+        valuePrefix="$"
+        gridOpacity={0.02}
         insideX
-        autoMargins={false}
-        marginBottom={-2}
-        marginRight={-2}
-        marginLeft={-2}
+        insideY
+        labelYOffset={16}
+        paddingBottom={-2}
+        paddingRight={-2}
+        paddingLeft={-2}
         maximum={maximum}
         // minimum={minimum}
         logarithmic
         minorGridEnabled
-        insideY
         categoryBoldLabels={true}
         categoryAxisColor="#FFF"
       />
@@ -131,16 +148,16 @@ const LaunchPerformance = ({ planData, marketPrices, planName, amChartsLoaded })
   )
 }
 
-LaunchPerformance.defaultProps = {
+LongTermPerformance.defaultProps = {
   planData: [],
   marketData: [],
   planName: '',
 }
 
-LaunchPerformance.propTypes = {
+LongTermPerformance.propTypes = {
   planData: PropTypes.array,
   marketPrices: PropTypes.array,
   planName: PropTypes.string,
 }
 
-export default LaunchPerformance
+export default LongTermPerformance

@@ -65,7 +65,7 @@ class Suggestions extends Component {
   }
 
   render() {
-    const { serialChartsReady, userPlan, userType, history } = this.props
+    const { amCharts4Loaded, userPlan, userType, history } = this.props
 
     return (
       <PlanContext.Consumer>
@@ -122,7 +122,7 @@ class Suggestions extends Component {
                               loading={loading}
                               error={error}
                               key={sugg.ticker + planName}
-                              serialChartsReady={serialChartsReady}
+                              amCharts4Loaded={amCharts4Loaded}
                               suggestionsType={suggestionsType}
                             />
                           ))
@@ -151,4 +151,4 @@ Suggestions.propTypes = {
   chartError: PropTypes.bool,
 }
 
-export default withDashboard(withCharts(Suggestions))
+export default withDashboard(withCharts(Suggestions, { version: 4 }))

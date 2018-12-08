@@ -11,8 +11,17 @@ const createChartData = sixMonthsPrices =>
     date: point[0],
   }))
 
-const StockChart = ({ sixMonthsPrices, ticker, suggestedPrice, action, serialChartsReady, loading, error }) => {
-  if (!serialChartsReady || loading) {
+const StockChart = ({
+  sixMonthsPrices,
+  ticker,
+  suggestedPrice,
+  suggestionsType,
+  action,
+  amCharts4Loaded,
+  loading,
+  error,
+}) => {
+  if (!amCharts4Loaded || loading) {
     return (
       <LoadingContainer className="loading-container">
         <FontAwesomeIcon icon="spinner-third" spin />
@@ -30,44 +39,31 @@ const StockChart = ({ sixMonthsPrices, ticker, suggestedPrice, action, serialCha
   const chartData = createChartData(sixMonthsPrices)
 
   let guideColor = theme.colors.primary
-  let color = { positive: theme.colors.primary, negative: theme.colors.black }
+  let color = { negative: theme.colors.primary, positive: theme.colors.black }
   const cursorColor = theme.colors.black
 
   if (action === 'SELL') {
-    color = { negative: theme.colors.secondary, positive: theme.colors.black }
+    color = { positive: theme.colors.secondary, negative: theme.colors.black }
     guideColor = theme.colors.secondary
   }
 
-  const graphs = [
+  const series = [
     {
-      id: ticker,
-      lineColor: color.negative,
-      negativeLineColor: color.positive,
+      valueY: 'price',
+      color: color.positive,
+      negativeColor: color.negative,
       negativeBase: suggestedPrice + 0.001,
-      fillAlphas: 0,
-      bullet: 'square',
-      bulletBorderAlpha: 1,
-      bulletColor: '#FFFFFF',
-      bulletSize: 5,
-      hideBulletsCount: 10,
-      lineThickness: 2,
-      useLineColorForBulletBorder: true,
-      valueField: 'price',
-      balloonText: `
-                <div class="chart-balloon">
-                    <span class="${action}-ticker-name ticker-name">${ticker}</span>
-                    <span class="balloon-value">$[[price]]</span>
-                </div>`,
+      tooltipText: `${ticker} \n\${price}`,
     },
   ]
 
   const guides = [
     {
       value: suggestedPrice + 0.001,
-      lineColor: guideColor,
+      color: guideColor,
+      dashed: true,
       lineAlpha: 0.4,
-      lineThickness: 1,
-      position: 'right',
+      text: suggestionsType === 'Trades' ? ' Traded at' : ' Suggested price',
     },
   ]
 
@@ -77,14 +73,13 @@ const StockChart = ({ sixMonthsPrices, ticker, suggestedPrice, action, serialCha
       <LineGraph
         id={`${ticker.toLowerCase()}-stockgraph`}
         className="suggestion-graph"
-        graphs={graphs}
+        series={series}
         data={chartData}
-        unit="$"
         insideY
-        labelYOffset={12}
+        valuePrefix="$"
+        labelYOffset={24}
         axisAlpha={0}
         gridOpacity={0}
-        cursorColor={cursorColor}
         guides={guides}
       />
     </GraphContainer>
@@ -99,4 +94,4 @@ StockChart.propTypes = {
   stockFetchFailed: PropTypes.bool,
 }
 
-export default StockChart
+export default React.memo(StockChart)

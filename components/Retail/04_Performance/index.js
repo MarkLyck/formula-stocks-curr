@@ -17,7 +17,7 @@ const GET_DATA_SINCE_2009 = gql`
   }
 `
 
-const Performance = ({ portfolioYields, planName, amChartsLoaded }) => (
+const Performance = ({ portfolioYields, planName, amCharts4Loaded }) => (
   <Query query={GET_DATA_SINCE_2009}>
     {({ loading, error, data = {} }) => {
       const { DJIA = {} } = data
@@ -30,7 +30,7 @@ const Performance = ({ portfolioYields, planName, amChartsLoaded }) => (
             portfolioYields={portfolioYields}
             marketPrices={DJIA.pricesSince2009 || []}
             planName={planName}
-            amChartsLoaded={amChartsLoaded}
+            amCharts4Loaded={amCharts4Loaded}
           />
         </Section>
       )
