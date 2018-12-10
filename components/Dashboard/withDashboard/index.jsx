@@ -49,7 +49,7 @@ const withDashboard = WrappedComponent => {
     })
 
     render() {
-      const { location } = this.props
+      const { location, ...extraProps } = this.props
       if (!isClient) return null
       return (
         <Query query={GET_LOGGED_IN_USER}>
@@ -77,7 +77,7 @@ const withDashboard = WrappedComponent => {
                 <PlanContext.Provider value={this.getContext()}>
                   <DashboardContent>
                     <NavBar location={location} userType={userType} />
-                    <WrappedComponent location={location} userType={userType} userPlan={userPlan} />
+                    <WrappedComponent location={location} userType={userType} userPlan={userPlan} {...extraProps} />
                   </DashboardContent>
                 </PlanContext.Provider>
               </DashboardLayout>
