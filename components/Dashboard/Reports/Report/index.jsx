@@ -1,20 +1,26 @@
 import React from 'react'
 import { format } from 'date-fns'
-import SearchBar from './SearchBar'
+
 import AIScore from './AIScore'
 import Score from './Score'
-import { ReportContainer, SectionHeader, BesideSection, BoldValue, FadedValue } from './styles'
+import { BesideSection, BoldValue, FadedValue } from './styles'
+import { SectionHeader } from '../styles'
 
 const Report = ({ report }) => {
-  const { date, name, stockPrice, scores } = report
+  let { date, name, ticker, stockPrice, scores } = report
+
+  // reports JSON is saved as strings with singleQuotes.
+  date = JSON.parse(date.split("'").join('"'))
+  scores = JSON.parse(scores.split("'").join('"'))
+
   const dateGenerated = format(new Date(date.year, date.month, date.day), 'MM/DD/YYYY')
   return (
-    <ReportContainer>
-      <SectionHeader>Search</SectionHeader>
-      <SearchBar />
+    <React.Fragment>
       <SectionHeader>AI Investment Report</SectionHeader>
       <BesideSection>
-        <BoldValue>{name}</BoldValue>
+        <BoldValue>
+          {ticker} - {name}
+        </BoldValue>
         <FadedValue>${stockPrice}</FadedValue>
       </BesideSection>
       <AIScore value={scores.ai_score} name="AI Score" />
@@ -34,7 +40,7 @@ const Report = ({ report }) => {
         <BoldValue>Report generated</BoldValue>
         <FadedValue>{dateGenerated}</FadedValue>
       </BesideSection>
-    </ReportContainer>
+    </React.Fragment>
   )
 }
 

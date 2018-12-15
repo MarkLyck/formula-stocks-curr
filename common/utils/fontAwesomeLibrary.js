@@ -27,6 +27,7 @@ import { faMobile } from '@fortawesome/pro-solid-svg-icons/faMobile'
 import { faNewspaper } from '@fortawesome/pro-solid-svg-icons/faNewspaper'
 import { faPencil } from '@fortawesome/pro-solid-svg-icons/faPencil'
 import { faQuestionCircle } from '@fortawesome/pro-solid-svg-icons/faQuestionCircle'
+import { faSearch } from '@fortawesome/pro-solid-svg-icons/faSearch'
 import { faSignInAlt } from '@fortawesome/pro-solid-svg-icons/faSignInAlt'
 import { faSignOutAlt } from '@fortawesome/pro-solid-svg-icons/faSignOutAlt'
 import { faSpinnerThird } from '@fortawesome/pro-solid-svg-icons/faSpinnerThird'
@@ -65,6 +66,7 @@ library.add(
   faPencil,
   faQuestionCircle,
   faExclamationCircle,
+  faSearch,
   faSignInAlt,
   faSignOutAlt,
   faSpinnerThird,
