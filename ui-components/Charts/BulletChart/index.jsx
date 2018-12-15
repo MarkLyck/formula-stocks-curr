@@ -79,7 +79,7 @@ const BulletChart = ({ value, min, max, numberOfSections, withMarkers, fullWidth
         {sections.map((_, i) => {
           const isNegativeSection = i < Math.floor(numberOfSections / 2)
           const isPositiveSection = i > Math.floor(numberOfSections / 2)
-          const isNeutralSection = !isNegativeSection && !isPositiveSection
+          const isNeutralZone = i > Math.floor(numberOfSections / 2) - 2 && i < Math.floor(numberOfSections / 2) + 2
           let opacity = 1
 
           if (isNegativeSection) {
@@ -106,7 +106,7 @@ const BulletChart = ({ value, min, max, numberOfSections, withMarkers, fullWidth
                 opacity={opacity}
                 numberOfSections={numberOfSections}
                 value={value > 0 ? `+${value.toFixed(0)}` : value.toFixed(0)}
-                neutral={isNeutralSection ? true : false}
+                neutral={isNeutralZone ? true : false}
               />
             )
           }

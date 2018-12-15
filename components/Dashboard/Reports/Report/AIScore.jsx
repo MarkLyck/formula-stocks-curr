@@ -7,6 +7,7 @@ import { ExpandedScore, BoldValue, FadedValue, Beside } from './styles'
 export const AIScoreContainer = styled(ExpandedScore)`
   position: relative;
   padding-top: 24px;
+  height: 236px;
 `
 
 export const AIScoreValue = styled.h1`
@@ -54,4 +55,4 @@ const AIScore = ({ value, name, amCharts4Loaded }) => {
   )
 }
 
-export default withCharts(AIScore, { version: 4 })
+export default React.memo(withCharts(AIScore, { version: 4 }))

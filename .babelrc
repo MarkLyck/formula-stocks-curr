@@ -41,6 +41,7 @@
           "@fortawesome/pro-solid-svg-icons/faNewspaper": "./static/icons/faIcons/faNewspaper",
           "@fortawesome/pro-solid-svg-icons/faPencil": "./static/icons/faIcons/faPencil",
           "@fortawesome/pro-solid-svg-icons/faQuestionCircle": "./static/icons/faIcons/faQuestionCircle",
+          "@fortawesome/pro-solid-svg-icons/faSearch": "./static/icons/faIcons/faSearch",
           "@fortawesome/pro-solid-svg-icons/faSignInAlt": "./static/icons/faIcons/faSignInAlt",
           "@fortawesome/pro-solid-svg-icons/faSignOutAlt": "./static/icons/faIcons/faSignOutAlt",
           "@fortawesome/pro-solid-svg-icons/faSpinnerThird": "./static/icons/faIcons/faSpinnerThird",

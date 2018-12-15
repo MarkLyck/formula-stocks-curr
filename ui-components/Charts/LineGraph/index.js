@@ -28,6 +28,8 @@ const createChart = settings => {
     negativeBase,
     negativeColor,
     preZoomToDates = [],
+    zoomOutButtonMarginRight = 16,
+    tooltipDateFormat = 'MMM, yyyy',
     logarithmic = false,
   } = settings
   const { am4core, am4charts } = window
@@ -45,7 +47,7 @@ const createChart = settings => {
   // dateAxis
   const dateAxis = chart.xAxes.push(new am4charts.DateAxis())
   dateAxis.renderer.inside = insideX
-  dateAxis.tooltipDateFormat = 'MMM, yyyy'
+  dateAxis.tooltipDateFormat = tooltipDateFormat
   dateAxis.renderer.grid.template.strokeOpacity = gridOpacity
   dateAxis.renderer.line.strokeOpacity = 0
   dateAxis.renderer.labels.template.fill = am4core.color(categoryAxisColor)
@@ -131,7 +133,7 @@ const createChart = settings => {
   chart.cursor.lineY.strokeOpacity = 0.2
 
   chart.zoomOutButton.marginTop = 8
-  chart.zoomOutButton.marginRight = 16
+  chart.zoomOutButton.marginRight = zoomOutButtonMarginRight
   chart.zoomOutButton.background.fill = am4core.color(theme.colors.black)
   chart.zoomOutButton.background.states.getKey('hover').properties.fill = am4core.color(theme.colors.darkGray)
   chart.zoomOutButton.background.states.getKey('down').properties.fill = am4core.color('#000')

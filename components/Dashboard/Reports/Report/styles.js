@@ -1,21 +1,6 @@
 import styled from 'react-emotion'
 import Box from 'ui-components/Box'
 
-export const ReportContainer = styled.div`
-  box-sizing: border-box;
-  padding: 16px;
-  width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
-`
-
-export const SectionHeader = styled.h3`
-  font-weight: 500;
-  color: ${props => props.theme.colors.purple};
-  margin-bottom: 8px;
-  margin-top: 24px;
-`
-
 export const BesideSection = styled(Box)`
   padding: 12px;
   margin-bottom: 16px;

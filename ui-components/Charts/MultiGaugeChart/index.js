@@ -61,7 +61,11 @@ const createChart = settings => {
   hand.radius = am4core.percent(98)
   hand.innerRadius = am4core.percent(60)
   hand.pin.disabled = true
-  hand.showValue(value, am4core.ease.cubicOut)
+  hand.value = 0
+
+  setTimeout(() => {
+    hand.showValue(value, 500, am4core.ease.cubicOut)
+  }, 750)
 
   return chart
 }
