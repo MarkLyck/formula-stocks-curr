@@ -59,22 +59,15 @@ const createStockReport = ({ name, ticker, scores, stock_price }) => {
     .split('"')
     .join("'")
 
-  console.log('stringifiedScores', stringifiedScores)
-
   return `
     ${alias}: createStockReport(name: "${name}", ticker: "${ticker}", stockPrice: ${stock_price}, scores: "${stringifiedScores}") {
       id
     }
   `
 }
+
 export const CREATE_REPORTS = reports => gql`
   mutation createStockReports {
     ${reports.map(report => createStockReport(report)).join('\n')}
-  }
-`
-
-export const DELETE_REPORTS = gql`
-  mutation {
-    deleteManyStockReports(where: { id_not: "@graph.cool" })
   }
 `

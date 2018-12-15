@@ -59,7 +59,7 @@ const PortfolioGraph = ({ portfolioYields, marketPrices, planName, amCharts4Load
       valueY: 'fs',
       color: '#27A5F9',
       fillOpacity: 0.4,
-      tooltipText: `${planName.toUpperCase()} \n+{fs}%`,
+      tooltipText: `${planName.toUpperCase()} \n[bold]{fsBalloon}[/]`,
     },
   ]
   if (marketPrices.length) {
@@ -67,7 +67,7 @@ const PortfolioGraph = ({ portfolioYields, marketPrices, planName, amCharts4Load
       valueY: 'market',
       color: '#49494A',
       fillOpacity: 0.4,
-      tooltipText: `DJIA \n+{market}%`,
+      tooltipText: `DJIA \n[bold]{marketBalloon}[/]`,
     })
   }
 
@@ -115,4 +115,4 @@ PortfolioGraph.propTypes = {
   planName: PropTypes.string,
 }
 
-export default PortfolioGraph
+export default React.memo(PortfolioGraph)

@@ -59,11 +59,9 @@ class FileUploader extends Component {
         }))
         extractJSONFromFile(file)
           .then(json => {
+            console.log('json', json)
             if (json.name.includes('aiscore')) {
-              console.log('json', json)
-              // console.log(TEST(json.data))
               mutateReportData(json, this.props.apolloClient, this.updateSuccesfullUploads.bind(null, file))
-              console.log('after')
             } else {
               let planName = json.name.split('.')[0].split('_')[1]
               if (planName === 'basic') planName = 'entry'

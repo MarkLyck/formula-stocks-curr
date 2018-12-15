@@ -11,13 +11,20 @@ import { TableBody, TableRow, TableHeadCell } from 'ui-components/Table'
 import PortfolioHeader from 'components/Dashboard/Portfolio/PortfolioHeader'
 import AnnualReturns from 'components/Dashboard/Portfolio/AnnualReturns'
 import PortfolioItem from 'components/Dashboard/Portfolio/PortfolioItem'
+import Loader from 'ui-components/Loader/Small'
 import StatisticsContainer from 'ui-components/statisticsContainer'
 import StatisticsBox from 'ui-components/statisticsContainer/StatisticsBox'
 import PortfolioLoader from 'components/Dashboard/Portfolio/Loader'
 import LoadingError from 'ui-components/Error/LoadingError'
 import PlanPermissionError from 'ui-components/Error/PlanPermissionError'
 
-import { PortfolioTable, PortfolioTableHead, LastUpdated, DateLabel } from 'components/Dashboard/Portfolio/styles'
+import {
+  PortfolioTable,
+  PortfolioTableHead,
+  LastUpdated,
+  DateLabel,
+  LoadingBox,
+} from 'components/Dashboard/Portfolio/styles'
 
 const PORTFOLIO_QUERY = gql`
     query plan($id: ID!) {
@@ -63,6 +70,11 @@ class Portfolio extends Component {
                   />
                   <AnnualReturns portfolioYields={Plan.portfolioYields} />
                   {hasPlanPerms === false && <PlanPermissionError planName={planName} />}
+                  {hasPlanPerms === 'WAITING' && (
+                    <LoadingBox>
+                      <Loader text="Loading Holdings..." />
+                    </LoadingBox>
+                  )}
                   {hasPlanPerms === true && (
                     <PortfolioTable>
                       <PortfolioTableHead>

@@ -1,20 +1,22 @@
-import { DELETE_REPORTS, CREATE_REPORTS } from './queries'
+import { CREATE_REPORTS } from './queries'
+import deleteAllNodes from './deleteAllNodes'
 
-const mutateReportData = async (file, apolloClient, updateSuccesfullUploads, planName, finished) => {
+const mutateReportData = async (file, apolloClient, updateSuccesfullUploads) => {
   const reports = file.data
-  console.log('reports', reports)
 
-  const deleteAllReports = await apolloClient
-    .mutate({ mutation: DELETE_REPORTS })
-    .then(data => console.log('deleted', data))
-    .catch(err => console.error(err))
+  const createReports = () => {
+    apolloClient
+      .mutate({ mutation: CREATE_REPORTS(reports) })
+      .then(data => {
+        updateSuccesfullUploads(file)
+        console.log('ai reports updated', data)
+      })
+      .catch(console.error)
+  }
 
-  // const response = await apolloClient
-  //   .mutate({
-  //     mutation: CREATE_REPORTS(reports),
-  //   })
-  //   .then(data => console.log('success', data))
-  //   .catch(err => console.error(err))
+  deleteAllNodes('StockReport', apolloClient)
+    .then(createReports)
+    .catch(console.error)
 }
 
 export default mutateReportData
