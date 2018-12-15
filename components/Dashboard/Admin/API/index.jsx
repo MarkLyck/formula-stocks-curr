@@ -5,8 +5,9 @@ import withCharts from 'ui-components/Charts/withCharts'
 import LoadingError from 'ui-components/Error/LoadingError'
 import GenericLoader from 'ui-components/Loader'
 import { Query, Mutation } from 'react-apollo'
-import { ALL_PLANS, UPDATE_PLAN } from './queries'
+import { ALL_PLANS, UPDATE_PLAN, TEST } from './queries'
 import { extractJSONFromFile, mutatePlanData } from './planMutation'
+import mutateReportData from './reportMutation'
 import plansData from './plansData'
 import { FileDrop, Container } from './styles'
 import JSONIcon from './json_icon.svg'
@@ -27,6 +28,7 @@ const acceptedFilenames = [
   'weekly_premium.json',
   'weekly_business.json',
   'weekly_fund.json',
+  'aiscore.json',
 ]
 let q = queue(1)
 
@@ -48,7 +50,6 @@ class FileUploader extends Component {
 
   onDrop = (updatePlan, allPlans, files) => {
     const badFiles = files.filter(file => acceptedFilenames.indexOf(file.name) === -1)
-
     if (!badFiles.length) {
       files.forEach(file => {
         this.setState(state => ({
@@ -58,17 +59,26 @@ class FileUploader extends Component {
         }))
         extractJSONFromFile(file)
           .then(json => {
-            let planName = json.name.split('.')[0].split('_')[1]
-            if (planName === 'basic') planName = 'entry'
+            console.log('json', json)
+            if (json.name.includes('aiscore')) {
+              mutateReportData(json, this.props.apolloClient, this.updateSuccesfullUploads.bind(null, file))
+            } else {
+              let planName = json.name.split('.')[0].split('_')[1]
+              if (planName === 'basic') planName = 'entry'
 
-            q.defer(mutatePlanData, json, updatePlan, this.updateSuccesfullUploads.bind(null, file), planName)
+              q.defer(mutatePlanData, json, updatePlan, this.updateSuccesfullUploads.bind(null, file), planName)
+            }
           })
-          .catch(err => this.setState({ errorUploading: `Error: ${err}` }))
+          .catch(err => {
+            console.error(err)
+            this.setState({ errorUploading: `Error: ${err}` })
+          })
       })
     }
   }
 
   render() {
+    const { apolloClient } = this.props
     const { uploadingFiles, successfullUploads, errorUploading } = this.state
     return (
       <Query query={ALL_PLANS}>

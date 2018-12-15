@@ -51,3 +51,23 @@ export const UPDATE_PLAN = gql`
     }
   }
 `
+
+const createStockReport = ({ name, ticker, scores, stock_price }) => {
+  const alias = ticker.replace('.', '_')
+
+  const stringifiedScores = JSON.stringify(scores)
+    .split('"')
+    .join("'")
+
+  return `
+    ${alias}: createStockReport(name: "${name}", ticker: "${ticker}", stockPrice: ${stock_price}, scores: "${stringifiedScores}") {
+      id
+    }
+  `
+}
+
+export const CREATE_REPORTS = reports => gql`
+  mutation createStockReports {
+    ${reports.map(report => createStockReport(report)).join('\n')}
+  }
+`

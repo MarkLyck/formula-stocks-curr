@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'react-emotion'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-const Icon = styled(FontAwesomeIcon)`
+export const Icon = styled(FontAwesomeIcon)`
   color: ${props => props.theme.colors.primary};
   margin-bottom: 16px;
 `
