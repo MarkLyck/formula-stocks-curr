@@ -80,6 +80,8 @@ const DAUGraph = ({ visitors, users, amCharts4Loaded }) => {
           paddingBottom={-2}
           categoryBoldLabels={true}
           categoryAxisColor="#FFF"
+          tooltipDateFormat="d MMM"
+          zoomOutButtonMarginRight={32}
         />
       </GraphContainer>
     </Container>
