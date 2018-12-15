@@ -63,7 +63,7 @@ const Reports = () => {
             }}
           />
           <IconTitle>No reports found</IconTitle>
-          <IconSubtitle>We were unable to find the stock you searched for.</IconSubtitle>
+          <IconSubtitle>We couldn't find any reports with that name</IconSubtitle>
         </IconContainer>
       )
     }

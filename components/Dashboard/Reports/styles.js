@@ -48,4 +48,5 @@ export const IconSubtitle = styled.h3`
   color: ${props => props.theme.colors.purple};
   font-size: 1rem;
   margin: 0 24px;
+  max-width: 360px;
 `
