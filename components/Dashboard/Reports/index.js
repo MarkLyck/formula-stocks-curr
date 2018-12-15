@@ -81,8 +81,6 @@ const Reports = () => {
     <Query query={SEARCH_REPORTS_QUERY} variables={{ searchTerm }}>
       {({ loading, error, data }) => {
         if (error || !data) return <LoadingError error={error} />
-        console.log('loading', loading)
-        console.log('data', data)
         return (
           <ReportContainer>
             <SectionHeader>Search</SectionHeader>

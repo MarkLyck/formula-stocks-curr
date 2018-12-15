@@ -36,7 +36,6 @@ const toIds = array => array.map(e => e.id)
 
 const detroyAllDataIn = async (T, apolloClient) => {
   const allNodes = await getAll(T, apolloClient)
-  console.log('allNodes', allNodes)
   await del(T, allNodes, apolloClient)
   console.log(`Deleted: ${allNodes.length} ${T}s`)
 }

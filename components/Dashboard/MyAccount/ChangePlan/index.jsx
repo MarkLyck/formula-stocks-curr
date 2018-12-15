@@ -85,7 +85,6 @@ class ChangePlan extends Component {
       query: CREATE_SUBSCRIPTION,
       variables: { customerID: stripeCustomer, billingPeriod, taxPercent, plan: selectedPlan.id },
     })
-    console.log('stripe data', data)
     const { subscription } = data.createSubscription
     // check that subscription was actually successfull.
     if (!subscription || !subscription.id) return
