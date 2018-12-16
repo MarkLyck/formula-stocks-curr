@@ -32,26 +32,11 @@ export const FadedValue = styled.h2`
 export const ScoreList = styled.ul`
   display: flex;
   flex-direction: column;
-
-  @media (min-width: 850px) {
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
 `
 
 export const ScoreSection = styled(BesideSection)`
-  @media (max-width: 850px) {
-    &:hover {
-      cursor: pointer;
-    }
-  }
-  @media (min-width: 850px) {
-    width: 100%;
-    max-width: 320px;
-    margin-right: 16px;
-    &:nth-child(even) {
-      margin-right: 0;
-    }
+  &:hover {
+    cursor: pointer;
   }
 `
 

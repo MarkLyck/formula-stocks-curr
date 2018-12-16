@@ -8,7 +8,6 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: ${props => (props.fullWidth ? '100%' : '400px')};
   margin-left: ${props => (props.fullWidth ? '0' : '8px')};
 `
 
