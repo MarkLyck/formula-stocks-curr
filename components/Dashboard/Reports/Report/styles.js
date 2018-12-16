@@ -43,3 +43,11 @@ export const Beside = styled.div`
   justify-content: space-between;
   margin-bottom: 16px;
 `
+
+export const HelpText = styled.p`
+  color: ${props => props.theme.colors.gray};
+  margin-top: 16px;
+  margin-bottom: 8px;
+  font-size: 0.8rem;
+  font-weight: 500;
+`

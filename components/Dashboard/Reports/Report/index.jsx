@@ -34,7 +34,7 @@ const Report = ({ report }) => {
       <Score value={scores.ai_value} name="Value" />
       <Score value={scores.ai_profitability} name="Profitability" />
       <Score value={scores.ai_soundness} name="Soundness" />
-      <Score value={scores.ai_stewardship} name="Stewardship" />
+      <Score value={scores.ai_soundness} name="Stewardship" />
 
       <BesideSection>
         <BoldValue>Report generated</BoldValue>

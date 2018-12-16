@@ -64,8 +64,8 @@ const createChart = settings => {
   hand.value = 0
 
   setTimeout(() => {
-    hand.showValue(value, 500, am4core.ease.cubicOut)
-  }, 750)
+    hand.showValue(value, 1000, am4core.ease.cubicOut)
+  }, 500)
 
   return chart
 }
