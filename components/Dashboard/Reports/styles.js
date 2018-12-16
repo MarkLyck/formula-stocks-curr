@@ -8,6 +8,9 @@ export const ReportContainer = styled.div`
   max-height: 600px;
   max-width: 600px;
   margin: 0 auto;
+  @media (min-width: 850px) {
+    max-width: calc((320px * 2) + 48px);
+  }
 `
 
 export const SectionHeader = styled.h3`

@@ -77,19 +77,20 @@ const LaunchPerformance = ({ portfolioYields, marketPrices, planName, amCharts4L
         id="single-launch-performace-graph"
         series={series}
         data={chartData}
+        valueSuffix="%"
+        gridOpacity={0.02}
         paddingRight={-10}
-        paddingBottom={-60}
+        paddingLeft={-5}
+        paddingBottom={-45}
         insideX
         insideY
         labelYOffset={16}
-        labelXOffset={64}
-        valueSuffix="%"
-        gridOpacity={0.02}
-        categoryBoldLabels={true}
+        labelXOffset={50}
+        categoryBoldLabels
         categoryAxisColor="#FFF"
         strictMinMax
         maximum={maximum}
-        minimum={minimum}
+        minimum={minimum - 10}
       />
     </GraphContainer>
   )

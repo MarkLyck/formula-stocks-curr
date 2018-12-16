@@ -43,6 +43,7 @@ export const SuggestionName = styled.h3`
 export const ContentContainer = styled.div`
   position: relative;
   display: flex;
+  height: 100%;
   border-radius: 6px;
   border-bottom: 6px solid ${props => props.theme.colors[props.type === 'BUY' ? 'primary' : 'secondary']};
   .failed-container {

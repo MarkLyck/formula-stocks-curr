@@ -68,6 +68,7 @@ const createChart = settings => {
   const valueAxis = chart.yAxes.push(new am4charts.ValueAxis())
   valueAxis.min = min
   valueAxis.max = max + extraMax
+  valueAxis.baseValue = min
   valueAxis.renderer.inside = insideY
   valueAxis.strictMinMax = strictMinMax
   valueAxis.renderer.labels.template.adapter.add('text', text => valuePrefix + text + valueSuffix)

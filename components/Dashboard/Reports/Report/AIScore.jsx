@@ -8,6 +8,13 @@ export const AIScoreContainer = styled(ExpandedScore)`
   position: relative;
   padding-top: 24px;
   height: 236px;
+  &:hover {
+    cursor: default;
+  }
+  @media (min-width: 850px) {
+    width: 100%;
+    max-width: 100%;
+  }
 `
 
 export const AIScoreValue = styled.h1`

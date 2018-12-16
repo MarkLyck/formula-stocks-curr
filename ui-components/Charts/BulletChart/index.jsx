@@ -47,7 +47,7 @@ const Section = styled.div`
 
 const SelectedSection = styled(Section)`
   position: relative;
-  height: 16px;
+  height: 20px;
   background: rgba(${props => props.sectionColor + ',' + props.opacity});
   border: 1px solid ${props => darken(0.1, 'rgba(' + props.sectionColor + ',' + props.opacity + ')')};
   border-radius: 4px;
@@ -61,6 +61,12 @@ const SelectedSection = styled(Section)`
     font-size: 8px;
     font-weight: 600;
     color: ${props => (props.neutral ? props.theme.colors.gray : 'white')};
+  }
+
+  @media (max-width: 420px) {
+    &::after {
+      content: "";
+    }
   }
 `
 
@@ -96,8 +102,8 @@ const BulletChart = ({ value, min, max, numberOfSections, withMarkers, fullWidth
           const valuesUpUntilNextSection = valuesPerSection * (i + 1)
           const valueFulLRange = value + max
           if (
-            valuesUpUntilNextSection - valuesPerSection < valueFulLRange &&
-            valuesUpUntilNextSection > valueFulLRange
+            valuesUpUntilNextSection - valuesPerSection <= valueFulLRange &&
+            valuesUpUntilNextSection >= valueFulLRange
           ) {
             return (
               <SelectedSection

@@ -50,3 +50,16 @@ export const Button = styled.button`
     color: ${props => props.theme.colors.white};
   }
 `
+
+export const Badge = styled.p`
+  position: absolute;
+  top: 14px;
+  right: 8px;
+  opacity: 0.8;
+  background: ${props => props.theme.colors.primary};
+  border-radius: 4px;
+  padding: 0px 6px;
+  font-weight: 400;
+  font-size: 0.6rem;
+  color: white;
+`
