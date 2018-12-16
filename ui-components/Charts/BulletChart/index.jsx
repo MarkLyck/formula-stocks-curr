@@ -96,8 +96,8 @@ const BulletChart = ({ value, min, max, numberOfSections, withMarkers, fullWidth
           const valuesUpUntilNextSection = valuesPerSection * (i + 1)
           const valueFulLRange = value + max
           if (
-            valuesUpUntilNextSection - valuesPerSection < valueFulLRange &&
-            valuesUpUntilNextSection > valueFulLRange
+            valuesUpUntilNextSection - valuesPerSection <= valueFulLRange &&
+            valuesUpUntilNextSection >= valueFulLRange
           ) {
             return (
               <SelectedSection

@@ -18,6 +18,7 @@
           "static": "./static",
           "@fortawesome/pro-solid-svg-icons/faAngleDown": "./static/icons/faIcons/faAngleDown",
           "@fortawesome/pro-regular-svg-icons/faBars": "./static/icons/faIcons/faBars",
+          "@fortawesome/pro-regular-svg-icons/faBrain": "./static/icons/faIcons/faBrain",
           "@fortawesome/pro-solid-svg-icons/faCalendarTimes": "./static/icons/faIcons/faCalendarTimes",
           "@fortawesome/pro-solid-svg-icons/faChartLine": "./static/icons/faIcons/faChartLine",
           "@fortawesome/pro-solid-svg-icons/faChartPie": "./static/icons/faIcons/faChartPie",

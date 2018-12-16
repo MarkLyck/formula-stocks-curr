@@ -3,14 +3,17 @@ import styled from 'react-emotion'
 import Box from 'ui-components/Box'
 
 const ItemContainer = styled(Box)`
+  box-sizing: border-box;
   display: fex;
   justify-content: space-between;
   padding: 16px;
   margin: 8px 0;
-  transition: all 0.2s;
+  border-left: 0;
+  transition: all 0.3s;
   &:hover {
     cursor: pointer;
-    transform: scale(1.04);
+    transform: scale(1.02);
+    border-left: ${props => `4px solid ${props.theme.colors.primary}`};
   }
 `
 
