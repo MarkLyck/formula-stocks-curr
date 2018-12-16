@@ -62,6 +62,12 @@ const SelectedSection = styled(Section)`
     font-weight: 600;
     color: ${props => (props.neutral ? props.theme.colors.gray : 'white')};
   }
+
+  @media (max-width: 420px) {
+    &::after {
+      content: "";
+    }
+  }
 `
 
 const BulletChart = ({ value, min, max, numberOfSections, withMarkers, fullWidth }) => {
