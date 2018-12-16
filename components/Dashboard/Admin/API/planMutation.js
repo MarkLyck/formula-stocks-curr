@@ -90,11 +90,15 @@ export const mutatePlanData = (file, updatePlan, updateSuccesfullUploads, planNa
 }
 
 export const extractJSONFromFile = file =>
-  new Promise(resolve => {
+  new Promise((resolve, reject) => {
     const receivedJSON = (fileName, e) => {
       const lines = e.target.result
-      const data = JSON.parse(lines)
-      resolve({ data, name: fileName })
+      try {
+        const data = JSON.parse(lines)
+        resolve({ data, name: fileName })
+      } catch (error) {
+        reject(error)
+      }
     }
 
     const fr = new FileReader()

@@ -36,7 +36,7 @@ class FileUploader extends Component {
   state = {
     uploadingFiles: [],
     successfullUploads: [],
-    errorUploading: [],
+    errorUploading: '',
   }
 
   updateSuccesfullUploads = file => {
@@ -52,11 +52,7 @@ class FileUploader extends Component {
     const badFiles = files.filter(file => acceptedFilenames.indexOf(file.name) === -1)
     if (!badFiles.length) {
       files.forEach(file => {
-        this.setState(state => ({
-          uploadingFiles: files,
-          successfullUploads: state.successfullUploads,
-          errorUploading: state.errorUploading,
-        }))
+        this.setState(state => ({ uploadingFiles: files }))
         extractJSONFromFile(file)
           .then(json => {
             console.log('json', json)
@@ -103,7 +99,7 @@ class FileUploader extends Component {
                   </FileDrop>
                   <p>Uploading files: {uploadingFiles.length}</p>
                   <p>successfullUploads: {successfullUploads.length}</p>
-                  <p>errorUploading: {errorUploading.length}</p>
+                  <p>errorUploading: {errorUploading}</p>
                 </Container>
               )}
             </Mutation>
