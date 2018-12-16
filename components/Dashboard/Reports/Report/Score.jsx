@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import BulletChart from 'ui-components/Charts/BulletChart'
 import { ScoreSection, BoldValue, FadedValue, ExpandedScore, Beside, Value, HelpText } from './styles'
 
@@ -19,7 +19,14 @@ const tips = {
 
 const Score = ({ value, name }) => {
   const [isExpanded, setExpanded] = useState(false)
-  const handleOnClick = () => setExpanded(!isExpanded)
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+  const handleOnClick = () => (windowWidth <= 850 ? setExpanded(!isExpanded) : null)
+  const updateWindowDimensions = () => setWindowWidth(window.innerWidth)
+
+  useEffect(() => {
+    window.addEventListener('resize', updateWindowDimensions)
+    return () => window.removeEventListener('resize', updateWindowDimensions)
+  })
 
   const outputValue = value * 100
   let valueColor = 'black'
@@ -29,7 +36,7 @@ const Score = ({ value, name }) => {
     valueColor = 'red'
   }
 
-  if (isExpanded) {
+  if (windowWidth > 850 || isExpanded) {
     return (
       <ExpandedScore onClick={handleOnClick}>
         <Beside>

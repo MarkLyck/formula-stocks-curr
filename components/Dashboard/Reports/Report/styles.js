@@ -29,9 +29,29 @@ export const FadedValue = styled.h2`
   margin-left: 16px;
 `
 
+export const ScoreList = styled.ul`
+  display: flex;
+  flex-direction: column;
+
+  @media (min-width: 850px) {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+`
+
 export const ScoreSection = styled(BesideSection)`
-  &:hover {
-    cursor: pointer;
+  @media (max-width: 850px) {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  @media (min-width: 850px) {
+    width: 100%;
+    max-width: 320px;
+    margin-right: 16px;
+    &:nth-child(even) {
+      margin-right: 0;
+    }
   }
 `
 
@@ -51,4 +71,8 @@ export const HelpText = styled.p`
   margin-bottom: 8px;
   font-size: 0.8rem;
   font-weight: 500;
+
+  @media (min-width: 850px) {
+    display: none;
+  }
 `
