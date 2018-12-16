@@ -18,6 +18,7 @@ export const BoldValue = styled.h2`
 
 export const Value = styled.h2`
   font-weight: 500;
+  margin-left: 8px;
   color: ${props => props.theme.colors[props.valueColor]};
 `
 

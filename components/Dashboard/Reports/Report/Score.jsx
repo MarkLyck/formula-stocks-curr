@@ -48,6 +48,7 @@ const Score = ({ value, name }) => {
     <ScoreSection onClick={handleOnClick}>
       <BoldValue>{name}</BoldValue>
       <BulletChart value={outputValue} min={MIN} max={MAX} numberOfSections={NUM_SECTIONS} />
+      <Value valueColor={valueColor}>{outputValue > 0 ? `+${outputValue.toFixed(0)}` : outputValue.toFixed(0)}</Value>
     </ScoreSection>
   )
 }

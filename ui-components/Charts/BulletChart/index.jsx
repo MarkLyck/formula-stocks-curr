@@ -47,7 +47,7 @@ const Section = styled.div`
 
 const SelectedSection = styled(Section)`
   position: relative;
-  height: 16px;
+  height: 20px;
   background: rgba(${props => props.sectionColor + ',' + props.opacity});
   border: 1px solid ${props => darken(0.1, 'rgba(' + props.sectionColor + ',' + props.opacity + ')')};
   border-radius: 4px;
