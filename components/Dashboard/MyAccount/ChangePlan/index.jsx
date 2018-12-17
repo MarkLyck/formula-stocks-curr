@@ -25,13 +25,13 @@ const plans = [
   {
     id: 'ENTRY',
     name: 'Entry',
-    price: 50,
+    price: 49.99,
     cycle: 'monthly',
   },
   {
     id: 'PREMIUM',
     name: 'Premium',
-    price: 100,
+    price: 99.99,
     cycle: 'monthly',
   },
   {
@@ -148,7 +148,7 @@ class ChangePlan extends Component {
           <div className="beside">
             <p className="description">Price:</p>
             <p className={`price ${!taxPercent && 'semi-bold'}`}>
-              ${selectedPlan.price} {!taxPercent && 'monthly'}
+              ${selectedPlan.price} {!taxPercent && selectedPlan.cycle}
             </p>
           </div>
           {!!taxAmount && (

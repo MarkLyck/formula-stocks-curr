@@ -9,12 +9,13 @@ const MIN = -100
 const tips = {
   Reward: 'Higher values, indicates better odds for a higher future return (alpha).',
   Safety: "Higher values, indicates better odds for a positive future return. Inverse of 'risk'",
-  Growth: 'Higher values, indicates better growth capability.',
+  Growth: 'Higher values indicate better capacity for growth',
   Value:
-    'Higher values, indicates that stock ownership is a better value. Relationship between price and expected return.',
-  Profitability: 'Higher values, indicates that the underlying business is a more profitable endeavour.',
-  Soundness: 'Higher values, indicates the degree to which the business appears sound.',
-  Stewardship: "Higher values, indicates the degree with which the business seems to reward it's shareholders",
+    'Higher values indicate better value. Value is the relationship between what you pay and what you get in return.',
+  Profitability: 'Higher values indicate a more profitable business model',
+  Soundness: 'Higher values indicates the degree to which the business appears to be sound.',
+  Stewardship:
+    'Higher values indicates the extent with which management actions appear aligned with shareholder interests.',
 }
 
 const Score = ({ value, name }) => {
