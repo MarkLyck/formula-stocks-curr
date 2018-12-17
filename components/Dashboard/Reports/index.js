@@ -10,6 +10,7 @@ import Report from 'components/Dashboard/Reports/Report'
 import SearchBar from './SearchBar'
 import ReportItem from './ReportItem'
 import { ReportContainer, SectionHeader, IconContainer, ReportIcon, IconTitle, IconSubtitle } from './styles'
+import ReportsOnboarding from './Onboarding'
 
 const SEARCH_REPORTS_QUERY = gql`
   query report($searchTerm: String) {
@@ -34,6 +35,7 @@ const Reports = () => {
 
   const renderInitial = loading => (
     <ReportContainer>
+      <ReportsOnboarding />
       <SectionHeader>Search</SectionHeader>
       <SearchBar searchTerm={searchTerm} handleSearchTermChange={handleSearchTermChange} loading={loading} />
       <IconContainer>
@@ -43,7 +45,7 @@ const Reports = () => {
           }}
         />
         <IconTitle>AI Investment reports</IconTitle>
-        <IconSubtitle>Search for top 1,000 market cap stocks to see our AI investment reports.</IconSubtitle>
+        <IconSubtitle>Entry has access to > 1000 mio. market capitalization stocks</IconSubtitle>
       </IconContainer>
     </ReportContainer>
   )

@@ -55,7 +55,7 @@ export const Badge = styled.p`
   position: absolute;
   top: 14px;
   right: 8px;
-  opacity: 0.8;
+  opacity: 0.9;
   background: ${props => props.theme.colors.primary};
   border-radius: 4px;
   padding: 0px 6px;

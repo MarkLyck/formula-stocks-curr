@@ -52,7 +52,7 @@ export const UPDATE_PLAN = gql`
   }
 `
 
-const createStockReport = ({ date, name, ticker, scores, stock_price }) => {
+const createStockReport = ({ date, name, ticker, scores, stock_price, market_cap }) => {
   const alias = ticker.replace('.', '_')
 
   const stringifiedDate = JSON.stringify(date)
@@ -70,7 +70,8 @@ const createStockReport = ({ date, name, ticker, scores, stock_price }) => {
       ticker: "${ticker}",
       stockPrice: ${stock_price},
       scores: "${stringifiedScores}",
-      aiScore: ${scores.ai_score}
+      aiScore: ${scores.ai_score},
+      marketCap: ${market_cap}
     ) {
       id
     }

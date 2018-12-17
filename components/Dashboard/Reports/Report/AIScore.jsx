@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'react-emotion'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import withCharts from 'ui-components/Charts/withCharts'
 import MultiGaugeChart from 'ui-components/Charts/MultiGaugeChart'
 import { ExpandedScore, BoldValue, FadedValue, Beside } from './styles'
@@ -34,6 +35,14 @@ export const AIScoreText = styled.h2`
   font-size: 1.2rem;
 `
 
+const BrainIcon = styled(FontAwesomeIcon)`
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  color: ${props => props.theme.colors.purple};
+  font-size: 1.2rem;
+`
+
 const NUM_SECTIONS = 21
 const MAX = 100
 const MIN = -100
@@ -49,6 +58,7 @@ const AIScore = ({ value, name, amCharts4Loaded }) => {
 
   return (
     <AIScoreContainer>
+      <BrainIcon icon="brain" />
       {amCharts4Loaded && <MultiGaugeChart numberOfSections={NUM_SECTIONS} min={MIN} max={MAX} value={outputValue} />}
       <AIScoreValue color={valueColor}>
         {outputValue > 0 ? `+${outputValue.toFixed(0)}` : outputValue.toFixed(0)}
