@@ -43,6 +43,16 @@ const ReportsOnboarding = ({ amCharts4Loaded }) => {
   return (
     <OnboardingModal isOpen={isVisible} onRequestClose={onRequestClose}>
       <AIScoreChart id="aiScoreBarChart" data={chartData} />
+      <p>
+        Use this chart to observe the performance typically associated with an AI Score level. Each bar indicates
+        approx. 1/20th of the entire US stock market. IRR refers to "Geometric Internal Rate of Return," or "the
+        annualized effective compounded return rate" in its geometric form. Winrate refers to the percentage of
+        investments which delivers a positive return in the investment period. A bar with an indication of "100" refers
+        to Ai score interval [90-100]. Performance numbers for AI Score levels are based on 5 decades of backtested
+        historical performance using Formula Stocks portfolio management solutions. The nature of statistical averages
+        are such, that in order to expect somewhat similar results akin to an AI score level, a wider sample must be
+        employed, i.e. a larger number of stocks must be consistently owned for longer periods of time.
+      </p>
     </OnboardingModal>
   )
 }
