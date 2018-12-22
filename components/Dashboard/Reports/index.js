@@ -27,6 +27,7 @@ const SEARCH_REPORTS_QUERY = gql`
 
 const Reports = () => {
   const [searchTerm, setSearchTerm] = useState('')
+  const [onboardingVisible, setOnboardingVisible] = useState(false)
   const [selectedReport, setSelectedReport] = useState(null)
   const handleSearchTermChange = e => {
     setSearchTerm(e.target.value)
@@ -35,7 +36,9 @@ const Reports = () => {
 
   const renderInitial = loading => (
     <ReportContainer>
-      <ReportsOnboarding />
+      {onboardingVisible && (
+        <ReportsOnboarding onboardingVisible={onboardingVisible} setOnboardingVisible={setOnboardingVisible} />
+      )}
       <SectionHeader>Search</SectionHeader>
       <SearchBar searchTerm={searchTerm} handleSearchTermChange={handleSearchTermChange} loading={loading} />
       <IconContainer>
@@ -55,7 +58,14 @@ const Reports = () => {
 
     if (isSingleReport) {
       const report = selectedReport ? selectedReport : data.allStockReports[0]
-      return <Report report={report} />
+      return (
+        <React.Fragment>
+          {onboardingVisible && (
+            <ReportsOnboarding onboardingVisible={onboardingVisible} setOnboardingVisible={setOnboardingVisible} />
+          )}
+          <Report report={report} setOnboardingVisible={setOnboardingVisible} />
+        </React.Fragment>
+      )
     } else if (data.allStockReports.length === 0) {
       return (
         <IconContainer>

@@ -126,11 +126,10 @@ const series = [
   },
 ]
 
-const ReportsOnboarding = ({ amCharts4Loaded }) => {
+const ReportsOnboarding = ({ amCharts4Loaded, onboardingVisible, setOnboardingVisible }) => {
   if (!amCharts4Loaded) return null
-  const [isVisible, setVisibility] = useState(true)
   const [pageIndex, setPageIndex] = useState(0)
-  const onRequestClose = () => setVisibility(false)
+  const onRequestClose = () => setOnboardingVisible(false)
   const windowWidth = useWindowWidth()
 
   const Intro = (
@@ -196,7 +195,7 @@ const ReportsOnboarding = ({ amCharts4Loaded }) => {
 
   return (
     <OnboardingModal
-      isOpen={isVisible}
+      isOpen={onboardingVisible}
       onRequestClose={onRequestClose}
       activePageIndex={pageIndex}
       setPageIndex={setPageIndex}
