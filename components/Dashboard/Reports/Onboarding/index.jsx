@@ -1,7 +1,98 @@
 import { useState } from 'react'
+import styled from 'react-emotion'
+import searchIcon from 'static/icons/reports/ai_report_search.svg'
 import OnboardingModal from 'ui-components/Modal/Onboarding'
+import { OnboardingHeader, OnboardingText } from 'ui-components/Modal/Onboarding/styles'
 import AIScoreChart from './AIScoreChart'
 import withCharts from 'ui-components/Charts/withCharts'
+import useWindowWidth from 'common/hooks/useWindowWidth'
+import { ReportIcon } from '../styles'
+
+const AIReportsWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  @media (max-width: 850px) {
+    flex-direction: column;
+  }
+`
+const AIReportsTextWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  padding: 24px 32px;
+  @media (max-width: 850px) {
+    margin-top: 16px;
+    padding: 0;
+  }
+  @media (max-width: 480px) {
+    width: 100%;
+  }
+`
+
+const AIScoreWrapper = styled.div`
+  display: flex;
+  @media (max-width: 1020px) {
+    flex-direction: column;
+  }
+  @media (max-width: 480px) {
+    width: 100%;
+  }
+`
+
+const AIScoreTextWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 380px;
+  ul {
+    padding: 16px 0;
+    font-size: 0.9rem;
+    color: ${props => props.theme.colors.black};
+    li {
+      position: relative;
+      padding: 8px 16px;
+      &::before {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+        content: '';
+        background: ${props => props.theme.colors.lightGray};
+        height: 8px;
+        width: 8px;
+        border-radius: 50%;
+      }
+    }
+  }
+  @media (max-width: 1020px) {
+    margin-top: 16px;
+    width: 600px;
+  }
+  @media (max-width: 850px) {
+    margin-top: 16px;
+    width: 400px;
+  }
+  @media (max-width: 480px) {
+    width: 100%;
+  }
+`
+
+const IconBackground = styled.div`
+  height: 240px;
+  width: 240px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: ${props => props.theme.colors.polar};
+  border-radius: 4px;
+  @media (max-width: 850px) {
+    width: 100%;
+  }
+`
+
+const Bold = styled.span`
+  font-weight: 500;
+`
 
 const chartData = [
   { aiScoreMin: -100, aiScoreMax: -90, irr: -9.13, winrate: 48 },
@@ -38,22 +129,80 @@ const series = [
 const ReportsOnboarding = ({ amCharts4Loaded }) => {
   if (!amCharts4Loaded) return null
   const [isVisible, setVisibility] = useState(true)
+  const [pageIndex, setPageIndex] = useState(0)
   const onRequestClose = () => setVisibility(false)
+  const windowWidth = useWindowWidth()
+
+  const Intro = (
+    <AIReportsWrapper>
+      <IconBackground>
+        <ReportIcon
+          dangerouslySetInnerHTML={{
+            __html: searchIcon,
+          }}
+        />
+      </IconBackground>
+      <AIReportsTextWrapper>
+        <OnboardingHeader>AI Reports</OnboardingHeader>
+        <OnboardingText>
+          Introducing a revolutionary easy way to pick stocks. Our AI analyzes over 400 datapoints for all US stocks
+          with a market cap over $1,000 million that has existed for over 7 years.
+        </OnboardingText>
+        <OnboardingText>
+          The output from this is one of the many internal strategies our system uses to build our portfolios. Now
+          available for all of our users
+        </OnboardingText>
+      </AIReportsTextWrapper>
+    </AIReportsWrapper>
+  )
+
+  const getChartWidth = () => {
+    if (windowWidth > 1020) return '480px'
+    if (windowWidth < 1020 && windowWidth > 850) return '600px'
+    else if (windowWidth > 480) return '400px'
+    return windowWidth - 48
+  }
+
+  const AIScoreIntro = (
+    <AIScoreWrapper>
+      <AIScoreChart
+        id="aiScoreBarChart"
+        data={chartData}
+        style={{
+          width: getChartWidth(),
+          height: windowWidth > 1020 ? '320px' : '280px',
+        }}
+      />
+      <AIScoreTextWrapper>
+        <OnboardingHeader>AI Score</OnboardingHeader>
+        <OnboardingText>
+          This chart shows the typical performance associated with an AI Score. Each bar indicate 1/20th of the US stock
+          market.
+        </OnboardingText>
+        <ul>
+          <li>
+            <Bold>IRR</Bold> refers to avg. “Geometric Internal Rate of Return”
+          </li>
+          <li>
+            <Bold>Win rate</Bold> refers to the avg. percentage of investments which is sold with a positive return
+          </li>
+        </ul>
+        <OnboardingText>
+          For a more in depth explanation <a>see our article on AI Reports.</a>
+        </OnboardingText>
+      </AIScoreTextWrapper>
+    </AIScoreWrapper>
+  )
 
   return (
-    <OnboardingModal isOpen={isVisible} onRequestClose={onRequestClose}>
-      <AIScoreChart id="aiScoreBarChart" data={chartData} />
-      <p>
-        Use this chart to observe the performance typically associated with an AI Score level. Each bar indicates
-        approx. 1/20th of the entire US stock market. IRR refers to "Geometric Internal Rate of Return," or "the
-        annualized effective compounded return rate" in its geometric form. Winrate refers to the percentage of
-        investments which delivers a positive return in the investment period. A bar with an indication of "100" refers
-        to Ai score interval [90-100]. Performance numbers for AI Score levels are based on 5 decades of backtested
-        historical performance using Formula Stocks portfolio management solutions. The nature of statistical averages
-        are such, that in order to expect somewhat similar results akin to an AI score level, a wider sample must be
-        employed, i.e. a larger number of stocks must be consistently owned for longer periods of time.
-      </p>
-    </OnboardingModal>
+    <OnboardingModal
+      isOpen={isVisible}
+      onRequestClose={onRequestClose}
+      activePageIndex={pageIndex}
+      setPageIndex={setPageIndex}
+      pages={[Intro, AIScoreIntro]}
+      section="AIReports"
+    />
   )
 }
 

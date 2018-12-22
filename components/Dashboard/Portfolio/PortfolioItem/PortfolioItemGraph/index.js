@@ -79,7 +79,7 @@ const StockChart = ({ historicPrices, ticker, costBasisPrice, action, amCharts4L
 }
 
 StockChart.propTypes = {
-  sixMonthsPrices: PropTypes.array,
+  historicPrices: PropTypes.array,
   ticker: PropTypes.string,
   action: PropTypes.string,
   suggestedPrice: PropTypes.number,

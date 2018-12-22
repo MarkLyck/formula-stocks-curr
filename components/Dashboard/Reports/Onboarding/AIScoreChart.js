@@ -13,10 +13,12 @@ const createChart = settings => {
   chart.data = data
   chart.colors.step = 2
   chart.maskBullets = false
+  chart.paddingBottom = -10
 
   // AXISs
   const categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis())
   categoryAxis.dataFields.category = 'aiScoreMax'
+  // categoryAxis.title.text = 'AI score'
   categoryAxis.renderer.grid.template.location = 0
   categoryAxis.renderer.minGridDistance = 25
   categoryAxis.renderer.grid.template.disabled = true
@@ -59,7 +61,7 @@ const createChart = settings => {
   irrSeries.tooltip.background.stroke = am4core.color(theme.colors.black)
   irrSeries.tooltip.background.strokeWidth = 2
   irrSeries.tooltip.label.fill = am4core.color(theme.colors.black)
-  irrSeries.tooltipText = 'irr: [bold]{irr}%[/]'
+  irrSeries.tooltipText = 'IRR: [bold]{irr}%[/]'
 
   var columnTemplate = irrSeries.columns.template
   columnTemplate.strokeWidth = 0
@@ -93,7 +95,7 @@ const createChart = settings => {
   winrateSeries.dataFields.valueY = 'winrate'
   winrateSeries.dataFields.categoryX = 'aiScoreMax'
   winrateSeries.yAxis = winrateAxis
-  winrateSeries.name = 'Winrate'
+  winrateSeries.name = 'Win rate'
   winrateSeries.stroke = theme.colors.black
   winrateSeries.strokeWidth = 2
   winrateSeries.tooltip.getFillFromObject = false
@@ -101,7 +103,7 @@ const createChart = settings => {
   winrateSeries.tooltip.background.stroke = am4core.color(theme.colors.black)
   winrateSeries.tooltip.background.strokeWidth = 2
   winrateSeries.tooltip.label.fill = am4core.color(theme.colors.black)
-  winrateSeries.tooltipText = 'winrate: [bold]{valueY}%[/]'
+  winrateSeries.tooltipText = 'Win rate: [bold]{valueY}%[/]'
 
   var winrateBullet = winrateSeries.bullets.push(new am4charts.Bullet())
   var winrateRectangle = winrateBullet.createChild(am4core.Rectangle)
@@ -138,7 +140,7 @@ const BarChart = ({ ...settings }) => {
     return () => (chart ? chart.dispose() : null)
   })
 
-  return <div id={settings.id} style={{ height: '400px' }} />
+  return <div id={settings.id} style={{ ...settings.style }} />
 }
 
 export default BarChart
