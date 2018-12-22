@@ -13,15 +13,20 @@ const createChart = settings => {
   chart.data = data
   chart.colors.step = 2
   chart.maskBullets = false
+  chart.paddingBottom = -10
 
   // AXISs
   const categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis())
   categoryAxis.dataFields.category = 'aiScoreMax'
+  // categoryAxis.title.text = 'AI score'
   categoryAxis.renderer.grid.template.location = 0
-  categoryAxis.renderer.minGridDistance = 50
+  categoryAxis.renderer.minGridDistance = 25
   categoryAxis.renderer.grid.template.disabled = true
   categoryAxis.renderer.fullWidthTooltip = true
   categoryAxis.renderer.labels.template.fill = am4core.color(theme.colors.black)
+  categoryAxis.renderer.labels.template.fontSize = 14
+  categoryAxis.adapter.add('getTooltipText', text => `${text - 10} to ${text}`)
+
   // categoryAxis tooltip
   const categoryAxisTooltip = categoryAxis.tooltip
   categoryAxisTooltip.background.fill = am4core.color(theme.colors.black)
@@ -30,28 +35,20 @@ const createChart = settings => {
   categoryAxisTooltip.fontFamily = 'Rubik'
 
   var winrateAxis = chart.yAxes.push(new am4charts.ValueAxis())
-  winrateAxis.title.text = 'Winrate'
+  winrateAxis.title.text = 'Win rate'
   winrateAxis.renderer.grid.template.disabled = true
   winrateAxis.renderer.labels.template.fill = am4core.color(theme.colors.black)
   winrateAxis.renderer.labels.template.adapter.add('text', text => `${text}%`)
-  // winrateAxis tooltip
-  const winrateAxisTooltip = winrateAxis.tooltip
-  winrateAxisTooltip.background.fill = am4core.color(theme.colors.black)
-  winrateAxisTooltip.background.cornerRadius = 4
-  winrateAxisTooltip.fillOpacity = 0.8
-  winrateAxisTooltip.fontFamily = 'Rubik'
+  winrateAxis.renderer.labels.template.fontSize = 14
+  winrateAxis.renderer.opposite = true
+  winrateAxis.cursorTooltipEnabled = false
 
   var irrAxis = chart.yAxes.push(new am4charts.ValueAxis())
   irrAxis.title.text = 'IRR'
-  irrAxis.renderer.opposite = true
+  irrAxis.cursorTooltipEnabled = false
   irrAxis.renderer.labels.template.fill = am4core.color(theme.colors.black)
   irrAxis.renderer.labels.template.adapter.add('text', text => `${text}%`)
-  // irrAxis tooltip
-  const irrAxisTooltip = irrAxis.tooltip
-  irrAxisTooltip.background.fill = am4core.color(theme.colors.black)
-  irrAxisTooltip.background.cornerRadius = 4
-  irrAxisTooltip.fillOpacity = 0.8
-  irrAxisTooltip.fontFamily = 'Rubik'
+  irrAxis.renderer.labels.template.fontSize = 14
 
   // Create series
   var irrSeries = chart.series.push(new am4charts.ColumnSeries())
@@ -64,7 +61,7 @@ const createChart = settings => {
   irrSeries.tooltip.background.stroke = am4core.color(theme.colors.black)
   irrSeries.tooltip.background.strokeWidth = 2
   irrSeries.tooltip.label.fill = am4core.color(theme.colors.black)
-  irrSeries.tooltipText = 'irr: [bold]{irr}%[/]'
+  irrSeries.tooltipText = 'IRR: [bold]{irr}%[/]'
 
   var columnTemplate = irrSeries.columns.template
   columnTemplate.strokeWidth = 0
@@ -87,9 +84,7 @@ const createChart = settings => {
       const value = Number(target.dataItem.categoryX)
       let opacity = 1
       opacity = Math.abs(value) / 100
-      console.log('op', value, opacity)
       if (value === 0 || value === -10) return 1
-      // console.log('opacity', opacity)
       return opacity
     }
 
@@ -100,7 +95,7 @@ const createChart = settings => {
   winrateSeries.dataFields.valueY = 'winrate'
   winrateSeries.dataFields.categoryX = 'aiScoreMax'
   winrateSeries.yAxis = winrateAxis
-  winrateSeries.name = 'Winrate'
+  winrateSeries.name = 'Win rate'
   winrateSeries.stroke = theme.colors.black
   winrateSeries.strokeWidth = 2
   winrateSeries.tooltip.getFillFromObject = false
@@ -108,7 +103,7 @@ const createChart = settings => {
   winrateSeries.tooltip.background.stroke = am4core.color(theme.colors.black)
   winrateSeries.tooltip.background.strokeWidth = 2
   winrateSeries.tooltip.label.fill = am4core.color(theme.colors.black)
-  winrateSeries.tooltipText = 'winrate: [bold]{valueY}%[/]'
+  winrateSeries.tooltipText = 'Win rate: [bold]{valueY}%[/]'
 
   var winrateBullet = winrateSeries.bullets.push(new am4charts.Bullet())
   var winrateRectangle = winrateBullet.createChild(am4core.Rectangle)
@@ -126,7 +121,7 @@ const createChart = settings => {
   chart.cursor.xAxis = categoryAxis
   chart.cursor.lineX.strokeOpacity = 0
   chart.cursor.lineX.fill = am4core.color('#000')
-  chart.cursor.lineX.fillOpacity = 0.1
+  chart.cursor.lineX.fillOpacity = 0.05
 
   // Zoomout Button
   chart.zoomOutButton.marginTop = 8
@@ -145,7 +140,7 @@ const BarChart = ({ ...settings }) => {
     return () => (chart ? chart.dispose() : null)
   })
 
-  return <div id={settings.id} style={{ height: '400px' }} />
+  return <div id={settings.id} style={{ ...settings.style }} />
 }
 
 export default BarChart
