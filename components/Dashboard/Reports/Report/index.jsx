@@ -2,11 +2,10 @@ import React from 'react'
 import { format } from 'date-fns'
 import AIScore from './AIScore'
 import Score from './Score'
-import ReportsOnboarding from '../Onboarding'
-import { ScoreList, BesideSection, BoldValue, FadedValue } from './styles'
+import { ScoreList, BesideSection, BoldValue, FadedValue, HowToUseThisButton } from './styles'
 import { SectionHeader } from '../styles'
 
-const Report = ({ report }) => {
+const Report = ({ report, setOnboardingVisible }) => {
   let { date, name, ticker, stockPrice, scores } = report
 
   // reports JSON is saved as strings with singleQuotes.
@@ -16,7 +15,6 @@ const Report = ({ report }) => {
   const dateGenerated = format(new Date(date.year, date.month - 1, date.day), 'MM/DD/YYYY')
   return (
     <React.Fragment>
-      <ReportsOnboarding />
       <SectionHeader>AI Investment Report</SectionHeader>
       <BesideSection>
         <BoldValue>
@@ -45,6 +43,7 @@ const Report = ({ report }) => {
         <BoldValue>Report generated</BoldValue>
         <FadedValue>{dateGenerated}</FadedValue>
       </BesideSection>
+      <HowToUseThisButton onClick={() => setOnboardingVisible(true)}>How do I use this?</HowToUseThisButton>
     </React.Fragment>
   )
 }

@@ -72,6 +72,7 @@ const StockChart = ({ historicPrices, ticker, costBasisPrice, action, amCharts4L
         cursorColor={cursorColor}
         guides={guides}
         valuePrefix="$"
+        tooltipDateFormat="d MMM YYYY"
         preZoomToDates={[subDays(new Date(), daysOwned), new Date()]}
       />
     </GraphContainer>

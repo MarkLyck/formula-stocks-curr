@@ -3,6 +3,7 @@ import styled from 'react-emotion'
 export const TooltipContainer = styled.div`
     position: relative;
     color: ${props => props.theme.colors.gray};
+    display: inline;
     &:hover {
         color: ${props => props.theme.colors.primary};
         &::before {

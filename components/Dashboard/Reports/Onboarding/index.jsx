@@ -3,6 +3,7 @@ import styled from 'react-emotion'
 import searchIcon from 'static/icons/reports/ai_report_search.svg'
 import OnboardingModal from 'ui-components/Modal/Onboarding'
 import { OnboardingHeader, OnboardingText } from 'ui-components/Modal/Onboarding/styles'
+import Tooltip from 'ui-components/Tooltip'
 import AIScoreChart from './AIScoreChart'
 import withCharts from 'ui-components/Charts/withCharts'
 import useWindowWidth from 'common/hooks/useWindowWidth'
@@ -126,12 +127,29 @@ const series = [
   },
 ]
 
-const ReportsOnboarding = ({ amCharts4Loaded }) => {
+const ReportsOnboarding = ({ amCharts4Loaded, onboardingVisible, setOnboardingVisible, userPlan }) => {
   if (!amCharts4Loaded) return null
-  const [isVisible, setVisibility] = useState(true)
   const [pageIndex, setPageIndex] = useState(0)
-  const onRequestClose = () => setVisibility(false)
+  const onRequestClose = () => setOnboardingVisible(false)
   const windowWidth = useWindowWidth()
+
+  const plansContent = {
+    ENTRY: 'has access to large and mega cap stocks.',
+    PREMIUM: 'has access to mid and higher cap stocks.',
+    BUSINESS: 'has access to small and higher cap stocks.',
+    FUND: 'has access to all stocks.',
+  }
+
+  const renderCapTip = () => `
+Micro Cap: refers to a company with a stock market capitalization of less than $250 million.
+\\A\\A 
+Small Cap: refers to a company with a stock market capitalization of $250 million to $2 billion.
+\\A\\A 
+Mid Cap: refers to a company with a stock market capitalization of $2 billion to $10 billion.
+\\A\\A 
+Large Cap: refers to a company with a stock market capitalization of $10 billion to $100 billion.
+\\A\\A 
+Mega Cap: refers to a company with a stock market capitalization of more than $100 billion.`
 
   const Intro = (
     <AIReportsWrapper>
@@ -145,12 +163,12 @@ const ReportsOnboarding = ({ amCharts4Loaded }) => {
       <AIReportsTextWrapper>
         <OnboardingHeader>AI Reports</OnboardingHeader>
         <OnboardingText>
-          Introducing a revolutionary easy way to pick stocks. Our AI analyzes over 400 datapoints for all US stocks
-          with a market cap over $1,000 million that has existed for over 7 years.
+          Introducing a revolutionary easy way to pick stocks. Artificial Intelligence analyzes all US stocks with a
+          market cap. over 10 bln. which has sufficient historical data available. The relative attractiveness of a
+          stock as an investment is boiled down to one single number.
         </OnboardingText>
         <OnboardingText>
-          The output from this is one of the many internal strategies our system uses to build our portfolios. Now
-          available for all of our users
+          <Bold>{userPlan}</Bold> {plansContent[userPlan]} <Tooltip tip={renderCapTip()} width={400} position="left" />
         </OnboardingText>
       </AIReportsTextWrapper>
     </AIReportsWrapper>
@@ -174,17 +192,17 @@ const ReportsOnboarding = ({ amCharts4Loaded }) => {
         }}
       />
       <AIScoreTextWrapper>
-        <OnboardingHeader>AI Score</OnboardingHeader>
+        <OnboardingHeader>AI Score returns</OnboardingHeader>
         <OnboardingText>
-          This chart shows the typical performance associated with an AI Score. Each bar indicate 1/20th of the US stock
-          market.
+          The entire stock market is sorted into buckets based on the AI score of each stock.
+          Each of 20 buckets display the future return for an interval of AI scores, e.g. AI score 90 to 100 = 30% IRR.
         </OnboardingText>
         <ul>
           <li>
-            <Bold>IRR</Bold> refers to avg. “Geometric Internal Rate of Return”
+            <Bold>IRR</Bold> refers to Internal Rate of Return, geometric.
           </li>
           <li>
-            <Bold>Win rate</Bold> refers to the avg. percentage of investments which is sold with a positive return
+            <Bold>Win rate</Bold> refers to the percentage of investments which is sold with a positive return.
           </li>
         </ul>
         <OnboardingText>
@@ -196,7 +214,7 @@ const ReportsOnboarding = ({ amCharts4Loaded }) => {
 
   return (
     <OnboardingModal
-      isOpen={isVisible}
+      isOpen={onboardingVisible}
       onRequestClose={onRequestClose}
       activePageIndex={pageIndex}
       setPageIndex={setPageIndex}

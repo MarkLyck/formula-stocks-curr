@@ -80,6 +80,7 @@ const StockChart = ({
         labelYOffset={24}
         axisAlpha={0}
         gridOpacity={0}
+        tooltipDateFormat="d MMM YYYY"
         guides={guides}
       />
     </GraphContainer>
