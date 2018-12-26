@@ -14,8 +14,13 @@ import { ReportContainer, SectionHeader, IconContainer, ReportIcon, IconTitle, I
 import ReportsOnboarding from './Onboarding'
 
 const SEARCH_REPORTS_QUERY = gql`
-  query report($searchTerm: String) {
-    allStockReports(filter: { OR: [{ ticker_starts_with: $searchTerm }, { name_starts_with: $searchTerm }] }) {
+  query report($searchTerm: String, $marketCap: Float) {
+    allStockReports(
+      filter: {
+        OR: [{ ticker_starts_with: $searchTerm }, { name_starts_with: $searchTerm }]
+        AND: [{ marketCap_gte: $marketCap }]
+      }
+    ) {
       date
       name
       stockPrice
@@ -25,6 +30,18 @@ const SEARCH_REPORTS_QUERY = gql`
     }
   }
 `
+
+const marketCaps = {
+  ENTRY: 10000,
+  PREMIUM: 2000,
+  BUSINESS: 250,
+  FUND: 0,
+}
+
+const getMarketCap = user => {
+  if (user.type === 'admin') return 0
+  return marketCaps[user.plan]
+}
 
 const Reports = ({ user }) => {
   if (!user || !user.plan) return <Loader />
@@ -97,7 +114,7 @@ const Reports = ({ user }) => {
   }
 
   return (
-    <Query query={SEARCH_REPORTS_QUERY} variables={{ searchTerm }}>
+    <Query query={SEARCH_REPORTS_QUERY} variables={{ searchTerm, marketCap: getMarketCap(user) }}>
       {({ loading, error, data }) => {
         if (error || !data) return <LoadingError error={error} />
         return (
