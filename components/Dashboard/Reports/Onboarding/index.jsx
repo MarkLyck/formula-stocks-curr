@@ -140,17 +140,6 @@ const ReportsOnboarding = ({ amCharts4Loaded, onboardingVisible, setOnboardingVi
     FUND: 'has access to all stocks.',
   }
 
-  const renderCapTip = () => `
-Micro Cap: refers to a company with a stock market capitalization of less than $250 million.
-\\A\\A 
-Small Cap: refers to a company with a stock market capitalization of $250 million to $2 billion.
-\\A\\A 
-Mid Cap: refers to a company with a stock market capitalization of $2 billion to $10 billion.
-\\A\\A 
-Large Cap: refers to a company with a stock market capitalization of $10 billion to $100 billion.
-\\A\\A 
-Mega Cap: refers to a company with a stock market capitalization of more than $100 billion.`
-
   const Intro = (
     <AIReportsWrapper>
       <IconBackground>
@@ -168,7 +157,7 @@ Mega Cap: refers to a company with a stock market capitalization of more than $1
           stock as an investment is boiled down to one single number.
         </OnboardingText>
         <OnboardingText>
-          <Bold>{userPlan}</Bold> {plansContent[userPlan]} <Tooltip tip={renderCapTip()} width={400} position="left" />
+          <Bold>{userPlan}</Bold> {plansContent[userPlan]}
         </OnboardingText>
       </AIReportsTextWrapper>
     </AIReportsWrapper>
@@ -194,8 +183,8 @@ Mega Cap: refers to a company with a stock market capitalization of more than $1
       <AIScoreTextWrapper>
         <OnboardingHeader>AI Score returns</OnboardingHeader>
         <OnboardingText>
-          The entire stock market is sorted into buckets based on the AI score of each stock.
-          Each of 20 buckets display the future return for an interval of AI scores, e.g. AI score 90 to 100 = 30% IRR.
+          The entire stock market is sorted into buckets based on the AI score of each stock. Each of 20 buckets display
+          the future return for an interval of AI scores, e.g. AI score 90 to 100 = 30.15% IRR.
         </OnboardingText>
         <ul>
           <li>
