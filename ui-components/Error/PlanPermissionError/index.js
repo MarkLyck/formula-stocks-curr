@@ -2,17 +2,19 @@ import React from 'react'
 import styled from 'react-emotion'
 import Router from 'next/router'
 import Button from 'ui-components/Button'
+import Box from 'ui-components/Box'
 
-const Container = styled.div`
+const Container = styled(Box)`
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
   margin: 16px;
   background: white;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.16);
   box-sizing: border-box;
   padding: 24px;
   text-align: center;
+  width: calc(100% - 32px);
   h3 {
     margin: 16px 0;
     font-size: 1.2rem;
