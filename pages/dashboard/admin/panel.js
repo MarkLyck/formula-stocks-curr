@@ -65,7 +65,7 @@ const getTrialConversionRate = (allUsers, activeTrials) => {
 
   // subtract active trials from the allUsers length as we don't know if they'll stay or not.
   const conversionRate = (stayedThroughTrial.length / (allUsers.length - activeTrials)) * 100
-  return conversionRate
+  return conversionRate.toFixed(2)
 }
 
 const Overview = ({ amCharts4Loaded }) => (

@@ -116,6 +116,7 @@ The total allocation in % of this stock in the portfolio, after this and all pre
             loading={loading}
             error={error}
             amCharts4Loaded={amCharts4Loaded}
+            suggestedPriceName={suggestedPriceName}
           />
         </ContentContainer>
         <DetailsModal suggestion={suggestion} isOpen={detailsIsVisible} onRequestClose={this.toggleDetails} />

@@ -18,6 +18,7 @@ const StockChart = ({
   suggestionsType,
   action,
   amCharts4Loaded,
+  suggestedPriceName,
   loading,
   error,
 }) => {
@@ -63,7 +64,7 @@ const StockChart = ({
       color: guideColor,
       dashed: true,
       lineAlpha: 0.4,
-      text: suggestionsType === 'Trades' ? ' Traded at' : ' Suggested price',
+      text: action === 'BUY' ? ' ' + suggestedPriceName : ' sold at',
     },
   ]
 
