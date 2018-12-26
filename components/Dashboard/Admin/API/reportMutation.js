@@ -1,22 +1,31 @@
 import { CREATE_REPORTS } from './queries'
 import deleteAllNodes from './deleteAllNodes'
 
-const mutateReportData = async (file, apolloClient, updateSuccesfullUploads) => {
+const mutateReportData = async (file, apolloClient, updateSuccesfullUploads, apiConsole) => {
   const reports = file.data
 
-  const createReports = () => {
+  const createReports = apiConsole => {
+    apiConsole.log('create new Reports')
     apolloClient
       .mutate({ mutation: CREATE_REPORTS(reports) })
       .then(data => {
+        apiConsole.log('new reports created')
         updateSuccesfullUploads(file)
         console.log('ai reports updated', data)
       })
-      .catch(console.error)
+      .catch(err => {
+        apiConsole.error('ERROR creating reports: ', err)
+        console.error(err)
+      })
   }
 
-  deleteAllNodes('StockReport', apolloClient)
-    .then(createReports)
-    .catch(console.error)
+  apiConsole.log('deleteAllNodes: StockReport')
+  deleteAllNodes('StockReport', apolloClient, apiConsole)
+    .then(() => createReports(apiConsole))
+    .catch(err => {
+      apiConsole.error('ERROR, deleting all StockReport nodes: ', err)
+      console.error(err)
+    })
 }
 
 export default mutateReportData

@@ -25,3 +25,13 @@ export const FileDrop = styled(Dropzone)`
   cursor: pointer;
   margin-bottom: 16px;
 `
+
+export const Console = styled.ul`
+  background: ${props => props.theme.colors.offWhite};
+  padding: 16px;
+  margin-top: 16px;
+  border-radius: 8px;
+  height: 100%;
+  max-height: 200px;
+  overflow: auto;
+`

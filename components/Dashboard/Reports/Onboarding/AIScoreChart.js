@@ -37,7 +37,7 @@ const createChart = settings => {
   var winrateAxis = chart.yAxes.push(new am4charts.ValueAxis())
   winrateAxis.title.text = 'Win rate'
   winrateAxis.renderer.grid.template.disabled = true
-  winrateAxis.renderer.labels.template.fill = am4core.color(theme.colors.black)
+  winrateAxis.renderer.labels.template.fill = am4core.color(theme.colors.gray)
   winrateAxis.renderer.labels.template.adapter.add('text', text => `${text}%`)
   winrateAxis.renderer.labels.template.fontSize = 14
   winrateAxis.renderer.opposite = true
@@ -96,24 +96,24 @@ const createChart = settings => {
   winrateSeries.dataFields.categoryX = 'aiScoreMax'
   winrateSeries.yAxis = winrateAxis
   winrateSeries.name = 'Win rate'
-  winrateSeries.stroke = theme.colors.black
+  winrateSeries.stroke = theme.colors.gray
   winrateSeries.strokeWidth = 2
   winrateSeries.tooltip.getFillFromObject = false
   winrateSeries.tooltip.background.fill = am4core.color('#fff')
-  winrateSeries.tooltip.background.stroke = am4core.color(theme.colors.black)
+  winrateSeries.tooltip.background.stroke = am4core.color(theme.colors.gray)
   winrateSeries.tooltip.background.strokeWidth = 2
-  winrateSeries.tooltip.label.fill = am4core.color(theme.colors.black)
+  winrateSeries.tooltip.label.fill = am4core.color(theme.colors.gray)
   winrateSeries.tooltipText = 'Win rate: [bold]{valueY}%[/]'
 
   var winrateBullet = winrateSeries.bullets.push(new am4charts.Bullet())
   var winrateRectangle = winrateBullet.createChild(am4core.Rectangle)
   winrateBullet.horizontalCenter = 'middle'
   winrateBullet.verticalCenter = 'middle'
-  winrateBullet.fill = theme.colors.black
-  winrateBullet.width = 7
-  winrateBullet.height = 7
-  winrateRectangle.width = 7
-  winrateRectangle.height = 7
+  winrateBullet.fill = theme.colors.gray
+  winrateBullet.width = 4
+  winrateBullet.height = 4
+  winrateRectangle.width = 4
+  winrateRectangle.height = 4
 
   // Add cursor
   chart.cursor = new am4charts.XYCursor()
