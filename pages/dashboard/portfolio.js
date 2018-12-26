@@ -67,6 +67,7 @@ class Portfolio extends Component {
                     portfolio={Plan.portfolio}
                     planName={Plan.name}
                     amCharts4Loaded={amCharts4Loaded}
+                    hasPlanPerms={hasPlanPerms}
                   />
                   <AnnualReturns portfolioYields={Plan.portfolioYields} />
                   {hasPlanPerms === false && <PlanPermissionError planName={planName} />}

@@ -15,6 +15,7 @@ const PortfolioHeader = ({
   amCharts4Loaded,
   serialChartsReady,
   pieChartsReady,
+  hasPlanPerms,
 }) => (
   <HeaderContainer>
     <LeftSide>
@@ -47,7 +48,9 @@ const PortfolioHeader = ({
           since 2009
         </p>
       </div>
-      <AllocationChart portfolio={portfolio} id="allocation-chart" amCharts4Loaded={amCharts4Loaded} />
+      {hasPlanPerms && (
+        <AllocationChart portfolio={portfolio} id="allocation-chart" amCharts4Loaded={amCharts4Loaded} />
+      )}
     </RightSide>
   </HeaderContainer>
 )
