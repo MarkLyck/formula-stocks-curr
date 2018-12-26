@@ -36,11 +36,19 @@ const FileUploader = ({ apolloClient }) => {
   const [uploadingFiles, setUploadingFiles] = useState([])
   const [successfullUploads, setSuccessfullUploads] = useState([])
   const [errorUploading, setErrorUploading] = useState('')
-  const [log, addLog] = useState([{ type: 'log', text: 'ready', timeStamp: new Date() }])
+  let [log, setLog] = useState([{ type: 'log', text: 'ready', timeStamp: new Date() }])
 
   const apiConsole = {
-    log: entry => addLog({ log: log.push({ type: 'log', text: entry, timeStamp: new Date() }) }),
-    error: entry => addLog({ log: log.push({ type: 'error', text: entry, timeStamp: new Date() }) }),
+    log: entry => {
+      console.log('> ' + entry)
+      log.push({ type: 'log', text: entry, timeStamp: new Date() })
+      setLog(log)
+    },
+    error: entry => {
+      console.error('> ERR: ' + entry)
+      log.push({ type: 'error', text: entry, timeStamp: new Date() })
+      setLog(log)
+    },
   }
 
   const updateSuccesfullUploads = file => {
@@ -54,11 +62,11 @@ const FileUploader = ({ apolloClient }) => {
     if (!badFiles.length) {
       apiConsole.log('filenames validated')
       files.forEach(file => {
-        setUploadingFiles({ uploadingFiles: files })
-        apiConsole.log(file.name, 'extracting json')
+        setUploadingFiles(files)
+        apiConsole.log(file.name.split('.')[0] + ' extracting json')
         extractJSONFromFile(file)
           .then(json => {
-            apiConsole.log(file.name, 'json extracted')
+            apiConsole.log(file.name.split('.')[0] + ' json extracted')
             if (json.name.includes('aiscore')) {
               try {
                 apiConsole.log('running mutateReportData')
@@ -71,14 +79,14 @@ const FileUploader = ({ apolloClient }) => {
             } else {
               let planName = json.name.split('.')[0].split('_')[1]
               if (planName === 'basic') planName = 'entry'
-              apiConsole.log(file.name, 'plan name corresponds to: ', planName)
+              apiConsole.log(file.name.split('.')[0] + ' plan name corresponds to: ' + planName)
 
-              q.defer(mutatePlanData, json, updatePlan, updateSuccesfullUploads.bind(null, file), planName)
+              q.defer(mutatePlanData, json, updatePlan, updateSuccesfullUploads.bind(null, file), planName, apiConsole)
             }
           })
           .catch(err => {
             console.error(err)
-            apiConsole.error('ERROR invalid JSON: ', file.name)
+            apiConsole.error('ERROR invalid JSON: ' + file.name)
             apiConsole.error(`Error: ${err}`)
             setErrorUploading(`Error: ${err}`)
           })
@@ -113,11 +121,13 @@ const FileUploader = ({ apolloClient }) => {
                 <p>successfullUploads: {successfullUploads.length}</p>
                 <p>errorUploading: {errorUploading}</p>
                 <Console>
-                  {log.map(entry => (
-                    <p className={entry.type} key={entry.timeStamp + entry.text}>
-                      > {entry.text}
-                    </p>
-                  ))}
+                  {log
+                    .map(entry => (
+                      <p className={entry.type} key={entry.timeStamp + entry.text}>
+                        > {entry.text}
+                      </p>
+                    ))
+                    .reverse()}
                 </Console>
               </Container>
             )}

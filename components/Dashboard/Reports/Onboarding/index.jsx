@@ -86,13 +86,12 @@ const ReportsOnboarding = ({ amCharts4Loaded, onboardingVisible, setOnboardingVi
       <AIReportsTextWrapper>
         <OnboardingHeader>AI Reports</OnboardingHeader>
         <OnboardingText>
-          Introducing a revolutionary easy way to pick stocks. Artificial Intelligence analyzes all US stocks with a
-          market cap. over 10 bln. which has sufficient historical data available. The relative attractiveness of a
-          stock as an investment is boiled down to one single number.
+          Introducing a revolutionary easy way to pick stocks. Our Artificial Intelligence analyzes stocks thoroughly
+          and produces a single measure, the <Bold>AI score</Bold>, which indicates the relative attractiveness of an
+          investment. Type the name or symbol of a stock you are interested in, and gain unique insight available
+          nowhere else.
         </OnboardingText>
-        <OnboardingText>
-          <Bold>{user.plan}</Bold> {plansContent[user.plan]}
-        </OnboardingText>
+        <OnboardingText>Try Business for access to more AI reports by market cap.</OnboardingText>
       </AIReportsTextWrapper>
     </AIReportsWrapper>
   )
@@ -118,14 +117,14 @@ const ReportsOnboarding = ({ amCharts4Loaded, onboardingVisible, setOnboardingVi
         <OnboardingHeader>AI Score returns</OnboardingHeader>
         <OnboardingText>
           The entire stock market is sorted into buckets based on the AI score of each stock. Each of 20 buckets display
-          the future return for an interval of AI scores, e.g. AI score 90 to 100 = 30.15% IRR.
+          the average return for an interval of AI scores, e.g. AI score 90 to 100 = 30.15% IRR.
         </OnboardingText>
         <ul>
           <li>
             <Bold>IRR</Bold> refers to Internal Rate of Return, geometric.
           </li>
           <li>
-            <Bold>Win rate</Bold> refers to the percentage of investments which is sold with a positive return.
+            <Bold>Win rate</Bold> refers to percentage sold with positive return. (grey line).
           </li>
         </ul>
         <OnboardingText>

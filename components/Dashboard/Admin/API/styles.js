@@ -31,7 +31,8 @@ export const Console = styled.ul`
   padding: 16px;
   margin-top: 16px;
   border-radius: 8px;
-  height: 100%;
-  max-height: 200px;
+  height: 200px;
   overflow: auto;
+  display: flex;
+  flex-direction: column-reverse;
 `
