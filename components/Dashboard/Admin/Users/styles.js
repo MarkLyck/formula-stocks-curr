@@ -8,6 +8,24 @@ export const UsersContainer = styled(Table)`
   margin: 16px;
   width: calc(100% - 32px);
 
+  .demo,
+  .admin {
+    color: ${props => props.theme.colors.gray};
+  }
+
+  .unpaid,
+  .cancelled {
+    color: ${props => props.theme.colors.red};
+  }
+
+  .subscriber {
+    color: ${props => props.theme.colors.primary};
+  }
+
+  .trial {
+    color: ${props => props.theme.colors.green};
+  }
+
   @media (max-width: 660px) {
     td:last-child {
       display: none;

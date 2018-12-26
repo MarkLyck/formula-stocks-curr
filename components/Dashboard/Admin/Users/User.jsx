@@ -12,7 +12,7 @@ const User = ({ user }) => (
       <p>{format(user.createdAt, 'DD/MM/YY')}</p>
     </TableCell>
     <TableCell>{distanceInWordsStrict(new Date(), user.updatedAt)} ago</TableCell>
-    <TableCell>{user.type}</TableCell>
+    <TableCell className={user.type}>{user.type}</TableCell>
   </TableRow>
 )
 

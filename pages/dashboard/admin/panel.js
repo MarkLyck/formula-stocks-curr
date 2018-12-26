@@ -52,20 +52,23 @@ const getPayingSubscribers = allUsers => allUsers && allUsers.filter(user => use
 const getActiveTrials = allUsers => allUsers && allUsers.filter(user => user.type === 'trial').length
 const getTrialConversionRate = (allUsers, activeTrials) => {
   if (!allUsers) return 0
-  const stayedThroughTrial = allUsers.filter(user => {
+  const realUsers = allUsers.filter(user => user.type !== 'admin' && user.type !== 'demo')
+  const stayedThroughTrial = realUsers.filter(user => {
     // if user cancelled AFTER the trial ended.
     // or if the user is currently a paying subscriber
     const { stripeSubscription } = user
     if (stripeSubscription) {
       if (stripeSubscription.canceled_at > stripeSubscription.trial_end) return true
       if (!stripeSubscription.canceled_at && user.type === 'subscriber') return true
+    } else {
+      return true
     }
     return false
   })
 
   // subtract active trials from the allUsers length as we don't know if they'll stay or not.
-  const conversionRate = (stayedThroughTrial.length / (allUsers.length - activeTrials)) * 100
-  return conversionRate
+  const conversionRate = (stayedThroughTrial.length / (realUsers.length - activeTrials)) * 100
+  return conversionRate.toFixed(2)
 }
 
 const Overview = ({ amCharts4Loaded }) => (
@@ -93,7 +96,15 @@ const Overview = ({ amCharts4Loaded }) => (
           </StatisticsContainer>
           <DAUGraph visitors={allVisitors} users={allUsers} amCharts4Loaded={amCharts4Loaded} />
           <VisitorStatistics statistics={Statistics} amCharts4Loaded={amCharts4Loaded} />
-          <VisitorList visitors={allVisitors && allVisitors.slice().reverse()} />
+          <VisitorList
+            visitors={
+              allVisitors &&
+              allVisitors
+                .slice()
+                .reverse()
+                .slice(0, 50)
+            }
+          />
         </React.Fragment>
       )
     }}
