@@ -6,6 +6,7 @@ import searchIcon from 'static/icons/reports/ai_report_search.svg'
 import errorIcon from 'static/icons/reports/ai_report_error.svg'
 import LoadingError from 'ui-components/Error/LoadingError'
 import PlanPermissionError from 'ui-components/Error/PlanPermissionError'
+import Loader from 'ui-components/Loader'
 import Report from 'components/Dashboard/Reports/Report'
 import SearchBar from './SearchBar'
 import ReportItem from './ReportItem'
@@ -25,23 +26,31 @@ const SEARCH_REPORTS_QUERY = gql`
   }
 `
 
-const Reports = ({ userPlan }) => {
+const Reports = ({ user }) => {
+  if (!user || !user.plan) return <Loader />
+  const hasSeenReportIntro = user.intros.reports
   const [searchTerm, setSearchTerm] = useState('')
-  const [onboardingVisible, setOnboardingVisible] = useState(true)
+  const [onboardingVisible, setOnboardingVisible] = useState(!hasSeenReportIntro)
   const [selectedReport, setSelectedReport] = useState(null)
   const handleSearchTermChange = e => {
     setSearchTerm(e.target.value)
     setSelectedReport(null)
   }
 
-  const renderOnboarding = () => (onboardingVisible
-      && <ReportsOnboarding onboardingVisible={onboardingVisible} setOnboardingVisible={setOnboardingVisible} userPlan={userPlan}/>)
+  const renderOnboarding = () =>
+    onboardingVisible && (
+      <ReportsOnboarding
+        onboardingVisible={onboardingVisible}
+        setOnboardingVisible={setOnboardingVisible}
+        user={user}
+      />
+    )
 
-  const renderInitial = loading => (
+  const renderInitial = () => (
     <ReportContainer>
       {renderOnboarding()}
       <SectionHeader>Search</SectionHeader>
-      <SearchBar searchTerm={searchTerm} handleSearchTermChange={handleSearchTermChange} loading={loading} />
+      <SearchBar searchTerm={searchTerm} handleSearchTermChange={handleSearchTermChange} />
       <IconContainer>
         <ReportIcon
           dangerouslySetInnerHTML={{
@@ -61,7 +70,6 @@ const Reports = ({ userPlan }) => {
       const report = selectedReport ? selectedReport : data.allStockReports[0]
       return (
         <React.Fragment>
-          {renderOnboarding()}
           <Report report={report} setOnboardingVisible={setOnboardingVisible} />
         </React.Fragment>
       )
@@ -94,6 +102,7 @@ const Reports = ({ userPlan }) => {
         if (error || !data) return <LoadingError error={error} />
         return (
           <ReportContainer>
+            {renderOnboarding()}
             <SectionHeader>Search</SectionHeader>
             <SearchBar searchTerm={searchTerm} handleSearchTermChange={handleSearchTermChange} loading={loading} />
             {!loading && renderReports(data)}

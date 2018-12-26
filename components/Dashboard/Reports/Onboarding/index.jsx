@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import styled from 'react-emotion'
+import gql from 'graphql-tag'
+import { Mutation } from 'react-apollo'
 import searchIcon from 'static/icons/reports/ai_report_search.svg'
 import OnboardingModal from 'ui-components/Modal/Onboarding'
 import { OnboardingHeader, OnboardingText } from 'ui-components/Modal/Onboarding/styles'
@@ -8,92 +9,14 @@ import AIScoreChart from './AIScoreChart'
 import withCharts from 'ui-components/Charts/withCharts'
 import useWindowWidth from 'common/hooks/useWindowWidth'
 import { ReportIcon } from '../styles'
-
-const AIReportsWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  @media (max-width: 850px) {
-    flex-direction: column;
-  }
-`
-const AIReportsTextWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 400px;
-  padding: 24px 32px;
-  @media (max-width: 850px) {
-    margin-top: 16px;
-    padding: 0;
-  }
-  @media (max-width: 480px) {
-    width: 100%;
-  }
-`
-
-const AIScoreWrapper = styled.div`
-  display: flex;
-  @media (max-width: 1020px) {
-    flex-direction: column;
-  }
-  @media (max-width: 480px) {
-    width: 100%;
-  }
-`
-
-const AIScoreTextWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 380px;
-  ul {
-    padding: 16px 0;
-    font-size: 0.9rem;
-    color: ${props => props.theme.colors.black};
-    li {
-      position: relative;
-      padding: 8px 16px;
-      &::before {
-        position: absolute;
-        top: 50%;
-        left: 0;
-        transform: translateY(-50%);
-        content: '';
-        background: ${props => props.theme.colors.lightGray};
-        height: 8px;
-        width: 8px;
-        border-radius: 50%;
-      }
-    }
-  }
-  @media (max-width: 1020px) {
-    margin-top: 16px;
-    width: 600px;
-  }
-  @media (max-width: 850px) {
-    margin-top: 16px;
-    width: 400px;
-  }
-  @media (max-width: 480px) {
-    width: 100%;
-  }
-`
-
-const IconBackground = styled.div`
-  height: 240px;
-  width: 240px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: ${props => props.theme.colors.polar};
-  border-radius: 4px;
-  @media (max-width: 850px) {
-    width: 100%;
-  }
-`
-
-const Bold = styled.span`
-  font-weight: 500;
-`
+import {
+  AIReportsWrapper,
+  AIReportsTextWrapper,
+  AIScoreWrapper,
+  AIScoreTextWrapper,
+  IconBackground,
+  Bold,
+} from './styles'
 
 const chartData = [
   { aiScoreMin: -100, aiScoreMax: -90, irr: -9.13, winrate: 48 },
@@ -118,19 +41,30 @@ const chartData = [
   { aiScoreMin: 90, aiScoreMax: 100, irr: 30.15, winrate: 90 },
 ]
 
-const Valueaxes = [{}]
+export const UPDATE_USER = gql`
+  mutation updateUser($id: ID!, $intros: Json) {
+    updateUser(id: $id, intros: $intros) {
+      id
+      intros
+    }
+  }
+`
 
-const series = [
-  {
-    valueY: 'irr',
-    categoryX: 'aiScoreMin',
-  },
-]
-
-const ReportsOnboarding = ({ amCharts4Loaded, onboardingVisible, setOnboardingVisible, userPlan }) => {
+const ReportsOnboarding = ({ amCharts4Loaded, onboardingVisible, setOnboardingVisible, user }) => {
   if (!amCharts4Loaded) return null
   const [pageIndex, setPageIndex] = useState(0)
-  const onRequestClose = () => setOnboardingVisible(false)
+  const onRequestClose = updateUser => {
+    if (user.intros.reports !== true) {
+      user.intros.reports = true
+      updateUser({
+        variables: {
+          id: user.id,
+          intros: user.intros,
+        },
+      })
+    }
+    setOnboardingVisible(false)
+  }
   const windowWidth = useWindowWidth()
 
   const plansContent = {
@@ -157,7 +91,7 @@ const ReportsOnboarding = ({ amCharts4Loaded, onboardingVisible, setOnboardingVi
           stock as an investment is boiled down to one single number.
         </OnboardingText>
         <OnboardingText>
-          <Bold>{userPlan}</Bold> {plansContent[userPlan]}
+          <Bold>{user.plan}</Bold> {plansContent[user.plan]}
         </OnboardingText>
       </AIReportsTextWrapper>
     </AIReportsWrapper>
@@ -202,14 +136,18 @@ const ReportsOnboarding = ({ amCharts4Loaded, onboardingVisible, setOnboardingVi
   )
 
   return (
-    <OnboardingModal
-      isOpen={onboardingVisible}
-      onRequestClose={onRequestClose}
-      activePageIndex={pageIndex}
-      setPageIndex={setPageIndex}
-      pages={[Intro, AIScoreIntro]}
-      section="AIReports"
-    />
+    <Mutation mutation={UPDATE_USER}>
+      {(updateUser, { data }) => (
+        <OnboardingModal
+          isOpen={onboardingVisible}
+          onRequestClose={onRequestClose.bind(null, updateUser)}
+          activePageIndex={pageIndex}
+          setPageIndex={setPageIndex}
+          pages={[Intro, AIScoreIntro]}
+          section="AIReports"
+        />
+      )}
+    </Mutation>
   )
 }
 

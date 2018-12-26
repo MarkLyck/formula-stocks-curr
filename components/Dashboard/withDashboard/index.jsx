@@ -14,6 +14,7 @@ const GET_LOGGED_IN_USER = gql`
       id
       type
       plan
+      intros
     }
   }
 `
@@ -66,6 +67,7 @@ const withDashboard = WrappedComponent => {
             if (data && data.loggedInUser) {
               userType = data.loggedInUser.type
               userPlan = data.loggedInUser.plan
+
               if (hasStorage && !localStorage.getItem('selectedPlan')) {
                 this.setPlan(userPlan)
               }
@@ -77,7 +79,13 @@ const withDashboard = WrappedComponent => {
                 <PlanContext.Provider value={this.getContext()}>
                   <DashboardContent>
                     <NavBar location={location} userType={userType} />
-                    <WrappedComponent location={location} userType={userType} userPlan={userPlan} {...extraProps} />
+                    <WrappedComponent
+                      location={location}
+                      userType={userType}
+                      userPlan={userPlan}
+                      user={data && data.loggedInUser ? data.loggedInUser : {}}
+                      {...extraProps}
+                    />
                   </DashboardContent>
                 </PlanContext.Provider>
               </DashboardLayout>
