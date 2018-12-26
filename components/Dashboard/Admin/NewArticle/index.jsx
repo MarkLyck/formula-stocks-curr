@@ -66,7 +66,6 @@ class NewArticle extends Component {
       })
         .then(response => response.json())
         .then(imageFile => {
-          console.log(imageFile.url)
           resolve({ data: { link: imageFile.url } })
         })
     })
