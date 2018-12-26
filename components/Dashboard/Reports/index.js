@@ -32,7 +32,7 @@ const SEARCH_REPORTS_QUERY = gql`
 `
 
 const marketCaps = {
-  ENTRY: 10000,
+  ENTRY: 5000,
   PREMIUM: 2000,
   BUSINESS: 250,
   FUND: 0,
@@ -75,7 +75,7 @@ const Reports = ({ user }) => {
           }}
         />
         <IconTitle>AI Investment reports</IconTitle>
-        <IconSubtitle>Entry has access to > 1000 mio. market capitalization stocks</IconSubtitle>
+        <IconSubtitle>Entry has access to stocks with a market cap over $5 billion.</IconSubtitle>
       </IconContainer>
     </ReportContainer>
   )
