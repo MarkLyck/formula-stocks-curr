@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import gql from 'graphql-tag'
 import { Mutation } from 'react-apollo'
+import Link from 'next/link'
 import searchIcon from 'static/icons/reports/ai_report_search.svg'
 import OnboardingModal from 'ui-components/Modal/Onboarding'
 import { OnboardingHeader, OnboardingText } from 'ui-components/Modal/Onboarding/styles'
@@ -128,7 +129,8 @@ const ReportsOnboarding = ({ amCharts4Loaded, onboardingVisible, setOnboardingVi
           </li>
         </ul>
         <OnboardingText>
-          For a more in depth explanation <a>see our article on AI Reports.</a>
+          For a more in depth explanation{' '}
+          <Link href="/dashboard/articles/ai-score">see our article on AI Reports.</Link>
         </OnboardingText>
       </AIScoreTextWrapper>
     </AIScoreWrapper>
