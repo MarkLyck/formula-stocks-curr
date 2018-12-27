@@ -26,10 +26,7 @@ class MenuItem extends Component {
 
   render() {
     const { route, name, icon, isActive, userType, badge } = this.props
-
-    if ((route === 'admin' || route === 'reports') && userType !== 'admin') {
-      return null
-    }
+    if (route === 'admin' && userType !== 'admin') return null
 
     return (
       <Button onClick={this.clickHandler} isActive={isActive}>
