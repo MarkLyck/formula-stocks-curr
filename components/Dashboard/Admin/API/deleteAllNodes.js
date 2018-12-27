@@ -23,7 +23,7 @@ const getAll = async (T, apolloClient) => {
   return toIds(data[`all${T}s`])
 }
 
-const del = async (T, accounts, apolloClient) => {
+const del = async (T, accounts, apolloClient, apiConsole) => {
   try {
     await Promise.all(
       accounts.map(id =>
@@ -34,6 +34,7 @@ const del = async (T, accounts, apolloClient) => {
       )
     )
   } catch (err) {
+    apiConsole.error('ERROR: deleting nodes' + err)
     console.error(err)
     return
   }
@@ -48,7 +49,7 @@ const deleteAllNodes = async (T, apolloClient, apiConsole) => {
   apiConsole.log(`Deleted: ${allNodes.length} ${T}s`)
   if (allNodes.length === 1000) {
     apiConsole.log('need to fetch more nodes to delete')
-    await deleteAllNodes(T, apolloClient)
+    await deleteAllNodes(T, apolloClient, apiConsole)
   }
   return true
 }
