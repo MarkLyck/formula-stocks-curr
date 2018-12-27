@@ -43,6 +43,11 @@ export const Body = styled.div`
     line-height: 1.8;
   }
 
+  img {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+
   blockquote {
     margin: 24px;
     position: relative;
