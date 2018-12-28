@@ -1,6 +1,7 @@
 import React from 'react'
 import Script from 'react-load-script'
 import { isClient } from 'common/utils/featureTests'
+import { getDeviceType } from 'common/utils/helpers'
 
 const loadAmCharts4 = async () =>
   Promise.all([import('@amcharts/amcharts4/core'), import('@amcharts/amcharts4/charts')])
@@ -22,11 +23,18 @@ const withCharts = (Component, settings = {}) => {
             .then(([am4core, am4charts]) => {
               window.am4core = am4core
               window.am4charts = am4charts
-              import('@amcharts/amcharts4/themes/animated').then(am4themes_animated => {
-                window.am4core.useTheme(am4themes_animated.default)
+              if (getDeviceType() === 'desktop') {
+                // only load animated theme for desktop devices
+                import('@amcharts/amcharts4/themes/animated').then(am4themes_animated => {
+                  window.am4core.useTheme(am4themes_animated.default)
+                  this.setState({ amCharts4Loaded: true })
+                  this.loadingAm4Charts = false
+                })
+              } else {
+                // faster graphs without animations for mobile and tablet.
                 this.setState({ amCharts4Loaded: true })
                 this.loadingAm4Charts = false
-              })
+              }
             })
             .catch(err => {
               console.error(err)

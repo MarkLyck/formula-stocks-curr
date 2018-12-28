@@ -18,6 +18,7 @@ const routes = [
 ]
 
 class SideMenu extends Component {
+  state = { activeRoute: '', isVisible: this.props.isPopOver }
   static getDerivedStateFromProps(nextProps, prevState) {
     if (isClient) {
       const route = routes.reduce((acc, curr, i) => {
@@ -32,13 +33,10 @@ class SideMenu extends Component {
     }
   }
 
-  state = { activeRoute: '', isVisible: this.props.isPopOver }
   setActiveRoute = route => this.setState({ activeRoute: route })
-  // TODO This also needs to close it's parent model. (then set this to false)
-  closeMenu = () => this.setState({ isVisible: this.state.isVisible })
 
   render() {
-    const { userType } = this.props
+    const { userType, onRequestClose } = this.props
     const { activeRoute, isVisible } = this.state
 
     return (
@@ -46,7 +44,7 @@ class SideMenu extends Component {
         {routes.map(route => (
           <MenuItem
             setActiveRoute={this.setActiveRoute}
-            closeMenu={this.closeMenu}
+            closeMenu={onRequestClose}
             key={route.route}
             icon={route.icon}
             name={route.name}
