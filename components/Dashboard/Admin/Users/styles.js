@@ -8,6 +8,13 @@ export const UsersContainer = styled(Table)`
   margin: 16px;
   width: calc(100% - 32px);
 
+  .old {
+    color: ${props => props.theme.colors.gray};
+  }
+  .very-old {
+    color: ${props => props.theme.colors.lightGray};
+  }
+
   .demo,
   .admin {
     color: ${props => props.theme.colors.gray};
