@@ -15,7 +15,7 @@ const USERS_QUERY = gql`
     allUsers {
       id
       createdAt
-      updatedAt
+      lastSeen
       name
       email
       type
