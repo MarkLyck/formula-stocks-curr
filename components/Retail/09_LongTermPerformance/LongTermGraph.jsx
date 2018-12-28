@@ -68,7 +68,7 @@ const LongTermPerformance = ({ planData, marketPrices, planName, amCharts4Loaded
       valueY: 'market',
       color: theme.colors.black,
       fillOpacity: 0.4,
-      tooltipText: `DJIA \n[bold]{marketBalloon}[/]`,
+      tooltipText: `S&P 500 \n[bold]{marketBalloon}[/]`,
     })
   }
 

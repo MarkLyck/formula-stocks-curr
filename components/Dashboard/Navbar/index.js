@@ -44,7 +44,7 @@ class NavBar extends Component {
         {/* {isPlanPage && <PlanButtons selectedPlan={selectedPlan} actions={actions} />} */}
         <Logo onClick={() => Router.push('/')} isAdminPage={isAdminPage} />
         <SlideIn isVisible={sideMenuVisible} onRequestClose={this.handleSideMenuToggle}>
-          <SideMenu userType={userType} isPopOver />
+          <SideMenu userType={userType} isPopOver onRequestClose={this.handleSideMenuToggle} />
         </SlideIn>
       </Bar>
     )

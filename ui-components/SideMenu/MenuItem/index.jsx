@@ -20,7 +20,8 @@ class MenuItem extends Component {
       return
     }
     setActiveRoute(route)
-    closeMenu()
+    // closeMenu is only a function on mobile
+    if (closeMenu) closeMenu()
     Router.push(`/dashboard/${route}`)
   }
 
