@@ -36,6 +36,7 @@ const createChart = settings => {
 
   var winrateAxis = chart.yAxes.push(new am4charts.ValueAxis())
   winrateAxis.title.text = 'Win rate'
+  winrateAxis.title.fill = am4core.color(theme.colors.gray)
   winrateAxis.renderer.grid.template.disabled = true
   winrateAxis.renderer.labels.template.fill = am4core.color(theme.colors.gray)
   winrateAxis.renderer.labels.template.adapter.add('text', text => `${text}%`)
