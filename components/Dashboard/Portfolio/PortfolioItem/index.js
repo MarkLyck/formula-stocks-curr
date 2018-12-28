@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
+import { differenceInDays } from 'date-fns'
 import { TableCell } from 'ui-components/Table'
 import PortfolioItemGraph from './PortfolioItemGraph'
 import { ItemRow } from './styles'
@@ -50,6 +51,9 @@ class PortfolioItem extends Component {
     const increasePrefix = percentIncrease > 0 ? '+' : ''
     const latestPrice = stock.latest_price ? `$${stock.latest_price.toFixed(2)}` : ''
     const allocation = numberToFirstDecimal(stock.percentage_weight)
+    const updatedDate = new Date(stock.date.year, stock.date.month - 1, stock.date.day)
+    const today = new Date()
+    const daysSinceUpdated = differenceInDays(today, updatedDate)
 
     return (
       <React.Fragment>
@@ -64,7 +68,9 @@ class PortfolioItem extends Component {
           </TableCell>
           <TableCell className="cost-basis">{costBasisPrice ? `$${costBasisPrice.toFixed(2)}` : ''}</TableCell>
           <TableCell className="last-price">{latestPrice}</TableCell>
-          <TableCell className="days-owned">{stock.days_owned}</TableCell>
+          {stock.ticker !== 'CASH' && (
+            <TableCell className="days-owned">{stock.days_owned + daysSinceUpdated}</TableCell>
+          )}
         </ItemRow>
         {stock.ticker !== 'CASH' && expanded && (
           <Query query={STOCK_QUERY} variables={{ ticker: stock.ticker }}>
