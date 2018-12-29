@@ -16,6 +16,7 @@ const createChartData = (portfolioYields, marketPrices, totalBalance, updatedAt)
   let lastMarketBalance = 0
 
   const chartData = portfolioYields.map((point, i) => {
+    // CASH is already included in this balance, DO NOT ADD CASH TO THIS VALUE AGAIN.
     const balance = (((portfolioYields[i].balance - startValue) / startValue) * 100).toFixed(2)
     let marketBalance
 
