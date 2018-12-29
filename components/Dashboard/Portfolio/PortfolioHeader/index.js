@@ -12,9 +12,10 @@ const PortfolioHeader = ({
   marketPrices,
   planName,
   portfolio,
+  allocationMap,
+  totalBalance,
+  updatedAt,
   amCharts4Loaded,
-  serialChartsReady,
-  pieChartsReady,
   hasPlanPerms,
 }) => (
   <HeaderContainer>
@@ -26,6 +27,8 @@ const PortfolioHeader = ({
       <PortfolioChart
         portfolioYields={portfolioYields}
         marketPrices={marketPrices}
+        totalBalance={totalBalance}
+        updatedAt={updatedAt}
         planName={planName}
         amCharts4Loaded={amCharts4Loaded}
       />
@@ -34,7 +37,7 @@ const PortfolioHeader = ({
       <div className="plan-results results">
         <h3 className="plan-name">{planName} Formula</h3>
         <p>
-          <span>+{getIncrease(portfolioYields[0].balance, portfolioYields[portfolioYields.length - 1].balance)}% </span>
+          <span>+{getIncrease(portfolioYields[0].balance, totalBalance)}% </span>
           since 2009
         </p>
       </div>
@@ -49,7 +52,12 @@ const PortfolioHeader = ({
         </p>
       </div>
       {hasPlanPerms && (
-        <AllocationChart portfolio={portfolio} id="allocation-chart" amCharts4Loaded={amCharts4Loaded} />
+        <AllocationChart
+          portfolio={portfolio}
+          id="allocation-chart"
+          amCharts4Loaded={amCharts4Loaded}
+          allocationMap={allocationMap}
+        />
       )}
     </RightSide>
   </HeaderContainer>

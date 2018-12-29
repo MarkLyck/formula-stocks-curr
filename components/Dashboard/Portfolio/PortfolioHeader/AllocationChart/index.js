@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import PieChart from 'ui-components/Charts/PieChart'
 import { adjustBrightness } from 'common/utils/helpers'
 
-const Allocation = ({ portfolio, id, amCharts4Loaded }) => {
+const Allocation = ({ portfolio, id, allocationMap, amCharts4Loaded }) => {
   if (!amCharts4Loaded) return null
   const colors = []
   const allocation = portfolio.map(stock => {
@@ -17,7 +17,7 @@ const Allocation = ({ portfolio, id, amCharts4Loaded }) => {
     }
     return {
       ticker: stock.ticker,
-      value: Number(stock.percentage_weight.toFixed(2)),
+      value: Number(allocationMap[stock.ticker].toFixed(2)),
     }
   })
 
