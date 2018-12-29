@@ -43,14 +43,15 @@ class PortfolioItem extends Component {
   toggleExpanded = () => this.setState({ expanded: !this.state.expanded })
 
   render() {
-    const { stock, amCharts4Loaded } = this.props
+    const { stock, allocation, amCharts4Loaded } = this.props
     const { expanded } = this.state
 
     const costBasisPrice = stock.purchase_price - stock.dividends
     const percentIncrease = (((stock.latest_price - costBasisPrice) * 100) / costBasisPrice).toFixed(2)
     const increasePrefix = percentIncrease > 0 ? '+' : ''
     const latestPrice = stock.latest_price ? `$${stock.latest_price.toFixed(2)}` : ''
-    const allocation = numberToFirstDecimal(stock.percentage_weight)
+    // const stockAllocation = numberToFirstDecimal(stock.percentage_weight)
+    const stockAllocation = numberToFirstDecimal(allocation)
     const updatedDate = new Date(stock.date.year, stock.date.month - 1, stock.date.day)
     const today = new Date()
     const daysSinceUpdated = differenceInDays(today, updatedDate)
@@ -62,7 +63,7 @@ class PortfolioItem extends Component {
             <h4 className="stock-name">{stock.name}</h4>
             {stock.ticker !== 'CASH' && <p className="ticker">{stock.ticker}</p>}
           </TableCell>
-          <TableCell className="allocation">{allocation}%</TableCell>
+          <TableCell className="allocation">{stockAllocation}%</TableCell>
           <TableCell className={`return ${percentIncrease >= 0 ? 'positive' : 'negative'}`}>
             {isNaN(percentIncrease) ? '' : `${increasePrefix}${percentIncrease}%`}
           </TableCell>

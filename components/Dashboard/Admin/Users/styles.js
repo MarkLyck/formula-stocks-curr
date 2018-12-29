@@ -21,7 +21,8 @@ export const UsersContainer = styled(Table)`
   }
 
   .unpaid,
-  .cancelled {
+  .canceling,
+  .canceled {
     color: ${props => props.theme.colors.red};
   }
 

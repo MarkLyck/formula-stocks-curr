@@ -34,6 +34,7 @@ const PORTFOLIO_QUERY = gql`
             launchStatistics
             statistics
             portfolioYields
+            updatedAt
         },
         DJIA: Market(id: "${marketIds.DJIA}") {
             name
@@ -56,6 +57,23 @@ class Portfolio extends Component {
               if (error || !data || !data.Plan || !data.DJIA) return <LoadingError error={error} />
               const { Plan, DJIA } = data
 
+              let totalBalance = 0
+              const balanceMap = Plan.portfolio.reduce((acc, curr) => {
+                if (curr.ticker !== 'CASH') {
+                  acc[curr.ticker] = curr.number_held * curr.latest_price
+                } else {
+                  acc[curr.ticker] = curr.number_held
+                }
+                totalBalance += acc[curr.ticker]
+
+                return acc
+              }, {})
+
+              const allocationMap = Object.entries(balanceMap).reduce((acc, [ticker, balance]) => {
+                acc[ticker] = (balance / totalBalance) * 100
+                return acc
+              }, {})
+
               const lastRebalanceDate = Plan.portfolioYields[Plan.portfolioYields.length - 1].date
 
               return (
@@ -65,10 +83,13 @@ class Portfolio extends Component {
                     marketPrices={DJIA.pricesSince2009}
                     portfolio={Plan.portfolio}
                     planName={Plan.name}
+                    allocationMap={allocationMap}
+                    totalBalance={totalBalance}
+                    updatedAt={Plan.updatedAt}
                     amCharts4Loaded={amCharts4Loaded}
                     hasPlanPerms={hasPlanPerms}
                   />
-                  <AnnualReturns portfolioYields={Plan.portfolioYields} />
+                  <AnnualReturns portfolioYields={Plan.portfolioYields} totalBalance={totalBalance} />
                   {hasPlanPerms === false && <PlanPermissionError planName={planName} />}
                   {hasPlanPerms === 'WAITING' && (
                     <LoadingBox>
@@ -101,7 +122,12 @@ class Portfolio extends Component {
                       </PortfolioTableHead>
                       <TableBody>
                         {Plan.portfolio.map(stock => (
-                          <PortfolioItem stock={stock} key={stock.ticker} amCharts4Loaded={amCharts4Loaded} />
+                          <PortfolioItem
+                            stock={stock}
+                            key={stock.ticker}
+                            allocation={allocationMap[stock.ticker]}
+                            amCharts4Loaded={amCharts4Loaded}
+                          />
                         ))}
                       </TableBody>
                     </PortfolioTable>

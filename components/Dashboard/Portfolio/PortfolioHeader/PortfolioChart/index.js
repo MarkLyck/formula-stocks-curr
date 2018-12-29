@@ -3,18 +3,19 @@ import PropTypes from 'prop-types'
 import min from 'lodash.min'
 import minBy from 'lodash.minby'
 import maxBy from 'lodash.maxby'
+import { format, differenceInDays } from 'date-fns'
 import LineGraph from 'ui-components/Charts/LineGraph'
 import { Legends, Legend } from 'ui-components/Charts/Legends'
 import theme from 'common/theme'
 import { formatPrice } from 'common/utils/helpers'
 import { GraphContainer } from './styles'
 
-const createChartData = (portfolioYields, marketPrices) => {
+const createChartData = (portfolioYields, marketPrices, totalBalance, updatedAt) => {
   const startValue = portfolioYields[0].balance
   const marketStartValue = Number(marketPrices[0].price) || 0
   let lastMarketBalance = 0
 
-  return portfolioYields.map((point, i) => {
+  const chartData = portfolioYields.map((point, i) => {
     const balance = (((portfolioYields[i].balance - startValue) / startValue) * 100).toFixed(2)
     let marketBalance
 
@@ -26,7 +27,8 @@ const createChartData = (portfolioYields, marketPrices) => {
       marketBalance = lastMarketBalance
     }
 
-    const month = Number(point.date.month) > 9 ? point.date.month : `0${point.date.month}`
+    // month format should be MM (e.g. 02 is February)
+    const month = point.date.month.padStart(2, '0')
 
     return {
       market: Number(marketBalance) || 0,
@@ -36,9 +38,38 @@ const createChartData = (portfolioYields, marketPrices) => {
       date: `${point.date.year}-${month}-${point.date.day}`,
     }
   })
+  // figure out what the last date from the JSON is.
+  const endDate = portfolioYields[portfolioYields.length - 1].date
+  const lastDayFromDatabase = new Date(endDate.year, endDate.month - 1, endDate.day)
+  // check the difference between JSON date and the last date the Plan was updated.
+  const daysDifference = differenceInDays(updatedAt, lastDayFromDatabase)
+  // only add an extra point to the graph if it's at least 1 day later than the last date in the graph is currently showing.
+  if (daysDifference > 0) {
+    const endBalance = (((totalBalance - startValue) / startValue) * 100).toFixed(2)
+    const endMarketBalance = Number(
+      (((marketPrices[marketPrices.length - 1].price - marketStartValue) / marketStartValue) * 100).toFixed(2)
+    )
+    chartData.push({
+      market: endMarketBalance,
+      fs: Number(endBalance),
+      fsBalloon: formatPrice(endBalance, true, true),
+      marketBalloon: formatPrice(endMarketBalance, true, true),
+      date: format(updatedAt, 'YYYY-MM-DD'),
+    })
+  }
+
+  return chartData
 }
 
-const PortfolioGraph = ({ portfolioYields, marketPrices, planName, amCharts4Loaded, serialChartsReady }) => {
+const PortfolioGraph = ({
+  portfolioYields,
+  marketPrices,
+  planName,
+  totalBalance,
+  updatedAt,
+  amCharts4Loaded,
+  serialChartsReady,
+}) => {
   if (!amCharts4Loaded || !portfolioYields || !portfolioYields.length) {
     return (
       <div id="result-chart" className="loading">
@@ -46,7 +77,7 @@ const PortfolioGraph = ({ portfolioYields, marketPrices, planName, amCharts4Load
       </div>
     )
   }
-  const chartData = createChartData(portfolioYields, marketPrices)
+  const chartData = createChartData(portfolioYields, marketPrices, totalBalance, updatedAt)
 
   const fsMin = minBy(chartData, point => point.fs).fs
   const marMin = chartData[0].market ? minBy(chartData, point => point.market).market : 0
@@ -96,6 +127,7 @@ const PortfolioGraph = ({ portfolioYields, marketPrices, planName, amCharts4Load
         max={maximum}
         min={minimum - 10}
         extraMax={20}
+        tooltipDateFormat="MMM YYYY"
         categoryBoldLabels
         categoryAxisColor="#fff"
       />
