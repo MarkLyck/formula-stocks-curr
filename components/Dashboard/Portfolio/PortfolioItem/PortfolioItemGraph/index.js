@@ -9,7 +9,7 @@ import { GraphContainer, LoadingContainer, FailedContainer } from './styles'
 const createChartData = historicPrices =>
   historicPrices.map(point => ({
     price: point[1],
-    date: point[0],
+    date: new Date(point[0]),
   }))
 
 const StockChart = ({ historicPrices, ticker, costBasisPrice, action, amCharts4Loaded, daysOwned, loading, error }) => {

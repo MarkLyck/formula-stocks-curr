@@ -7,7 +7,7 @@ import { Button, Badge } from './styles'
 
 class MenuItem extends Component {
   clickHandler = () => {
-    const { route, setActiveRoute, closeMenu } = this.props
+    const { route, setActiveRoute, closeMenu, user } = this.props
     if (route === 'logout') {
       if (hasStorage) localStorage.removeItem('graphcoolToken')
       Router.push('/')
@@ -15,6 +15,10 @@ class MenuItem extends Component {
     } else if (route === 'support') {
       window.Intercom('boot', {
         app_id: 'i194mpvo',
+        name: user ? user.name : '',
+        email: user ? user.email : '',
+        user_id: user ? user.id : '',
+        created_at: user ? user.createdAt : '',
       })
       window.Intercom('showNewMessage')
       return
@@ -26,8 +30,8 @@ class MenuItem extends Component {
   }
 
   render() {
-    const { route, name, icon, isActive, userType, badge } = this.props
-    if (route === 'admin' && userType !== 'admin') return null
+    const { route, name, icon, isActive, user, badge } = this.props
+    if (route === 'admin' && (!user || user.type !== 'admin')) return null
 
     return (
       <Button onClick={this.clickHandler} isActive={isActive}>

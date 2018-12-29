@@ -27,15 +27,12 @@ const createChartData = (portfolioYields, marketPrices, totalBalance, updatedAt)
       marketBalance = lastMarketBalance
     }
 
-    // month format should be MM (e.g. 02 is February)
-    const month = point.date.month.padStart(2, '0')
-
     return {
       market: Number(marketBalance) || 0,
       fs: Number(balance),
       fsBalloon: formatPrice(balance, true, true),
       marketBalloon: formatPrice(marketBalance, true, true),
-      date: `${point.date.year}-${month}-${point.date.day}`,
+      date: new Date(point.date.year, point.date.month - 1, point.date.day),
     }
   })
   // figure out what the last date from the JSON is.
@@ -54,7 +51,7 @@ const createChartData = (portfolioYields, marketPrices, totalBalance, updatedAt)
       fs: Number(endBalance),
       fsBalloon: formatPrice(endBalance, true, true),
       marketBalloon: formatPrice(endMarketBalance, true, true),
-      date: format(updatedAt, 'YYYY-MM-DD'),
+      date: new Date(updatedAt),
     })
   }
 
@@ -133,18 +130,6 @@ const PortfolioGraph = ({
       />
     </GraphContainer>
   )
-}
-
-PortfolioGraph.defaultProps = {
-  portfolioYields: [],
-  DJIA: [],
-  planName: '',
-}
-
-PortfolioGraph.propTypes = {
-  portfolioYields: PropTypes.array,
-  marketPrices: PropTypes.array,
-  planName: PropTypes.string,
 }
 
 export default React.memo(PortfolioGraph)

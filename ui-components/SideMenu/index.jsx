@@ -36,7 +36,7 @@ class SideMenu extends Component {
   setActiveRoute = route => this.setState({ activeRoute: route })
 
   render() {
-    const { userType, onRequestClose } = this.props
+    const { user, onRequestClose } = this.props
     const { activeRoute, isVisible } = this.state
 
     return (
@@ -50,7 +50,7 @@ class SideMenu extends Component {
             name={route.name}
             route={route.route}
             isActive={route.route === activeRoute}
-            userType={userType}
+            user={user}
             badge={route.badge}
           />
         ))}
