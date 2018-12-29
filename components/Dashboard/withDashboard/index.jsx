@@ -15,6 +15,9 @@ const GET_LOGGED_IN_USER = gql`
       type
       plan
       intros
+      name
+      email
+      createdAt
     }
   }
 `
@@ -62,11 +65,9 @@ const withDashboard = WrappedComponent => {
               Router.push('/')
             }
 
-            let userType,
-              userPlan = ''
+            let user = {}
             if (data && data.loggedInUser) {
-              userType = data.loggedInUser.type
-              userPlan = data.loggedInUser.plan
+              user = data.loggedInUser
 
               if (hasStorage && !localStorage.getItem('selectedPlan')) {
                 this.setPlan(userPlan)
@@ -75,15 +76,15 @@ const withDashboard = WrappedComponent => {
 
             return (
               <DashboardLayout>
-                <SideMenu location={location} userType={userType} />
+                <SideMenu location={location} user={user} />
                 <PlanContext.Provider value={this.getContext()}>
                   <DashboardContent>
-                    <NavBar location={location} userType={userType} />
+                    <NavBar location={location} userType={user.type} />
                     <WrappedComponent
                       location={location}
-                      userType={userType}
-                      userPlan={userPlan}
-                      user={data && data.loggedInUser ? data.loggedInUser : {}}
+                      userType={user.type}
+                      userPlan={user.plan}
+                      user={user}
                       {...extraProps}
                     />
                   </DashboardContent>
