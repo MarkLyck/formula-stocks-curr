@@ -20,7 +20,6 @@ const SIGNUP_USER = gql`
     $type: String!
     $stripeToken: String!
     $address: Json
-    $location: Json
     $device: Json
     $taxPercent: Float!
     $billingPeriod: String
@@ -33,7 +32,6 @@ const SIGNUP_USER = gql`
       type: $type
       stripeToken: $stripeToken
       address: $address
-      location: $location
       device: $device
       taxPercent: $taxPercent
       billingPeriod: $billingPeriod
@@ -70,8 +68,6 @@ class SignUp extends Component {
     const { apolloClient } = this.props
     const { accountInfo } = this.state
 
-    const location =
-      hasStorage && localStorage.getItem('location') ? JSON.parse(localStorage.getItem('location')) : null
     const plan = hasStorage && localStorage.getItem('selectedPlan') ? localStorage.getItem('selectedPlan') : 'ENTRY'
     const type = plan === 'ENTRY' ? 'trial' : 'subscriber'
 
@@ -85,7 +81,6 @@ class SignUp extends Component {
           name,
           plan,
           type,
-          location,
           taxPercent,
           billingPeriod: 'MONTHLY',
           address: {

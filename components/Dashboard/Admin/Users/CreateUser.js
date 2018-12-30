@@ -12,7 +12,6 @@ const CREATE_USER = gql`
     $stripeToken: String
     $stripeCustomer: String
     $address: Json
-    $location: Json
     $device: Json!
     $taxPercent: Float!
   ) {
@@ -25,7 +24,6 @@ const CREATE_USER = gql`
       stripeToken: $stripeToken
       stripeCustomer: $stripeCustomer
       address: $address
-      location: $location
       device: $device
       taxPercent: $taxPercent
     ) {
