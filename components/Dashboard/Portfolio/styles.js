@@ -1,4 +1,4 @@
-import styled from 'react-emotion'
+import styled from '@emotion/styled'
 import { Table, TableHead } from 'ui-components/Table'
 import Box, { boxStyle } from 'ui-components/Box'
 

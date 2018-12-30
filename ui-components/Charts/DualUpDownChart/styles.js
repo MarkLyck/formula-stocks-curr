@@ -1,5 +1,5 @@
-import { css } from 'emotion'
-import styled from 'react-emotion'
+import { css } from '@emotion/core'
+import styled from '@emotion/styled'
 import Box from 'ui-components/Box'
 
 export const ChartBeside = styled.div`

@@ -1,48 +1,48 @@
-import styled from 'react-emotion'
-import { css } from 'emotion'
+import styled from '@emotion/styled'
+import { css } from '@emotion/core'
 
-export const overlayClass = css`
-  z-index: 10;
-  background: rgba(0, 0, 0, 0.2);
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
-
-const getLeft = windowWidth => {
-  if (windowWidth > 1440) return '220px'
-  if (windowWidth > 850) return '110px'
-  return '50%'
+export const modalContentStyles = {
+  content: {
+    top: '0',
+    left: '0',
+    right: '0',
+    bottom: '0',
+    padding: '0',
+    background: 'none',
+    border: 'none',
+    borderRadius: '0',
+  },
 }
 
-export const modalStyles = windowWidth => `
+export const OnboardingContainer = styled.div`
   box-sizing: border-box;
   position: absolute;
-  top: ${windowWidth > 850 ? '200px' : '50%'};
-  left: ${getLeft(windowWidth)};
-  transform: ${windowWidth < 850 ? 'translate(-50%, -50%)' : 'none'};
+  top: 200px;
+  left: 220px;
+  transform: none;
   background: white;
   outline: none;
   z-index: 11;
   border-radius: 8px;
   transition: all 0.2s;
-  ${
-    windowWidth < 480
-      ? `
-      top: unset;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      transform: none;
-      border-radius: 0;
-      width: 100%;
-  `
-      : ''
+
+  @media (max-width: 1440px) {
+    left: 110px;
+  }
+
+  @media (max-width: 850px) {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  @media (max-width: 480px) {
+    top: unset;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transform: none;
+    border-radius: 0;
+    width: 100%;
   }
 `
 
@@ -61,7 +61,7 @@ export const PageIndicator = styled.button`
   width: 16px;
   height: 16px;
   border: none;
-  border-radius: 50%;
+  border-radius: 8px;
   margin-right: 8px;
 `
 

@@ -2,7 +2,6 @@
   "presets": ["next/babel"],
   "plugins": [
     "inline-svg",
-    "polished",
     "date-fns",
     ["emotion", { "inline": true }],
     [

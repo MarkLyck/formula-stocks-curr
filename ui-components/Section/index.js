@@ -1,6 +1,6 @@
 import React from 'react'
-import { css } from 'emotion'
-import styled from 'react-emotion'
+import { css } from '@emotion/core'
+import styled from '@emotion/styled'
 import PropTypes from 'prop-types'
 import mq from 'common/utils/mq'
 

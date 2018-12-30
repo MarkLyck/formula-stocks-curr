@@ -1,5 +1,5 @@
-import styled from 'react-emotion'
-import { css, keyframes } from 'emotion'
+import styled from '@emotion/styled'
+import { css, keyframes } from '@emotion/core'
 
 // This returns a animation
 const typedjsBlink = keyframes`
@@ -122,6 +122,7 @@ export const SliderImage = styled.div`
   background-position: center center;
   background-size: cover;
   width: 100%;
+  ${props => props.css && props.css}
 
   @media (max-width: 800px) {
     height: 400px;

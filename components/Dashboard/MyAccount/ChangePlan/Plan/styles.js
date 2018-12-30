@@ -1,4 +1,4 @@
-import styled from 'react-emotion'
+import styled from '@emotion/styled'
 
 export const PlanContainer = styled.div`
   padding: 16px;
@@ -8,13 +8,15 @@ export const PlanContainer = styled.div`
   align-items: center;
   border-bottom: 1px solid #eee;
   box-sizing: border-box;
+  background: ${props => (props.isSelected ? '#27a5f9' : 'white')};
+  color: ${props => (props.isSelected ? 'white' : props.theme.colors.black)};
 
   .is-current {
     color: ${props => props.theme.colors.gray};
   }
 
   &:hover {
-    color: ${props => props.theme.colors.primary};
+    color: ${props => (props.isSelected ? 'white' : props.theme.colors.primary)};
     cursor: pointer;
     .is-current {
       color: ${props => props.theme.colors.gray};

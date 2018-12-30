@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import Modal from 'react-modal'
+import ReactModal from 'react-modal'
 import { hasStorage } from 'common/utils/featureTests'
 import gql from 'graphql-tag'
 import Plan from './Plan'
-import { ChangePlanContainer, ChangePlanPaper, LargeFlatButton, modalStyles, overlayClass } from './styles'
+import { ChangePlanContainer, ChangePlanPaper, LargeFlatButton, modalContentStyles, ModalContainer } from './styles'
 
 const CREATE_SUBSCRIPTION = gql`
   query createSubscription($customerID: String!, $plan: String!, $billingPeriod: String, $taxPercent: Float) {
@@ -137,37 +137,39 @@ class ChangePlan extends Component {
             Next
           </LargeFlatButton>
         </ChangePlanPaper>
-        <Modal
+        <ReactModal
           isOpen={showConfirmation}
           onRequestClose={this.toggleModal}
-          overlayClassName={overlayClass}
-          css={modalStyles}
+          style={modalContentStyles}
+          overlayClassName="modal-overlay"
         >
-          <h3 className="title">Confirm plan change</h3>
-          <div className="beside">
-            <p className="description">Price:</p>
-            <p className={`price ${!taxPercent && 'semi-bold'}`}>
-              ${selectedPlan.price} {!taxPercent && selectedPlan.cycle}
-            </p>
-          </div>
-          {!!taxAmount && (
-            <React.Fragment>
-              <div className="beside">
-                <p className="description">{taxPercent}% VAT Tax:</p>
-                <p className="price">${taxAmount.toFixed(2)}</p>
-              </div>
-              <div className="beside">
-                <p className="price semi-bold">Total:</p>
-                <p className="price semi-bold">
-                  ${(selectedPlan.price + taxAmount).toFixed(2)} {selectedPlan.cycle}
-                </p>
-              </div>
-            </React.Fragment>
-          )}
-          <LargeFlatButton color="primary" align="center" onClick={this.changePlan}>
-            Subscribe for ${(selectedPlan.price + taxAmount).toFixed(2)} {selectedPlan.cycle}
-          </LargeFlatButton>
-        </Modal>
+          <ModalContainer>
+            <h3 className="title">Confirm plan change</h3>
+            <div className="beside">
+              <p className="description">Price:</p>
+              <p className={`price ${!taxPercent && 'semi-bold'}`}>
+                ${selectedPlan.price} {!taxPercent && selectedPlan.cycle}
+              </p>
+            </div>
+            {!!taxAmount && (
+              <React.Fragment>
+                <div className="beside">
+                  <p className="description">{taxPercent}% VAT Tax:</p>
+                  <p className="price">${taxAmount.toFixed(2)}</p>
+                </div>
+                <div className="beside">
+                  <p className="price semi-bold">Total:</p>
+                  <p className="price semi-bold">
+                    ${(selectedPlan.price + taxAmount).toFixed(2)} {selectedPlan.cycle}
+                  </p>
+                </div>
+              </React.Fragment>
+            )}
+            <LargeFlatButton color="primary" align="center" onClick={this.changePlan}>
+              Subscribe for ${(selectedPlan.price + taxAmount).toFixed(2)} {selectedPlan.cycle}
+            </LargeFlatButton>
+          </ModalContainer>
+        </ReactModal>
       </ChangePlanContainer>
     )
   }

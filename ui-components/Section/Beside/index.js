@@ -1,12 +1,12 @@
-import { css } from 'emotion'
-import styled from 'react-emotion'
+import { css } from '@emotion/core'
+import styled from '@emotion/styled'
 
 const Beside = styled.div`
   display: flex;
   justify-content: space-between;
   max-width: 1160px;
   width: 100%;
-  > div:first-child {
+  > div:first-of-type {
     margin-right: 24px;
   }
 `

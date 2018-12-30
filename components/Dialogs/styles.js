@@ -1,26 +1,39 @@
-import styled from 'react-emotion'
-import { css } from 'emotion'
+import styled from '@emotion/styled'
+import { css } from '@emotion/core'
 
 export const ModalContainer = styled.div`
   padding: 24px 16px;
 `
 
-export const modalStyles = `
-  background: white;
-  width: 360px;
-  height: auto;
-  outline: none;
-  z-index: 11;
-`
+export const smallModalContentStyles = {
+  content: {
+    position: 'absolute',
+    width: '360px',
+    height: 'auto',
+    top: '50%',
+    left: '50%',
+    right: 'unset',
+    bottom: 'unset',
+    padding: '0',
+    border: 'none',
+    transform: 'translate(-50%, -50%)',
+    overflow: 'visible',
+  },
+}
 
-export const fullScreenModalStyles = `
-  background: white;
-  width: 100%;
-  height: 100%;
-  outline: none;
-  z-index: 11;
-  overflow-y: scroll;
-`
+export const fullPageModalContentStyle = {
+  content: {
+    top: '0',
+    right: '0',
+    bottom: '0',
+    left: '0',
+    padding: '0',
+    overflowY: 'scroll',
+  },
+  overlay: {
+    background: 'white',
+  },
+}
 
 export const LegalContainer = styled.div`
   padding: 32px;
@@ -33,19 +46,6 @@ export const LegalContainer = styled.div`
     font-weight: 500;
     margin-bottom: 8px;
   }
-`
-
-export const overlayClass = css`
-  z-index: 10;
-  background: rgba(0, 0, 0, 0.5);
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `
 
 export const AppBar = styled.div`

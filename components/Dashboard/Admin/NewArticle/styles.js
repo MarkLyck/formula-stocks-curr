@@ -1,4 +1,4 @@
-import styled from 'react-emotion'
+import styled from '@emotion/styled'
 import Dropzone from 'react-dropzone'
 import { MegadraftEditor } from 'megadraft'
 
@@ -250,7 +250,7 @@ export const EditorContainer = styled.div`
     margin: 64px 0 24px 0;
     }
 
-    .megadraft-editor h2:first-child {
+    .megadraft-editor h2:first-of-type {
     margin-top: 0;
     }
 

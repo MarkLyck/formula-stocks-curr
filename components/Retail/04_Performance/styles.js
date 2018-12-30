@@ -1,4 +1,4 @@
-import styled from 'react-emotion'
+import styled from '@emotion/styled'
 import { boxStyle } from 'ui-components/Box'
 
 export const GraphContainer = styled.div`

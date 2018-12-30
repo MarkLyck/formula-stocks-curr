@@ -1,5 +1,5 @@
-import { keyframes } from 'emotion'
-import styled from 'react-emotion'
+import { keyframes } from '@emotion/core'
+import styled from '@emotion/styled'
 
 // This returns a animation
 const expand = keyframes`

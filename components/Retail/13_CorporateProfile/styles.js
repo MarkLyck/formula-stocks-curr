@@ -1,5 +1,5 @@
-import { css } from 'emotion'
-import styled from 'react-emotion'
+import { css } from '@emotion/core'
+import styled from '@emotion/styled'
 import mq from 'common/utils/mq'
 import Beside from 'ui-components/Section/Beside'
 import Box from 'ui-components/Box'
@@ -12,7 +12,7 @@ export const BesideContainer = styled.div`
                 max-width: 100%;
                 margin 0;
             }
-            > div:first-child {
+            > div:first-of-type {
                 margin-bottom: 32px;
             }
 	    `)};

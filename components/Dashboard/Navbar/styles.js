@@ -1,4 +1,4 @@
-import styled from 'react-emotion'
+import styled from '@emotion/styled'
 
 export const Logo = styled.div`
   background-image: url('/static/icons/logo_horizontal.svg');

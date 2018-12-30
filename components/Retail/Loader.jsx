@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'react-emotion'
+import styled from '@emotion/styled'
 import Navbar from 'components/Retail/Navbar'
 import { Section } from 'ui-components/Section'
 import SectionTitle from 'ui-components/Section/SectionTitle'

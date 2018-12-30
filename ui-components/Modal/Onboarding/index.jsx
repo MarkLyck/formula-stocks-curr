@@ -4,8 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Button from 'ui-components/Button'
 import useWindowWidth from 'common/hooks/useWindowWidth'
 import {
-  overlayClass,
-  modalStyles,
+  OnboardingContainer,
+  modalContentStyles,
   Arrow,
   XButton,
   Container,
@@ -25,33 +25,35 @@ const HelpModal = ({ isOpen, onRequestClose, activePageIndex, pages, setPageInde
     <ReactModal
       isOpen={isOpen}
       onRequestClose={onRequestClose}
-      overlayClassName={overlayClass}
-      css={modalStyles(windowWidth)}
+      overlayClassName="modal-overlay"
+      style={modalContentStyles}
     >
-      <Arrow />
-      <XButton onClick={onRequestClose}>
-        <FontAwesomeIcon icon={['far', 'times']} size="2x" />
-      </XButton>
-      <Container>{pages[activePageIndex]}</Container>
+      <OnboardingContainer>
+        <Arrow />
+        <XButton onClick={onRequestClose}>
+          <FontAwesomeIcon icon={['far', 'times']} size="2x" />
+        </XButton>
+        <Container>{pages[activePageIndex]}</Container>
 
-      <Divider />
+        <Divider />
 
-      <Container>
-        <IndicatorContainer>
-          {pages.map((_, i) => (
-            <PageIndicator key={i} onClick={() => setPageIndex(i)} isActive={activePageIndex === i} />
-          ))}
-        </IndicatorContainer>
+        <Container>
+          <IndicatorContainer>
+            {pages.map((_, i) => (
+              <PageIndicator key={i} onClick={() => setPageIndex(i)} isActive={activePageIndex === i} />
+            ))}
+          </IndicatorContainer>
 
-        <ButtonWrapper>
-          <Button type="light" variant="raised" onClick={onRequestClose}>
-            Skip Intro
-          </Button>
-          <Button variant="raised" onClick={next}>
-            {activePageIndex === pages.length - 1 ? 'Finish' : 'Continue'}
-          </Button>
-        </ButtonWrapper>
-      </Container>
+          <ButtonWrapper>
+            <Button type="light" variant="raised" onClick={onRequestClose}>
+              Skip Intro
+            </Button>
+            <Button variant="raised" onClick={next}>
+              {activePageIndex === pages.length - 1 ? 'Finish' : 'Continue'}
+            </Button>
+          </ButtonWrapper>
+        </Container>
+      </OnboardingContainer>
     </ReactModal>
   )
 }

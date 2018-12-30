@@ -1,5 +1,5 @@
-import styled from 'react-emotion'
-import { css, keyframes } from 'emotion'
+import styled from '@emotion/styled'
+import { css, keyframes } from '@emotion/core'
 
 const slideIn = keyframes`
   0% {
@@ -76,7 +76,7 @@ export const MenuList = styled.ul`
   }
 
   @media (max-height: 430px) {
-    > button:nth-child(4) {
+    > button:nth-of-type(4) {
       display: none;
     }
   }

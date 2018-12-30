@@ -3,13 +3,13 @@ import platform from 'platform'
 import gql from 'graphql-tag'
 import Router from 'next/router'
 import { graphql, compose } from 'react-apollo'
-import Modal from 'react-modal'
+import ReactModal from 'react-modal'
 import { hasStorage } from 'common/utils/featureTests'
 import { getDeviceType } from 'common/utils/helpers'
 import ModalHeader from 'components/Dialogs/ModalHeader'
 import AccountInfo from './AccountInfo'
 import BillingInfo from './BillingInfo'
-import { ModalContainer, modalStyles, overlayClass } from '../styles'
+import { ModalContainer, smallModalContentStyles } from '../styles'
 
 const SIGNUP_USER = gql`
   query signupUser(
@@ -54,7 +54,7 @@ const SIGNIN_USER_MUTATION = gql`
 
 class SignUp extends Component {
   static getDerivedStateFromProps(props, state) {
-    Modal.setAppElement('body')
+    ReactModal.setAppElement('body')
     return state
   }
 
@@ -117,7 +117,12 @@ class SignUp extends Component {
     const { onRequestClose, planPrice } = this.props
 
     return (
-      <Modal isOpen onRequestClose={onRequestClose} overlayClassName={overlayClass} css={modalStyles}>
+      <ReactModal
+        isOpen
+        onRequestClose={onRequestClose}
+        overlayClassName="modal-overlay"
+        style={smallModalContentStyles}
+      >
         <ModalContainer>
           <ModalHeader title="Sign up" toggleModal={onRequestClose} />
           {page === 1 && <AccountInfo nextPage={this.nextPage} />}
@@ -130,7 +135,7 @@ class SignUp extends Component {
             />
           )}
         </ModalContainer>
-      </Modal>
+      </ReactModal>
     )
   }
 }

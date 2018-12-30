@@ -1,4 +1,4 @@
-import styled from 'react-emotion'
+import styled from '@emotion/styled'
 
 export const FieldContainer = styled.div`
   position: relative;
@@ -21,7 +21,7 @@ export const FieldContainer = styled.div`
     }
   }
 
-  &:nth-child(2) {
+  &:nth-of-type(2) {
     margin-left: 16px;
   }
 `

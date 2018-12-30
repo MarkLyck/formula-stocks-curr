@@ -4,7 +4,7 @@ import { Formik } from 'formik'
 import Form, { Field, Row, ErrorMessage } from 'ui-components/Form'
 import Button from 'ui-components/Button'
 import CountrySelect from './CountrySelect'
-import { css } from 'emotion'
+import { css } from '@emotion/core'
 import { FooterText } from './styles'
 
 class AccountInfo extends Component {
@@ -78,7 +78,7 @@ class AccountInfo extends Component {
             label="City"
             placeholder="New York"
             icon="city"
-            className={css`
+            css={css`
               margin-right: 8px;
             `}
             onChange={handleChange}
@@ -91,7 +91,7 @@ class AccountInfo extends Component {
             label="Postal code"
             placeholder="10075"
             icon="map"
-            className={css`
+            css={css`
               margin-left: 8px;
             `}
             onChange={handleChange}

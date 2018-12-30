@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import gql from 'graphql-tag'
 import { graphql } from 'react-apollo'
-import Modal from 'react-modal'
+import ReactModal from 'react-modal'
 import Router from 'next/router'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { ModalContainer, overlayClass, modalStyles } from '../styles'
+import { ModalContainer, smallModalContentStyles } from '../styles'
 import { ForgotPassword } from './styles'
 import { Formik } from 'formik'
 import Form, { Row, Field, ErrorMessage } from 'ui-components/Form'
@@ -23,7 +23,7 @@ const AUTHENTICATE_EMAIL_USER = gql`
 
 class Login extends Component {
   static getDerivedStateFromProps(props, state) {
-    Modal.setAppElement('body')
+    ReactModal.setAppElement('body')
     return state
   }
   emailValueHasChanged = false
@@ -84,7 +84,12 @@ class Login extends Component {
     const { showResetPassword } = this.state
 
     return (
-      <Modal isOpen onRequestClose={onRequestClose} overlayClassName={overlayClass} css={modalStyles}>
+      <ReactModal
+        isOpen
+        onRequestClose={onRequestClose}
+        overlayClassName="modal-overlay"
+        style={smallModalContentStyles}
+      >
         <ModalContainer>
           {!showResetPassword ? (
             <React.Fragment>
@@ -145,7 +150,7 @@ class Login extends Component {
             <ResetPassword onRequestClose={onRequestClose} apolloClient={apolloClient} />
           )}
         </ModalContainer>
-      </Modal>
+      </ReactModal>
     )
   }
 }

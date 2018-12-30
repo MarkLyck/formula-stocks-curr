@@ -1,5 +1,5 @@
-import { css } from 'emotion'
-import styled from 'react-emotion'
+import { css } from '@emotion/core'
+import styled from '@emotion/styled'
 import ReactModal from 'react-modal'
 import mq from 'common/utils/mq'
 import { boxStyle } from 'ui-components/Box'
@@ -43,6 +43,7 @@ export const Modal = styled(ReactModal)`
 
 export const ListContainer = styled.div`
   overflow-y: auto;
+  margin-bottom: 16px;
   .gray-item {
     background: ${props => props.theme.colors.offWhite};
   }

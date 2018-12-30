@@ -1,12 +1,12 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import PropTypes from 'prop-types'
-import Modal from 'react-modal'
-import { overlayClass, AppBar, fullScreenModalStyles, LegalContainer } from '../styles'
+import ReactModal from 'react-modal'
+import { AppBar, fullPageModalContentStyle, LegalContainer } from '../styles'
 import { List } from './styles'
 
 const FAQ = ({ open, hide }) => (
-  <Modal isOpen onRequestClose={() => {}} overlayClassName={overlayClass} css={fullScreenModalStyles}>
+  <ReactModal isOpen onRequestClose={() => {}} overlayClassName="modal-overlay" style={fullPageModalContentStyle}>
     <AppBar>
       <h2>Frequently Asked Questions</h2>
       <button onClick={hide}>
@@ -289,7 +289,7 @@ const FAQ = ({ open, hide }) => (
         allowed to invest using the products for personal retirement purposes, alongside members through the website.
       </p>
     </LegalContainer>
-  </Modal>
+  </ReactModal>
 )
 
 FAQ.propTypes = {

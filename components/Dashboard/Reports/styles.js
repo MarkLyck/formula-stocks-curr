@@ -1,4 +1,4 @@
-import styled from 'react-emotion'
+import styled from '@emotion/styled'
 
 export const ReportContainer = styled.div`
   box-sizing: border-box;
@@ -15,7 +15,7 @@ export const SectionHeader = styled.h3`
   color: ${props => props.theme.colors.purple};
   margin-bottom: 8px;
   margin-top: 24px;
-  &:first-child {
+  &:first-of-type {
     margin-top: 8px;
   }
 `
