@@ -1,13 +1,21 @@
+# logs
 logs
 *.log
 npm-debug.log*
-.DS_Store
 
+# deployment
+now.json
+
+# build
 coverage
 node_modules
-businessLogic
 cypress/videos
 cypress/screenshots
 package-lock.json
 .next
 bundles
+
+# misc
+.DS_Store
+.env
+businessLogic
