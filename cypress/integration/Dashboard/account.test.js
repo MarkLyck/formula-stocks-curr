@@ -6,9 +6,11 @@ describe('Account', () => {
     cy.get('#email').type('test@formulastocks.com')
     cy.get('#password').type('viLeKEf4HfjRdsxdQv')
     cy.get('button[type="submit"]').click()
+    cy.contains('Portfolio yields')
 
     // My accunt should load
     cy.get('button[data-test-id="account-menu-btn"]').click()
+    cy.wait(500)
     cy.contains('My Account')
 
     // cancel subscription

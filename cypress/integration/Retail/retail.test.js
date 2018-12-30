@@ -58,14 +58,6 @@ describe('Retail', () => {
     cy.visit('localhost:3000')
     cy.contains('Sign up').click()
 
-    // check bad invalid email shows error
-    cy.get('#email').type('bad email')
-    cy.wait(50)
-    cy.get('#password')
-    cy.wait(50)
-    cy.get('div[data-test-id="error-message"]')
-    cy.contains('Invalid email address')
-
     // should not show an error with valid email and pw.
     cy.get('#email').type('valid@email.com')
     cy.get('#password').type('validPW123')

@@ -8,9 +8,11 @@ describe('AI Reports', () => {
     cy.get('#email').type('test@formulastocks.com')
     cy.get('#password').type('viLeKEf4HfjRdsxdQv')
     cy.get('button[type="submit"]').click()
+    cy.contains('Portfolio yields')
 
     // go to AI Reports
     cy.get('button[data-test-id="AI reports-menu-btn"]').click()
+    cy.wait(500)
 
     // should see AI Reports page
     cy.contains('AI Investment reports')
