@@ -13,7 +13,7 @@ const TermsOfService = ({ open, hideTerms }) => (
   >
     <AppBar>
       <h2>Terms of Service</h2>
-      <button onClick={hideTerms}>
+      <button onClick={hideTerms} date-test-id="close-btn">
         <FontAwesomeIcon icon={['far', 'times']} />
       </button>
     </AppBar>

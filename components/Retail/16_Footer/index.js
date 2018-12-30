@@ -63,11 +63,11 @@ class Footer extends Component {
           </Disclaimer>
           <Disclaimer>
             By visiting this site, you agree to our{' '}
-            <a role="button" tabIndex="0" onClick={this.toggleTerms}>
+            <a role="button" tabIndex="0" onClick={this.toggleTerms} date-test-id="terms-link">
               Terms of Service
             </a>{' '}
             &{' '}
-            <a role="button" tabIndex="-0" onClick={this.togglePrivacyPolicy}>
+            <a role="button" tabIndex="-0" onClick={this.togglePrivacyPolicy} date-test-id="privacy-link">
               Privacy Policy
             </a>
           </Disclaimer>

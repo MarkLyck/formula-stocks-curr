@@ -48,7 +48,7 @@ const HelpModal = ({ isOpen, onRequestClose, activePageIndex, pages, setPageInde
             <Button type="light" variant="raised" onClick={onRequestClose}>
               Skip Intro
             </Button>
-            <Button variant="raised" onClick={next}>
+            <Button variant="raised" onClick={next} data-test-id="next-onboarding-btn">
               {activePageIndex === pages.length - 1 ? 'Finish' : 'Continue'}
             </Button>
           </ButtonWrapper>

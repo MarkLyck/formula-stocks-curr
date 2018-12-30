@@ -9,7 +9,7 @@ const FAQ = ({ open, hide }) => (
   <ReactModal isOpen onRequestClose={() => {}} overlayClassName="modal-overlay" style={fullPageModalContentStyle}>
     <AppBar>
       <h2>Frequently Asked Questions</h2>
-      <button onClick={hide}>
+      <button onClick={hide} date-test-id="close-btn">
         <FontAwesomeIcon icon={['far', 'times']} />
       </button>
     </AppBar>

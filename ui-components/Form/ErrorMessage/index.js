@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { MessageContainer } from './styles'
 
 const ErrorMessage = ({ children }) => (
-  <div style={{ position: 'relative', width: '100%' }}>
+  <div style={{ position: 'relative', width: '100%' }} data-test-id="error-message">
     <MessageContainer>
       <FontAwesomeIcon icon="exclamation-circle" style={{ color: '#fff' }} />
       <p>{children}</p>
