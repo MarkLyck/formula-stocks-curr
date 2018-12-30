@@ -44,15 +44,24 @@ class PlanButtons extends Component {
               aria-owns={anchorEl ? 'plan-menu' : null}
               aria-haspopup="true"
               onClick={this.openMenu}
+              data-test-id="plan-change-btn"
             >
               <SelectedPlanName>{planName ? planName.toLowerCase() : ''}</SelectedPlanName>
               <FontAwesomeIcon icon="angle-down" style={{ marginRight: 0 }} />
             </Button>
             <DropDownMenu open={showMenu}>
-              <button onClick={() => this.setPlan(setPlan, 'ENTRY')}>Entry</button>
-              <button onClick={() => this.setPlan(setPlan, 'PREMIUM')}>Premium</button>
-              <button onClick={() => this.setPlan(setPlan, 'BUSINESS')}>Business</button>
-              <button onClick={() => this.setPlan(setPlan, 'FUND')}>Fund</button>
+              <button onClick={() => this.setPlan(setPlan, 'ENTRY')} data-test-id="entry-plan-btn">
+                Entry
+              </button>
+              <button onClick={() => this.setPlan(setPlan, 'PREMIUM')} data-test-id="premium-plan-btn">
+                Premium
+              </button>
+              <button onClick={() => this.setPlan(setPlan, 'BUSINESS')} data-test-id="business-plan-btn">
+                Business
+              </button>
+              <button onClick={() => this.setPlan(setPlan, 'FUND')} data-test-id="fund-plan-btn">
+                Fund
+              </button>
             </DropDownMenu>
           </React.Fragment>
         )}

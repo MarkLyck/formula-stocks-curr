@@ -31,7 +31,7 @@ const CloseButton = styled.button`
 const ModalHeader = ({ title, toggleModal }) => (
   <ModalHeaderContainer>
     <ModalTitle>{title}</ModalTitle>
-    <CloseButton onClick={toggleModal}>
+    <CloseButton onClick={toggleModal} data-test-id="modal-close-btn">
       <FontAwesomeIcon icon={['far', 'times']} size="2x" />
     </CloseButton>
   </ModalHeaderContainer>

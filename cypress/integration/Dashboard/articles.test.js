@@ -1,0 +1,15 @@
+describe('Articles', () => {
+  it('should load', () => {
+    cy.server()
+    cy.visit('localhost:3000')
+    cy.contains('Login').click()
+    cy.get('#email').type('test@formulastocks.com')
+    cy.get('#password').type('viLeKEf4HfjRdsxdQv')
+    cy.get('button[type="submit"]').click()
+
+    cy.get('button[data-test-id="articles-menu-btn"]').click()
+    // click Welcome article
+    cy.contains('Welcome').click()
+    cy.contains('The stock selections you find on')
+  })
+})

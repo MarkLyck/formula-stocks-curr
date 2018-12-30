@@ -20,6 +20,7 @@ class ReactivateSubscription extends Component {
       query: REACTIVATE_SUBSCRIPTION,
       variables: { subID },
     })
+
     const stripeSubscription = data.reactivateSubscription.stripeSubscription
     updateUser({ variables: { id: userID, stripeSubscription } })
   }

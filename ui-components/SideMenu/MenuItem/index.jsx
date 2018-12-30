@@ -34,7 +34,7 @@ class MenuItem extends Component {
     if (route === 'admin' && (!user || user.type !== 'admin')) return null
 
     return (
-      <Button onClick={this.clickHandler} isActive={isActive}>
+      <Button onClick={this.clickHandler} isActive={isActive} data-test-id={`${name}-menu-btn`}>
         <FontAwesomeIcon icon={icon} />
         <h4>{name}</h4>
         {badge && <Badge>{badge}</Badge>}
