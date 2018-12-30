@@ -1,4 +1,4 @@
-import styled from 'react-emotion'
+import styled from '@emotion/styled'
 
 export const List = styled.ol`
   padding-left: 24px;

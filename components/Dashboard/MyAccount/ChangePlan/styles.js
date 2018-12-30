@@ -1,6 +1,5 @@
-import styled from 'react-emotion'
+import styled from '@emotion/styled'
 import { darken } from 'polished'
-import { css } from 'emotion'
 import Box, { boxStyle } from 'ui-components/Box'
 
 export const ChangePlanContainer = styled.div`
@@ -41,20 +40,25 @@ export const LargeFlatButton = styled.button`
   }
 `
 
+export const modalContentStyles = {
+  content: {
+    top: '50%',
+    right: 'unset',
+    bottom: 'unset',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    padding: '0',
+    background: 'none',
+    border: 'none',
+    borderRadius: '0',
+    margin: 'auto',
+    width: '400px',
+  },
+}
+
 export const ModalContainer = styled.div`
-  padding: 24px 16px;
-
-  .submit-button {
-    margin: 8px 0 16px;
-  }
-`
-
-export const modalStyles = css`
   ${boxStyle};
-  width: 400px;
-  height: auto;
   outline: none;
-  z-index: 11;
   flex-direction: column;
   align-items: center;
 
@@ -79,17 +83,4 @@ export const modalStyles = css`
   button {
     margin-top: 28px;
   }
-`
-
-export const overlayClass = css`
-  z-index: 10;
-  background rgba(0,0,0,0.5);
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `

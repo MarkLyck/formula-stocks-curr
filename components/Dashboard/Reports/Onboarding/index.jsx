@@ -130,7 +130,9 @@ const ReportsOnboarding = ({ amCharts4Loaded, onboardingVisible, setOnboardingVi
         </ul>
         <OnboardingText>
           For a more in depth explanation{' '}
-          <Link href="/dashboard/articles/ai-score">see our article on AI Reports.</Link>
+          <Link href="/dashboard/articles/ai-score">
+            <a>see our article on AI Reports.</a>
+          </Link>
         </OnboardingText>
       </AIScoreTextWrapper>
     </AIScoreWrapper>

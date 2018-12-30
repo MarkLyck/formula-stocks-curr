@@ -1,4 +1,4 @@
-import styled from 'react-emotion'
+import styled from '@emotion/styled'
 import { darken } from 'polished'
 
 export const MenuContainer = styled.div`

@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'react-emotion'
+import styled from '@emotion/styled'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import withCharts from 'ui-components/Charts/withCharts'
 import MultiGaugeChart from 'ui-components/Charts/MultiGaugeChart'

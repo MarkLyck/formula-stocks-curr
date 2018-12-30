@@ -1,5 +1,5 @@
-import styled from 'react-emotion'
-import { keyframes } from 'emotion'
+import styled from '@emotion/styled'
+import { keyframes } from '@emotion/core'
 
 // This returns a animation
 const formError = keyframes`

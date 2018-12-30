@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'react-emotion'
+import styled from '@emotion/styled'
 import { darken } from 'polished'
 import Box from 'ui-components/Box'
 import theme from 'common/theme'
@@ -34,11 +34,11 @@ const Section = styled.div`
   background: rgba(${props => props.sectionColor + ',' + props.opacity});
   height: 4px;
   box-shadow: 0 2px 4px 0 rgba(111, 120, 156, 0.16);
-  &:first-child {
+  &:first-of-type {
     border-top-left-radius: 4px;
     border-bottom-left-radius: 4px;
   }
-  &:last-child {
+  &:last-of-type {
     border-top-right-radius: 4px;
     border-bottom-right-radius: 4px;
   }

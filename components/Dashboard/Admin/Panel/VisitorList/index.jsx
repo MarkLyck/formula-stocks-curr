@@ -2,10 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Table, TableBody, TableHeadCell, TableHead, TableRow } from 'ui-components/Table'
 import Visitor from './Visitor'
-import { ContainerStyle } from './styles'
+import { tableStyle } from './styles'
 
 const VisitorList = ({ visitors }) => (
-  <Table className={ContainerStyle}>
+  <Table css={tableStyle}>
     <TableHead>
       <TableRow>
         <TableHeadCell>Location</TableHeadCell>
@@ -21,9 +21,5 @@ const VisitorList = ({ visitors }) => (
     </TableBody>
   </Table>
 )
-
-VisitorList.propTypes = {
-  visitors: PropTypes.array,
-}
 
 export default VisitorList

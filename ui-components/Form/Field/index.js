@@ -17,6 +17,7 @@ class Field extends Component {
   render() {
     const {
       id,
+      css = '',
       className = '',
       autoFocus,
       icon,
@@ -30,7 +31,7 @@ class Field extends Component {
     const { focused } = this.state
 
     return (
-      <FieldContainer className={`field ${className} ${focused ? 'field--focused' : ''}`}>
+      <FieldContainer className={`field ${className} ${focused ? 'field--focused' : ''}`} css={css}>
         {icon && <Icon icon={icon} />}
         <Input
           id={id}

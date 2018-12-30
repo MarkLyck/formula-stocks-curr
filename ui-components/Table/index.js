@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'react-emotion'
+import styled from '@emotion/styled'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export const Table = styled.table`
@@ -7,6 +7,7 @@ export const Table = styled.table`
   margin-top: 16px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.16);
   background: #fcfcfc;
+  ${props => (props.css ? props.css : '')}
 `
 
 export const TableHead = styled.thead``

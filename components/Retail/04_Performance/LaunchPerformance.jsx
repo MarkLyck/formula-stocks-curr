@@ -79,8 +79,8 @@ const LaunchPerformance = ({ portfolioYields, marketPrices, planName, amCharts4L
         data={chartData}
         valueSuffix="%"
         gridOpacity={0.02}
-        paddingRight={-10}
-        paddingLeft={-5}
+        paddingRight={-3}
+        paddingLeft={-2}
         paddingBottom={-45}
         insideX
         insideY

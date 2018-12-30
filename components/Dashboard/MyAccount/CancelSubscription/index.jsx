@@ -28,7 +28,7 @@ class CancelSubscription extends Component {
 
   render() {
     const { stripeSubscription, updateUser, userID } = this.props
-    if (!stripeSubscription || !stripeSubscription.cancel_at_period_end)
+    if (!stripeSubscription || !stripeSubscription.id)
       return <p style={{ textAlign: 'center' }}>Please contact support if you'd like to cancel your subscription</p>
     const nowInUnixSeconds = Date.now() / 1000
 

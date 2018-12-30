@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'react-emotion'
+import styled from '@emotion/styled'
 import Box from 'ui-components/Box'
 
 const StatBox = styled(Box)`
@@ -27,7 +27,7 @@ const Container = styled.div`
     width: calc(100% / 4 - 32px);
   }
 
-  > div:nth-child(2) {
+  > div:nth-of-type(2) {
     > div:last-child {
       border-left: 1px solid #eaeaeb;
     }

@@ -1,4 +1,4 @@
-import styled from 'react-emotion'
+import styled from '@emotion/styled'
 
 export const Statistics = styled.div`
   display: flex;
@@ -11,18 +11,18 @@ export const Statistics = styled.div`
   > div {
     width: calc(100% / 4 - 32px);
   }
-  > div:first-child {
+  > div:first-of-type {
     background: ${props => props.theme.colors.primary};
     color: ${props => props.theme.colors.white};
   }
-  > div:nth-child(2) {
+  > div:nth-of-type(2) {
     background: ${props => props.theme.colors.white};
     color: ${props => props.theme.colors.primary};
     > div:last-child {
       border-left: 2px solid #eaeaeb;
     }
   }
-  > div:nth-child(3) {
+  > div:nth-of-type(3) {
     background: ${props => props.theme.colors.secondary};
     color: ${props => props.theme.colors.white};
   }

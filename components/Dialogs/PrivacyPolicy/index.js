@@ -1,11 +1,16 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import PropTypes from 'prop-types'
-import Modal from 'react-modal'
-import { overlayClass, AppBar, fullScreenModalStyles, LegalContainer } from '../styles'
+import ReactModal from 'react-modal'
+import { AppBar, fullPageModalContentStyle, LegalContainer } from '../styles'
 
 const TermsOfService = ({ open, hideTerms }) => (
-  <Modal isOpen={open} onRequestClose={() => {}} overlayClassName={overlayClass} css={fullScreenModalStyles}>
+  <ReactModal
+    isOpen={open}
+    onRequestClose={() => {}}
+    overlayClassName="modal-overlay"
+    style={fullPageModalContentStyle}
+  >
     <AppBar>
       <h2>Privacy Policy</h2>
       <button onClick={hideTerms}>
@@ -141,7 +146,7 @@ const TermsOfService = ({ open, hideTerms }) => (
 
       <p>© Formula Stocks ApS 2017 All Rights Reserved</p>
     </LegalContainer>
-  </Modal>
+  </ReactModal>
 )
 
 TermsOfService.propTypes = {

@@ -1,4 +1,4 @@
-import styled from 'react-emotion'
+import styled from '@emotion/styled'
 
 export const PricingText = styled.h3`
   font-weight: 500;

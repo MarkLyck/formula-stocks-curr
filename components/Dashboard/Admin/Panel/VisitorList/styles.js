@@ -1,26 +1,26 @@
-import { css } from 'emotion'
+import { css } from '@emotion/core'
 import { boxStyle } from 'ui-components/Box'
 
-export const ContainerStyle = css`
+export const tableStyle = css`
   ${boxStyle};
   display: table;
   width: calc(100% - 32px);
   margin: 16px;
 
   @media (max-width: 600px) {
-    th:nth-child(4) {
+    th:nth-of-type(4) {
       display: none;
     }
-    td:nth-child(4) {
+    td:nth-of-type(4) {
       display: none;
     }
   }
 
   @media (max-width: 456px) {
-    th:nth-child(3) {
+    th:nth-of-type(3) {
       display: none;
     }
-    td:nth-child(3) {
+    td:nth-of-type(3) {
       display: none;
     }
   }

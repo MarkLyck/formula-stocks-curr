@@ -3,7 +3,7 @@ import platform from 'platform'
 import fetchJsonP from 'fetch-jsonp'
 import { getDeviceType } from 'common/utils/helpers'
 import { isClient, hasStorage } from 'common/utils/featureTests'
-import { geoAccessKey } from 'common/constants'
+import { IP_API_KEY } from 'common/constants'
 
 const CREATE_VISITOR = gql`
   mutation createVisitor($device: Json!, $location: Json!, $referrer: String!) {
@@ -49,13 +49,22 @@ const createNewVisit = async (geoApiResponse, apolloClient) => {
 const newVisitor = apolloClient => {
   if (!isClient || (hasStorage && localStorage.getItem('visitorID'))) return null
 
-  return fetchJsonP(`https://api.ipapi.com/check?access_key=${geoAccessKey}`)
+  // TODO create a microservice for this call to hide API_KEY
+  // - MINOR priority free API and no security concerns. Only statistics from where visitors come from
+  return fetchJsonP(`https://api.ipapi.com/check?access_key=${IP_API_KEY}`)
     .then(response => {
       return response.json()
     })
-    .then(geoData => createNewVisit(geoData, apolloClient))
+    .then(geoData => {
+      if (geoData.success) {
+        createNewVisit(geoData, apolloClient)
+      } else {
+        console.error('ipapi call error', geoData.error)
+        createNewVisit({}, apolloClient)
+      }
+    })
     .catch(err => {
-      console.error(err)
+      console.error('ipapi call failed', err)
 
       createNewVisit({}, apolloClient)
     })

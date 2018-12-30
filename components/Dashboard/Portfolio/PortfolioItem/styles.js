@@ -1,4 +1,4 @@
-import styled from 'react-emotion'
+import styled from '@emotion/styled'
 import { TableRow } from 'ui-components/Table'
 
 export const ItemRow = styled(TableRow)`

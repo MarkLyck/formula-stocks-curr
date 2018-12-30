@@ -1,5 +1,5 @@
-import styled from 'react-emotion'
-import { css } from 'emotion'
+import styled from '@emotion/styled'
+import { css } from '@emotion/core'
 import mq from 'common/utils/mq'
 import Box from 'ui-components/Box'
 
@@ -11,7 +11,7 @@ export const ReturnsContainer = styled(Box)`
     .five-years {
       display: none;
     }
-    .divider:nth-child(2) {
+    .divider:nth-of-type(2) {
       display: none;
     }
   `)};
@@ -20,7 +20,7 @@ export const ReturnsContainer = styled(Box)`
     .three-years {
       display: none;
     }
-    .divider:nth-child(4) {
+    .divider:nth-of-type(4) {
       display: none;
     }
   `)};

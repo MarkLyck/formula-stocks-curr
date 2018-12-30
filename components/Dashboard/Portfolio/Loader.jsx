@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'react-emotion'
+import styled from '@emotion/styled'
 import Loader from 'static/icons/loader.svg'
 import Box from 'ui-components/Box'
 

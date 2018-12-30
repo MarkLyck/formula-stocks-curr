@@ -1,4 +1,4 @@
-import styled from 'react-emotion'
+import styled from '@emotion/styled'
 
 const Disclaimer = styled.p`
   color: ${props => props.theme.colors.black};

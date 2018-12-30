@@ -1,4 +1,4 @@
-import styled from 'react-emotion'
+import styled from '@emotion/styled'
 
 const Subtitle = styled.div`
   margin-bottom: 24px;

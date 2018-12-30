@@ -1,5 +1,5 @@
-import styled from 'react-emotion'
-import { css } from 'emotion'
+import styled from '@emotion/styled'
+import { css } from '@emotion/core'
 import mq from 'common/utils/mq'
 import Beside from 'ui-components/Section/Beside'
 import { boxStyle } from 'ui-components/Box'

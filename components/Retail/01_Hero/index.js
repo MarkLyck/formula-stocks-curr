@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { css } from 'emotion'
+import { css } from '@emotion/core'
 
 import Typed from 'typed.js'
 import { Element } from 'react-scroll'
@@ -69,7 +69,7 @@ class Hero extends Component {
         <Overlay />
         <Slider ref={slider => (this.slider = slider)} {...this.slickSettings}>
           <SliderImage
-            className={css`
+            css={css`
               background-image: url(/static/images/slides/speedster/speedster.jpg);
               background-image: image-set(
                 url(/static/images/slides/speedster/speedster.jpg) 1x,
@@ -79,7 +79,7 @@ class Hero extends Component {
           />
 
           <SliderImage
-            className={css`
+            css={css`
               background-image: url(/static/images/slides/target/target.jpg);
               background-image: image-set(
                 url(/static/images/slides/target/target.jpg) 1x,
@@ -89,7 +89,7 @@ class Hero extends Component {
           />
 
           <SliderImage
-            className={css`
+            css={css`
               background-image: url(/static/images/slides/net/net.jpg);
               background-image: image-set(
                 url(/static/images/slides/net/net.jpg) 1x,
@@ -99,7 +99,7 @@ class Hero extends Component {
           />
 
           <SliderImage
-            className={css`
+            css={css`
               background-image: url(/static/images/slides/boat/boat.jpg);
               background-image: image-set(
                 url(/static/images/slides/boat/boat.jpg) 1x,
@@ -109,7 +109,7 @@ class Hero extends Component {
           />
 
           <SliderImage
-            className={css`
+            css={css`
               background-image: url(/static/images/slides/family/family.jpg);
               background-image: image-set(
                 url(/static/images/slides/family/family.jpg) 1x,
@@ -118,7 +118,7 @@ class Hero extends Component {
             `}
           />
           <SliderImage
-            className={css`
+            css={css`
               background-image: url(/static/images/slides/achieveGoals/achieveGoals.jpg);
               background-image: image-set(
                 url(/static/images/slides/achieveGoals/achieveGoals.jpg) 1x,

@@ -1,4 +1,4 @@
-import styled from 'react-emotion'
+import styled from '@emotion/styled'
 import InputRange from 'react-input-range'
 
 export const HistoryContainer = styled.div`

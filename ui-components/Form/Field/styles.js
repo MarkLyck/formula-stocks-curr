@@ -1,4 +1,4 @@
-import styled from 'react-emotion'
+import styled from '@emotion/styled'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export const Icon = styled(FontAwesomeIcon)`
@@ -17,6 +17,8 @@ export const FieldContainer = styled.div`
   .with-icon {
     padding-left: 40px;
   }
+
+  ${props => props.css && props.css}
 `
 
 export const Input = styled.input`

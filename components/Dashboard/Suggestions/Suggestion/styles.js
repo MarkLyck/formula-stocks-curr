@@ -1,4 +1,4 @@
-import styled from 'react-emotion'
+import styled from '@emotion/styled'
 import Box from 'ui-components/Box'
 import { darken } from 'polished'
 

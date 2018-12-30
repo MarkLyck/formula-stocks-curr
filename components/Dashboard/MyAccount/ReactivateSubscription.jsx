@@ -26,7 +26,7 @@ class ReactivateSubscription extends Component {
 
   render() {
     const { stripeSubscription, updateUser, userID } = this.props
-    if (!stripeSubscription || stripeSubscription.cancel_at_period_end) return null
+    if (!stripeSubscription || !stripeSubscription.canceled_at) return null
 
     return (
       <Button

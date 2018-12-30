@@ -1,4 +1,4 @@
-import styled from 'react-emotion'
+import styled from '@emotion/styled'
 import { Table } from 'ui-components/Table'
 import { boxStyle } from 'ui-components/Box'
 
@@ -40,10 +40,10 @@ export const UsersContainer = styled(Table)`
     }
   }
   @media (max-width: 540px) {
-    td:nth-child(2) {
+    td:nth-of-type(2) {
       display: none;
     }
-    td:first-child {
+    td:first-of-type {
       p {
         white-space: nowrap;
         overflow: hidden;
@@ -54,10 +54,10 @@ export const UsersContainer = styled(Table)`
     }
   }
   @media (max-width: 380px) {
-    td:nth-child(3) {
+    td:nth-of-type(3) {
       display: none;
     }
-    td:first-child {
+    td:first-of-type {
       p {
         white-space: nowrap;
         overflow: hidden;
