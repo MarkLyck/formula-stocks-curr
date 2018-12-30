@@ -1,4 +1,4 @@
-import testPass from '../testPass'
+import testPass from '../../testPass'
 
 describe('AI Reports', () => {
   it('should load', () => {

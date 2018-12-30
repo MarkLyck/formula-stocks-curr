@@ -1,4 +1,4 @@
-import testPass from '../testPass'
+import testPass from '../../testPass'
 
 describe('Account', () => {
   it('should load', () => {
@@ -16,11 +16,11 @@ describe('Account', () => {
     cy.contains('My Account')
 
     // cancel subscription
-    cy.contains('Cancel subscription').click()
-    cy.contains('Your subscription is ending on')
+    // cy.contains('Cancel subscription').click()
+    // cy.contains('Your subscription is ending on')
 
     // reactivate subscription
-    cy.contains('Reactivate subscription').click()
-    cy.contains('your subscription will end').should('not.exist')
+    // cy.contains('Reactivate subscription').click()
+    // cy.contains('your subscription will end').should('not.exist')
   })
 })

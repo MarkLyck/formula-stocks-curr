@@ -1,4 +1,4 @@
-import testPass from '../testPass'
+import testPass from '../../testPass'
 
 describe('Portfolio', () => {
   it('should load', () => {
