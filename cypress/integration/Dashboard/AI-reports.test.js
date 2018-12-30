@@ -1,3 +1,5 @@
+import testPass from '../testPass'
+
 describe('AI Reports', () => {
   it('should load', () => {
     cy.server()
@@ -6,7 +8,7 @@ describe('AI Reports', () => {
     // Login
     cy.contains('Login').click()
     cy.get('#email').type('test@formulastocks.com')
-    cy.get('#password').type('viLeKEf4HfjRdsxdQv')
+    cy.get('#password').type(testPass)
     cy.get('button[type="submit"]').click()
     cy.contains('Portfolio yields')
 
