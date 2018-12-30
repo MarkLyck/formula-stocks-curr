@@ -48,7 +48,7 @@ const createNewVisit = async (geoApiResponse, apolloClient) => {
 
 const newVisitor = apolloClient => {
   // ignore E2E tests and programatic browsers.
-  if (platform.name === 'electron') return null
+  if (platform.name === 'Electron') return null
   if (!isClient || (hasStorage && localStorage.getItem('visitorID'))) return null
 
   // TODO create a microservice for this call to hide API_KEY
