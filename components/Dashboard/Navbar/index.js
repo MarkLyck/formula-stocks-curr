@@ -8,7 +8,7 @@ import SideMenu from 'ui-components/SideMenu'
 import { hasStorage, isClient } from 'common/utils/featureTests'
 import PlanMenu from './planMenu'
 import AdminButtons from './adminButtons'
-// import ArticlesBackButton from './articlesBackButton'
+import ArticlesBackButton from './articlesBackButton'
 import { Bar, Logo, LeftContent, HamburgerButton } from './styles'
 
 let selectedPlan =
@@ -28,12 +28,12 @@ class NavBar extends Component {
 
     const isPlanPage = path.includes('portfolio') || path.includes('suggestions') || path.includes('trades')
     const isAdminPage = path.includes('admin')
-    // const isArticlePage = Router.router.query.title
+    const isArticlePage = Router.router.route === '/dashboard/articles/article'
     // if (!isPlanPage && !isAdminPage && !isArticlePage) return (<Bar><span /><Logo /></Bar>)
 
     return (
       <Bar>
-        {/* {isArticlePage && <ArticlesBackButton />} */}
+        {isArticlePage && <ArticlesBackButton />}
         <LeftContent>
           <HamburgerButton onClick={this.handleSideMenuToggle}>
             <FontAwesomeIcon icon={['far', 'bars']} />
