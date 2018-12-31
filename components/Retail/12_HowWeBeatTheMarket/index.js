@@ -6,7 +6,7 @@ import BrochureLink from 'components/BrochureLink'
 import { List, ListItem } from './styles'
 
 const HowWeBeatTheMarket = () => (
-  <Section data-offwhite>
+  <Section data-white>
     <Element name="how-it-works" />
     <SectionTitle>How we beat the market</SectionTitle>
     <p>
@@ -24,8 +24,7 @@ const HowWeBeatTheMarket = () => (
     </p>
     <List>
       <ListItem>
-        <span>Artificial Intelligence</span> – the capability for an algorithm to learn from experience, and reason
-        based upon it.
+        <span>Artificial Intelligence</span> – our speciality revolves around artificial intelligence in several forms
       </ListItem>
       <ListItem>
         <span>Quantitative business analytics</span> – analyzing business models using big data.

@@ -7,7 +7,7 @@ import Right from 'ui-components/Section/Beside/Right'
 import { BesideContainer, Card, ProfileImg, ProfileTextContainer, Subtitle } from './styles'
 
 const CorporateProfile = () => (
-  <Section data-offwhite>
+  <Section data-white>
     <SectionTitle>Corporate profile</SectionTitle>
     <BesideContainer>
       <Beside>

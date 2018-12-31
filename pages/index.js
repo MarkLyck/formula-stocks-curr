@@ -24,9 +24,10 @@ import WhatToExpect from 'components/Retail/07_WhatToExpect'
 import PilotProgram from 'components/Retail/08_PilotProgram'
 import LongTermPerformance from 'components/Retail/09_LongTermPerformance'
 import Statistics from 'components/Retail/10_Statistics'
-import HowWeBeatTheMarket from 'components/Retail/11_HowWeBeatTheMarket'
-import RiskManagement from 'components/Retail/12_RiskManagement'
-import CorporateProfile from 'components/Retail/13_CorporateProfile'
+import AIScore from 'components/Retail/11_AIScore'
+import HowWeBeatTheMarket from 'components/Retail/12_HowWeBeatTheMarket'
+import RiskManagement from 'components/Retail/13_RiskManagement'
+import CorporateProfile from 'components/Retail/14_CorporateProfile'
 import ScrolledToBottom from 'components/Retail/15_ScrolledToBottom'
 import Footer from 'components/Retail/16_Footer'
 
@@ -117,6 +118,7 @@ class Retail extends Component {
                 avgLoss={avgLoss}
                 sortinoRatio={sortinoRatio}
               />
+              <AIScore amCharts4Loaded={amCharts4Loaded} />
               <HowWeBeatTheMarket />
               <RiskManagement winRatio={winRatio} sortinoRatio={sortinoRatio} avgGain={avgGain} avgLoss={avgLoss} />
               <CorporateProfile />
