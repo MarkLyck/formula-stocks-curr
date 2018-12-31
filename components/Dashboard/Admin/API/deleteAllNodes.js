@@ -45,7 +45,7 @@ const deleteAllNodes = async (T, apolloClient, apiConsole) => {
   apiConsole.log('getAll node IDs...')
   const allNodes = await getAll(T, apolloClient)
   apiConsole.log('deleting nodes...')
-  await del(T, allNodes, apolloClient)
+  await del(T, allNodes, apolloClient, apiConsole)
   apiConsole.log(`Deleted: ${allNodes.length} ${T}s`)
   if (allNodes.length === 1000) {
     apiConsole.log('need to fetch more nodes to delete')
