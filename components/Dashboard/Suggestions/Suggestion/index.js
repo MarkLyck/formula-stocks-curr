@@ -61,6 +61,10 @@ The total allocation in % of this stock in the portfolio, after this and all pre
     const allocation = suggestion.percentage_weight ? suggestion.percentage_weight : suggestion.portfolio_weight
 
     const latestPrice = stock ? stock.latestPrice : suggestion.suggested_price
+    const percentIncrease =
+      suggestion.action === 'SELL'
+        ? ((latestPrice - suggestion.original_purchase) / suggestion.original_purchase) * 100
+        : null
 
     return (
       <SuggContainer>
@@ -95,13 +99,16 @@ The total allocation in % of this stock in the portfolio, after this and all pre
             {suggestion.action === 'SELL' && (
               <ListItem name="Purchase price" value={`$${suggestion.original_purchase.toFixed(2)}`} />
             )}
+            {suggestion.action === 'SELL' && (
+              <ListItem name="Return" value={`${percentIncrease > 0 && '+'}${percentIncrease.toFixed(2)}%`} />
+            )}
             {suggestion.advanced_data ? (
               <Button type="light" variant="raised" onClick={this.toggleDetails}>
                 Details
               </Button>
             ) : (
               <React.Fragment>
-                <Placeholder className="placeholder" />
+                {suggestion.action !== 'SELL' && <Placeholder className="placeholder" />}
                 {suggestionsType === 'Trades' && <Placeholder className="placeholder" />}
                 <ButtonPlaceholder className="placeholder" />
               </React.Fragment>
