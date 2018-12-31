@@ -14,7 +14,7 @@ const ScrolledToBottom = ({ toggleSignUpModal }) => {
   }
 
   return (
-    <Section>
+    <Section data-offwhite>
       <SectionTitle>Now that you have scrolled all the way to the bottom...</SectionTitle>
       <Subtitle>It can be just the right moment to stop reading and do some clicking instead.</Subtitle>
       <Button variant="raised" onClick={toggleSignUpModal}>

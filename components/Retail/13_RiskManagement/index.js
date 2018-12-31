@@ -11,7 +11,7 @@ const RiskManagement = ({ winRatio, avgGain, avgLoss, sortinoRatio }) => {
   )} * ${avgLoss.toFixed(2)})`
 
   return (
-    <Section>
+    <Section data-offwhite>
       <SectionTitle>Risk management</SectionTitle>
       <p>
         Formula Stocks moderates risk, and we believe it yields a lower degree of risk than passive stock market

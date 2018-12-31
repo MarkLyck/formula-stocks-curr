@@ -12,6 +12,7 @@ export const AIScoreContainer = styled(ExpandedScore)`
   &:hover {
     cursor: default;
   }
+  ${props => props.css}
 `
 
 export const AIScoreValue = styled.h1`
@@ -47,7 +48,7 @@ const NUM_SECTIONS = 21
 const MAX = 100
 const MIN = -100
 
-const AIScore = ({ value, name, amCharts4Loaded }) => {
+const AIScore = ({ value, name, amCharts4Loaded, css }) => {
   const outputValue = value * 100
   let valueColor = 'black'
   if (outputValue > (MAX * 2) / NUM_SECTIONS / 2) {
@@ -57,7 +58,7 @@ const AIScore = ({ value, name, amCharts4Loaded }) => {
   }
 
   return (
-    <AIScoreContainer>
+    <AIScoreContainer css={css}>
       <BrainIcon icon="brain" />
       {amCharts4Loaded && <MultiGaugeChart numberOfSections={NUM_SECTIONS} min={MIN} max={MAX} value={outputValue} />}
       <AIScoreValue color={valueColor}>

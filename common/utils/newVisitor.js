@@ -58,7 +58,7 @@ const newVisitor = apolloClient => {
       return response.json()
     })
     .then(geoData => {
-      if (geoData.success) {
+      if (geoData.ip) {
         createNewVisit(geoData, apolloClient)
       } else {
         console.error('ipapi call error', geoData.error)
