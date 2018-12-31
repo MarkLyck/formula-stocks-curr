@@ -20,17 +20,16 @@ const WhatIsIt = () => (
             reward, with lower expected risk.
             <br />
             <br />
-            Included is a model portfolio designed to enhance wealth through intelligent portfolio management. Use it to
-            better your investment performance.
+            Included is a model portfolio designed to build wealth through intelligent portfolio management. Use it to
+            better your investment performance. Or use AI investment reports for individual stock picking.
             <br />
             <br />
-            Using Formula Stocks is easy. After logging in you will find recommendations for stocks trading on all US
-            stock exchanges including large international stocks. These can be traded from anywhere in the world,
-            through any bank or broker you already use.
+            Using Formula Stocks is easy. Recommendations are for stocks trading on all US exchanges including larger
+            international stocks. Trade these from anywhere in the world, through a bank or broker you already use.
             <br />
             <br />
-            You can use these individually or replicate our model portfolio. Simply follow the instructions, and you
-            will be handling your own account in no time.
+            Using Formula Stocks is easy. Simply follow the instructions, and you will be handling your own account in
+            no time.
           </p>
         </Right>
       </Beside>

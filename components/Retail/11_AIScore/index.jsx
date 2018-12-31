@@ -1,5 +1,5 @@
 import React from 'react'
-import AIScore from 'components/Dashboard/Reports/Report/AIScore'
+import { AIScoreWithoutCharts } from 'components/Dashboard/Reports/Report/AIScore'
 import AIScoreChart from 'components/Dashboard/Reports/Onboarding/AIScoreChart'
 import Section from 'ui-components/Section'
 import SectionTitle from 'ui-components/Section/SectionTitle'
@@ -24,7 +24,9 @@ const AIScoreSection = ({ amCharts4Loaded }) => (
             Green? Consider buying.
           </div>
         </Left>
-        <Right>{amCharts4Loaded && <AIScore value={0.82} name="AI Score" css={aiScoreStyle} />}</Right>
+        <Right>
+          {amCharts4Loaded && <AIScoreWithoutCharts value={0.82} name="AI Score" css={aiScoreStyle} amCharts4Loaded />}
+        </Right>
       </Beside>
     </BesideContainer>
 
