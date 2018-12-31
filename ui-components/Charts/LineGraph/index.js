@@ -54,6 +54,8 @@ const createChart = settings => {
   dateAxis.renderer.labels.template.fontSize = 12
   dateAxis.renderer.labels.template.fontWeight = categoryBoldLabels ? 600 : 500
   if (labelXOffset) dateAxis.renderer.labels.template.paddingBottom = labelXOffset
+  dateAxis.renderer.minLabelPosition = 0.1
+  dateAxis.renderer.maxLabelPosition = 0.99
   // dateAxis tooltip
   const dateAxisTooltip = dateAxis.tooltip
   dateAxisTooltip.background.fill = am4core.color(theme.colors.black)
@@ -79,6 +81,8 @@ const createChart = settings => {
   valueAxis.renderer.labels.template.fontWeight = 400
   valueAxis.renderer.labels.template.paddingLeft = labelYOffset
   valueAxis.tooltip.disabled = true
+  valueAxis.renderer.minLabelPosition = 0.1
+  valueAxis.renderer.maxLabelPosition = 0.99
   valueAxis.logarithmic = logarithmic
 
   // set up guides

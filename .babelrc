@@ -16,6 +16,7 @@
           "pages": "./pages",
           "static": "./static",
           "@fortawesome/pro-solid-svg-icons/faAngleDown": "./static/icons/faIcons/faAngleDown",
+          "@fortawesome/pro-solid-svg-icons/faAngleLeft": "./static/icons/faIcons/faAngleLeft",
           "@fortawesome/pro-regular-svg-icons/faBars": "./static/icons/faIcons/faBars",
           "@fortawesome/pro-regular-svg-icons/faBrain": "./static/icons/faIcons/faBrain",
           "@fortawesome/pro-solid-svg-icons/faCalendarTimes": "./static/icons/faIcons/faCalendarTimes",

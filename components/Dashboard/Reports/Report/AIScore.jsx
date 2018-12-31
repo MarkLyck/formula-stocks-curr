@@ -69,4 +69,6 @@ const AIScore = ({ value, name, amCharts4Loaded, css }) => {
   )
 }
 
+export const AIScoreWithoutCharts = React.memo(AIScore)
+
 export default React.memo(withCharts(AIScore, { version: 4 }))

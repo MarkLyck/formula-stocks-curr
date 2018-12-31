@@ -9,10 +9,11 @@ import theme from 'common/theme'
 import { GraphContainer } from './styles'
 
 const createChartData = (planData, marketPrices) => {
-  let lastMarketBalance = 25000
+  const startingValue = 25000
+  let lastMarketBalance = startingValue
   return planData.map((point, i) => {
-    let balance = 25000
-    let marketBalance = 25000
+    let balance = startingValue
+    let marketBalance = startingValue
 
     let marketPercentIncrease = 0
     if (marketPrices[i]) {
@@ -23,20 +24,18 @@ const createChartData = (planData, marketPrices) => {
       balance = planData[i].balance
     }
     if (marketPrices[i] && marketPrices[i].price) {
-      marketBalance = 25000 + Math.floor(marketPercentIncrease * 25000)
+      marketBalance = startingValue + Math.floor(marketPercentIncrease * startingValue)
       lastMarketBalance = marketBalance
-    } else if (i !== 0 && planData[i - 1] !== 25000) {
+    } else if (i !== 0 && planData[i - 1] !== startingValue) {
       marketBalance = lastMarketBalance
     }
-
-    const month = Number(point.date.month) > 9 ? point.date.month : `0${point.date.month}`
 
     return {
       market: Number(marketBalance) || 0,
       fs: Number(balance),
       fsBalloon: formatPrice(balance, false, false, '$'),
       marketBalloon: formatPrice(marketBalance, false, false, '$'),
-      date: `${point.date.year}-${month}-${point.date.day}`,
+      date: new Date(point.date.year, point.date.month - 1, point.date.day),
     }
   })
 }

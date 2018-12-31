@@ -1,6 +1,7 @@
 import { library } from '@fortawesome/fontawesome-svg-core'
 
 import { faAngleDown } from '@fortawesome/pro-solid-svg-icons/faAngleDown'
+import { faAngleLeft } from '@fortawesome/pro-solid-svg-icons/faAngleLeft'
 import { faBars } from '@fortawesome/pro-regular-svg-icons/faBars'
 import { faBrain } from '@fortawesome/pro-regular-svg-icons/faBrain'
 import { faCalendarTimes } from '@fortawesome/pro-solid-svg-icons/faCalendarTimes'
@@ -41,6 +42,7 @@ import { faUsers } from '@fortawesome/pro-solid-svg-icons/faUsers'
 
 library.add(
   faAngleDown,
+  faAngleLeft,
   faBars,
   faBrain,
   faCalendarTimes,
