@@ -73,7 +73,12 @@ const createChart = settings => {
   valueAxis.baseValue = min
   valueAxis.renderer.inside = insideY
   valueAxis.strictMinMax = strictMinMax
-  valueAxis.renderer.labels.template.adapter.add('text', text => valuePrefix + text + valueSuffix)
+  valueAxis.renderer.labels.template.adapter.add('text', text => {
+    // bug in amcharts, this prefix is also used for guides.
+    // this checks if it's a guide text (not numbers) and doesn't apply prefix/suffix to it.
+    if (!text || isNaN(Number(text.split(',').join()))) return text
+    return valuePrefix + text + valueSuffix
+  })
   valueAxis.renderer.grid.template.strokeOpacity = gridOpacity
   valueAxis.renderer.baseGrid.disabled = true // disables zero-line
   valueAxis.renderer.labels.template.fill = am4core.color(theme.colors.black)
