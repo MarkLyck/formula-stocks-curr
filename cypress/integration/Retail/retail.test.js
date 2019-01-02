@@ -20,6 +20,13 @@ describe('Retail', () => {
     cy.contains('What do I get with a Formula Stocks subscription?')
     cy.get('button[date-test-id="close-btn"]').click()
 
+    // scrolling down to load all elements so the terms & privacy links can be clicked.
+    cy.contains('How we beat the market').scrollIntoView()
+    cy.contains('Risk management').scrollIntoView()
+    cy.contains('Corporate profile').scrollIntoView()
+    cy.contains('Now that you have scrolled all the way to the bottom...').scrollIntoView()
+    cy.contains('Contact us at:').scrollIntoView()
+
     // check Terms and Conditions modal
     cy.get('a[date-test-id="terms-link"]').click()
     cy.contains('Please read these Terms and Conditions carefully')

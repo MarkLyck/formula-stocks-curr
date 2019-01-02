@@ -9,9 +9,6 @@ export const GraphContainer = styled.div`
   br {
     display: none;
   }
-  .longterm-legends {
-    z-index: 10;
-  }
   #single-long-term-performance-graph {
     overflow: hidden;
     ${boxStyle};

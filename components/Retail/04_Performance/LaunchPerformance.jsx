@@ -69,8 +69,8 @@ const LaunchPerformance = ({ portfolioYields, marketPrices, planName, amCharts4L
 
   return (
     <GraphContainer>
-      <Legends>
-        <Legend color={theme.colors.primary}>
+      <Legends horizontal left={40} top={8}>
+        <Legend color={theme.colors.primary} width={40}>
           <p>{planName}</p>
         </Legend>
         <Legend color={theme.colors.black}>
