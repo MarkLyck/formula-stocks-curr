@@ -25,13 +25,20 @@ const GET_LOGGED_IN_USER = gql`
 `
 
 export const UPDATE_USER = gql`
-  mutation updateUser($id: ID!, $stripeSubscription: Json, $plan: String, $type: String) {
-    updateUser(id: $id, stripeSubscription: $stripeSubscription, plan: $plan, type: $type) {
+  mutation updateUser($id: ID!, $stripeSubscription: Json, $plan: String, $type: String, $cancelReason: String) {
+    updateUser(
+      id: $id
+      stripeSubscription: $stripeSubscription
+      plan: $plan
+      type: $type
+      cancelReason: $cancelReason
+    ) {
       id
       name
       email
       plan
       stripeSubscription
+      cancelReason
     }
   }
 `
