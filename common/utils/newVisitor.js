@@ -46,7 +46,16 @@ const createNewVisit = async (geoApiResponse, apolloClient) => {
   }
 }
 
+const blackListedReferrers = [
+  'http://localhost:3000/',
+  'http://localhost:3000',
+  'http://localhost:3000/__/',
+  'https://zeit.co/',
+]
+
 const newVisitor = apolloClient => {
+  // don't mistakenly create visitors during development.
+  if (blackListedReferrers.includes(document.referrer)) return null
   // ignore E2E tests and programatic browsers.
   if (platform.name === 'Electron') return null
   if (!isClient || (hasStorage && localStorage.getItem('visitorID'))) return null
