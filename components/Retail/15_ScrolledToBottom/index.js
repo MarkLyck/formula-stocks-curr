@@ -1,4 +1,5 @@
 import React from 'react'
+import LazyLoad from 'react-lazyload'
 import Section from 'ui-components/Section'
 import SectionTitle from 'ui-components/Section/SectionTitle'
 import Subtitle from 'ui-components/Section/Subtitle'
@@ -14,16 +15,18 @@ const ScrolledToBottom = ({ toggleSignUpModal }) => {
   }
 
   return (
-    <Section data-offwhite>
-      <SectionTitle>Now that you have scrolled all the way to the bottom...</SectionTitle>
-      <Subtitle>It can be just the right moment to stop reading and do some clicking instead.</Subtitle>
-      <Button variant="raised" onClick={toggleSignUpModal}>
-        I'm ready to try
-      </Button>
-      <ChatLink id="talk-to-us" href="mailto:i194mpvo@incoming.intercom.io">
-        Want more information? - Simply ask.
-      </ChatLink>
-    </Section>
+    <LazyLoad height={286} once>
+      <Section data-offwhite>
+        <SectionTitle>Now that you have scrolled all the way to the bottom...</SectionTitle>
+        <Subtitle>It can be just the right moment to stop reading and do some clicking instead.</Subtitle>
+        <Button variant="raised" onClick={toggleSignUpModal}>
+          I'm ready to try
+        </Button>
+        <ChatLink id="talk-to-us" href="mailto:i194mpvo@incoming.intercom.io">
+          Want more information? - Simply ask.
+        </ChatLink>
+      </Section>
+    </LazyLoad>
   )
 }
 

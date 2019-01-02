@@ -1,4 +1,5 @@
 import React from 'react'
+import LazyLoad from 'react-lazyload'
 import Section from 'ui-components/Section'
 import SectionTitle from 'ui-components/Section/SectionTitle'
 import Beside from 'ui-components/Section/Beside'
@@ -12,7 +13,9 @@ const WhatIsIt = () => (
     <BesideContainer>
       <Beside>
         <Left data-center>
-          <Screenshot src="static/images/screenshots/trades.png" alt="" />
+          <LazyLoad height={303} offset={100} once>
+            <Screenshot src="static/images/screenshots/trades.png" alt="" />
+          </LazyLoad>
         </Left>
         <Right>
           <p>

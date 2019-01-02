@@ -1,4 +1,5 @@
 import React from 'react'
+import LazyLoad from 'react-lazyload'
 import PropTypes from 'prop-types'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
@@ -18,24 +19,26 @@ const GET_DATA_SINCE_2009 = gql`
 `
 
 const Performance = ({ portfolioYields, planName, amCharts4Loaded }) => (
-  <Query query={GET_DATA_SINCE_2009}>
-    {({ loading, error, data = {} }) => {
-      const { DJIA = {} } = data
-      return (
-        <Section>
-          <Element name="performance" />
-          <SectionTitle>Performance</SectionTitle>
-          <Subtitle>Unleveraged returns since 2009, compared to the Dow Jones Industrial Average.</Subtitle>
-          <LaunchPerformance
-            portfolioYields={portfolioYields}
-            marketPrices={DJIA.pricesSince2009 || []}
-            planName={planName}
-            amCharts4Loaded={amCharts4Loaded}
-          />
-        </Section>
-      )
-    }}
-  </Query>
+  <LazyLoad height={690} offset={500} once>
+    <Query query={GET_DATA_SINCE_2009}>
+      {({ loading, error, data = {} }) => {
+        const { DJIA = {} } = data
+        return (
+          <Section>
+            <Element name="performance" />
+            <SectionTitle>Performance</SectionTitle>
+            <Subtitle>Unleveraged returns since 2009, compared to the Dow Jones Industrial Average.</Subtitle>
+            <LaunchPerformance
+              portfolioYields={portfolioYields}
+              marketPrices={DJIA.pricesSince2009 || []}
+              planName={planName}
+              amCharts4Loaded={amCharts4Loaded}
+            />
+          </Section>
+        )
+      }}
+    </Query>
+  </LazyLoad>
 )
 
 Performance.propTypes = {

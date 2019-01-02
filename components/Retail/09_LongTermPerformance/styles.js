@@ -18,3 +18,13 @@ export const GraphContainer = styled.div`
     height: 100%;
   }
 `
+
+export const ChartLoaderContainer = styled.div`
+  ${boxStyle};
+  width: 100%;
+  height: 65vh;
+  max-height: 800px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
