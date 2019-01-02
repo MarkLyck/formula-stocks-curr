@@ -79,7 +79,7 @@ class Hero extends Component {
             `}
           />
 
-          <LazyLoad once>
+          <LazyLoad height="100%" once>
             <SliderImage
               css={css`
                 background-image: url(/static/images/slides/target/target.jpg);
@@ -91,7 +91,7 @@ class Hero extends Component {
             />
           </LazyLoad>
 
-          <LazyLoad once>
+          <LazyLoad height="100%" once>
             <SliderImage
               css={css`
                 background-image: url(/static/images/slides/net/net.jpg);
@@ -102,7 +102,7 @@ class Hero extends Component {
               `}
             />
           </LazyLoad>
-          <LazyLoad once>
+          <LazyLoad height="100%" once>
             <SliderImage
               css={css`
                 background-image: url(/static/images/slides/boat/boat.jpg);
@@ -114,7 +114,7 @@ class Hero extends Component {
             />
           </LazyLoad>
 
-          <LazyLoad once>
+          <LazyLoad height="100%" once>
             <SliderImage
               css={css`
                 background-image: url(/static/images/slides/family/family.jpg);
@@ -125,7 +125,7 @@ class Hero extends Component {
               `}
             />
           </LazyLoad>
-          <LazyLoad once>
+          <LazyLoad height="100%" once>
             <SliderImage
               css={css`
                 background-image: url(/static/images/slides/achieveGoals/achieveGoals.jpg);
