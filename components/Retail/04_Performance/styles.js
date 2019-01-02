@@ -36,3 +36,13 @@ export const GraphContainer = styled.div`
     }
   }
 `
+
+export const ChartLoaderContainer = styled.div`
+  ${boxStyle};
+  height: 480px;
+  width: 100%;
+  max-width: 720px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`

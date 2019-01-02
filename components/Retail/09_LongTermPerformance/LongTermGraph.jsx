@@ -6,7 +6,7 @@ import LineGraph from 'ui-components/Charts/LineGraph'
 import { formatPrice } from 'common/utils/helpers'
 import { Legends, Legend } from 'ui-components/Charts/Legends'
 import theme from 'common/theme'
-import { GraphContainer } from './styles'
+import { GraphContainer, ChartLoaderContainer } from './styles'
 
 const createChartData = (planData, marketPrices) => {
   const startingValue = 25000
@@ -42,7 +42,11 @@ const createChartData = (planData, marketPrices) => {
 
 const LongTermPerformance = ({ planData, marketPrices, planName, amCharts4Loaded }) => {
   if (!planData || !planData.length || !amCharts4Loaded) {
-    return <FontAwesomeIcon icon="spinner-third" spin size="4x" />
+    return (
+      <ChartLoaderContainer>
+        <FontAwesomeIcon icon="spinner-third" spin size="4x" />
+      </ChartLoaderContainer>
+    )
   }
   const chartData = createChartData(planData, marketPrices)
 

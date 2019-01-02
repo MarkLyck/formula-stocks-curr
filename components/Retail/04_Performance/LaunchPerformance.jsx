@@ -8,7 +8,7 @@ import LineGraph from 'ui-components/Charts/LineGraph'
 import { Legends, Legend } from 'ui-components/Charts/Legends'
 import { formatPrice } from 'common/utils/helpers'
 import theme from 'common/theme'
-import { GraphContainer } from './styles'
+import { GraphContainer, ChartLoaderContainer } from './styles'
 
 const createChartData = (portfolioYields, marketPrices) => {
   const startValue = portfolioYields[0].balance
@@ -34,7 +34,11 @@ const createChartData = (portfolioYields, marketPrices) => {
 
 const LaunchPerformance = ({ portfolioYields, marketPrices, planName, amCharts4Loaded }) => {
   if (!portfolioYields || !marketPrices.length || !portfolioYields.length || !amCharts4Loaded) {
-    return <FontAwesomeIcon icon="spinner-third" spin size="4x" />
+    return (
+      <ChartLoaderContainer>
+        <FontAwesomeIcon icon="spinner-third" spin size="4x" />
+      </ChartLoaderContainer>
+    )
   }
   const chartData = createChartData(portfolioYields, marketPrices)
 

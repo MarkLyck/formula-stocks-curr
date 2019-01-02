@@ -23,9 +23,12 @@ export const Screenshot = styled.img`
   height: auto;
   width: 100%;
   transition: transform 0.5s;
-  margin-bottom: 32px;
-  margin-top: 24px;
+
   &:hover {
     transform: scale(1.05);
+  }
+
+  @media (max-width: 992px) {
+    margin-bottom: 32px;
   }
 `

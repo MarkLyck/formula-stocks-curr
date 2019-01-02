@@ -47,6 +47,7 @@ export default class FSDocument extends Document {
 
           <link rel="preconnect" href="https://vars.hotjar.com" />
           <link rel="preconnect" href="https://js.intercomcdn.com" />
+          <link rel="preconnect" href="https://api.ipapi.com" />
 
           <style dangerouslySetInnerHTML={{ __html: this.props.css }} />
         </Head>

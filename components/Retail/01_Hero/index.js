@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import LazyLoad from 'react-lazyload'
 import PropTypes from 'prop-types'
 import { css } from '@emotion/core'
 
@@ -78,54 +79,63 @@ class Hero extends Component {
             `}
           />
 
-          <SliderImage
-            css={css`
-              background-image: url(/static/images/slides/target/target.jpg);
-              background-image: image-set(
-                url(/static/images/slides/target/target.jpg) 1x,
-                url(/static/images/slides/target/target@2x.jpg) 2x
-              );
-            `}
-          />
+          <LazyLoad once>
+            <SliderImage
+              css={css`
+                background-image: url(/static/images/slides/target/target.jpg);
+                background-image: image-set(
+                  url(/static/images/slides/target/target.jpg) 1x,
+                  url(/static/images/slides/target/target@2x.jpg) 2x
+                );
+              `}
+            />
+          </LazyLoad>
 
-          <SliderImage
-            css={css`
-              background-image: url(/static/images/slides/net/net.jpg);
-              background-image: image-set(
-                url(/static/images/slides/net/net.jpg) 1x,
-                url(/static/images/slides/net/net@2x.jpg) 2x
-              );
-            `}
-          />
+          <LazyLoad once>
+            <SliderImage
+              css={css`
+                background-image: url(/static/images/slides/net/net.jpg);
+                background-image: image-set(
+                  url(/static/images/slides/net/net.jpg) 1x,
+                  url(/static/images/slides/net/net@2x.jpg) 2x
+                );
+              `}
+            />
+          </LazyLoad>
+          <LazyLoad once>
+            <SliderImage
+              css={css`
+                background-image: url(/static/images/slides/boat/boat.jpg);
+                background-image: image-set(
+                  url(/static/images/slides/boat/boat.jpg) 1x,
+                  url(/static/images/slides/boat/boat@2x.jpg) 2x
+                );
+              `}
+            />
+          </LazyLoad>
 
-          <SliderImage
-            css={css`
-              background-image: url(/static/images/slides/boat/boat.jpg);
-              background-image: image-set(
-                url(/static/images/slides/boat/boat.jpg) 1x,
-                url(/static/images/slides/boat/boat@2x.jpg) 2x
-              );
-            `}
-          />
-
-          <SliderImage
-            css={css`
-              background-image: url(/static/images/slides/family/family.jpg);
-              background-image: image-set(
-                url(/static/images/slides/family/family.jpg) 1x,
-                url(/static/images/slides/family/family@2x.jpg) 2x
-              );
-            `}
-          />
-          <SliderImage
-            css={css`
-              background-image: url(/static/images/slides/achieveGoals/achieveGoals.jpg);
-              background-image: image-set(
-                url(/static/images/slides/achieveGoals/achieveGoals.jpg) 1x,
-                url(/static/images/slides/achieveGoals/achieveGoals@2x.jpg) 2x
-              );
-            `}
-          />
+          <LazyLoad once>
+            <SliderImage
+              css={css`
+                background-image: url(/static/images/slides/family/family.jpg);
+                background-image: image-set(
+                  url(/static/images/slides/family/family.jpg) 1x,
+                  url(/static/images/slides/family/family@2x.jpg) 2x
+                );
+              `}
+            />
+          </LazyLoad>
+          <LazyLoad once>
+            <SliderImage
+              css={css`
+                background-image: url(/static/images/slides/achieveGoals/achieveGoals.jpg);
+                background-image: image-set(
+                  url(/static/images/slides/achieveGoals/achieveGoals.jpg) 1x,
+                  url(/static/images/slides/achieveGoals/achieveGoals@2x.jpg) 2x
+                );
+              `}
+            />
+          </LazyLoad>
         </Slider>
       </HeroContainer>
     )
