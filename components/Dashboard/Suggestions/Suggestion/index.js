@@ -29,7 +29,7 @@ class Suggestion extends Component {
 Percentage of total portfolio value to add\\A\\A 
 
 E.g. if it\\'s 5.00% and your portfolio consists of $40,000 in stocks and 
-cash,\00a0 you would purchase for $2,000 of this stock.\\A\\A 
+cash, \00a0 you would purchase for $2,000 of this stock.\\A\\A 
 
 It makes no difference if you already have this stock in your portfolio. Trades are in addition to existing positions.
 `

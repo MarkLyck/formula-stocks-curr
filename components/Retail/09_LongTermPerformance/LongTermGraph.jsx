@@ -120,7 +120,7 @@ const LongTermPerformance = ({ planData, marketPrices, planName, amCharts4Loaded
 
   return (
     <GraphContainer>
-      <Legends left={40} className="longterm-legends">
+      <Legends left={40} top={12}>
         <Legend color={theme.colors.primary}>
           <p className="plan-name">{planName}</p>
         </Legend>
