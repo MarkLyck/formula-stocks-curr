@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
-import fecha from 'fecha'
+import { format } from 'date-fns'
 import { planIds, marketIds } from 'common/constants'
 import hasPermissions from 'common/utils/hasPermissions'
 import PlanContext from 'common/Contexts/PlanContext'
@@ -149,7 +149,7 @@ class Portfolio extends Component {
                   <LastUpdated>
                     Last rebalanced:{' '}
                     <DateLabel>
-                      {fecha.format(
+                      {format(
                         new Date(lastRebalanceDate.year, lastRebalanceDate.month - 1, lastRebalanceDate.day),
                         'MMM D, YYYY'
                       )}

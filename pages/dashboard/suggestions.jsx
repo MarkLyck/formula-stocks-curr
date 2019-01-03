@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
-import fecha from 'fecha'
+import { format } from 'date-fns'
 import Router from 'next/router'
 
 import PlanContext from 'common/Contexts/PlanContext'
@@ -132,7 +132,7 @@ class Suggestions extends Component {
                   )}
                   {plan.updatedAt && (
                     <LastUpdated>
-                      Last updated: <DateLabel>{fecha.format(new Date(plan.updatedAt), 'MMM D, YYYY')}</DateLabel>
+                      Last updated: <DateLabel>{format(new Date(plan.updatedAt), 'MMM D, YYYY')}</DateLabel>
                     </LastUpdated>
                   )}
                 </React.Fragment>

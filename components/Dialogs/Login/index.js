@@ -55,7 +55,9 @@ class Login extends Component {
       .signinUser({ variables: { email: values.email, password: values.password } })
       .then(response => {
         setSubmitting(false)
-        localStorage.setItem('graphcoolToken', response.data.authenticateUser.token)
+        // using setItem here causes issues with Router.push as dashboard checks for this token and it doesn't exist yet.
+        // TODO undo this when a success message is displayed.
+        localStorage.graphcoolToken = response.data.authenticateUser.token
         Router.push('/dashboard/portfolio')
       })
       .catch(error => {

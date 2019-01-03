@@ -1,7 +1,7 @@
 import React from 'react'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
-import fecha from 'fecha'
+import { format } from 'date-fns'
 import { statisticsId } from 'common/constants'
 import withDashboard from 'components/Dashboard/withDashboard'
 import withCharts from 'ui-components/Charts/withCharts'
@@ -15,7 +15,7 @@ import VisitorList from 'components/Dashboard/Admin/Panel/VisitorList'
 
 const date = new Date()
 date.setDate(date.getDate() - 30)
-const date30DaysAgo = fecha.format(date, 'YYYY-MM-DD')
+const date30DaysAgo = format(date, 'YYYY-MM-DD')
 
 const PANEL_QUERY = gql`
   query {
