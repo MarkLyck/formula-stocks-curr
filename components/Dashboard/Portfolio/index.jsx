@@ -15,7 +15,7 @@ import StatisticsContainer from 'ui-components/statisticsContainer'
 import StatisticsBox from 'ui-components/statisticsContainer/StatisticsBox'
 import PortfolioLoader from 'components/Dashboard/Portfolio/Loader'
 import LoadingError from 'ui-components/Error/LoadingError'
-import PlanPermissionError from 'ui-components/Error/PlanPermissionError'
+import PermissionError from 'ui-components/Error/PermissionError'
 
 import {
   PortfolioTable,
@@ -45,14 +45,14 @@ const PORTFOLIO_QUERY = gql`
 
 class Portfolio extends Component {
   render() {
-    const { amCharts4Loaded, userPlan, userType } = this.props
+    const { amCharts4Loaded, user, history } = this.props
 
     return (
       <PlanContext.Consumer>
         {({ planName }) => (
           <Query query={PORTFOLIO_QUERY} variables={{ id: planIds[planName] }}>
             {({ loading, error, data }) => {
-              const hasPlanPerms = hasPermissions(planName, userPlan, userType)
+              const hasPlanPerms = hasPermissions(planName, user)
               if (loading) return <PortfolioLoader />
               if (error || !data || !data.Plan || !data.DJIA) return <LoadingError error={error} />
               const { Plan, DJIA } = data
@@ -90,7 +90,7 @@ class Portfolio extends Component {
                     hasPlanPerms={hasPlanPerms}
                   />
                   <AnnualReturns portfolioYields={Plan.portfolioYields} totalBalance={totalBalance} />
-                  {hasPlanPerms === false && <PlanPermissionError planName={planName} />}
+                  {hasPlanPerms === false && <PermissionError planName={planName} history={history} user={user} />}
                   {hasPlanPerms === 'WAITING' && (
                     <LoadingBox>
                       <Loader text="Loading Holdings..." />
