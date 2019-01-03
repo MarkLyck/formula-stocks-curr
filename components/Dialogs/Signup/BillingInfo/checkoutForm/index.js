@@ -43,12 +43,13 @@ class CheckoutForm extends Component {
     postalCode: 'empty',
     nameClass: 'empty',
     error: {},
-    submitting: false,
+    isSubmitting: false,
     showTerms: false,
+    signupSuccess: false,
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.signupError) return { submitting: false }
+    if (nextProps.signupError) return { isSubmitting: false }
     return {}
   }
 
@@ -71,23 +72,25 @@ class CheckoutForm extends Component {
     this.setState(newState)
   }
 
+  showSuccess = () => this.setState({ isSubmitting: false, signupSuccess: true })
+
   handleSubmit = e => {
     e.preventDefault()
-    const { submitting } = this.state
+    const { isSubmitting } = this.state
     const { stripe, taxPercent, handleSignup } = this.props
 
-    if (submitting) return null
+    if (isSubmitting) return null
     if (!this.name) {
-      this.setState({ submitting: false, error: { message: 'Please enter your full name' } })
+      this.setState({ isSubmitting: false, error: { message: 'Please enter your full name' } })
       return null
     }
 
-    this.setState({ submitting: true, error: {} })
+    this.setState({ isSubmitting: true, error: {} })
     stripe.createToken().then(payload => {
       if (payload.error) {
-        this.setState({ submitting: false, error: payload.error })
+        this.setState({ isSubmitting: false, error: payload.error })
       } else {
-        handleSignup(this.name, taxPercent, payload)
+        handleSignup(this.name, taxPercent, this.showSuccess, payload)
       }
     })
     return e
@@ -115,9 +118,12 @@ class CheckoutForm extends Component {
   toggleTerms = () => this.setState({ showTerms: !this.state.showTerms })
 
   render() {
-    const { error, submitting, showTerms } = this.state
+    const { error, isSubmitting, showTerms, signupSuccess } = this.state
     const { planPrice, taxAmount, taxPercent } = this.props
     const cardNumberError = error.message && error.message.indexOf('number') > -1
+
+    const buttonColor = signupSuccess ? 'green' : 'primary'
+    const buttonText = signupSuccess ? 'Success' : 'Try it free for 30 days'
 
     return (
       <Form onSubmit={this.handleSubmit}>
@@ -188,12 +194,14 @@ class CheckoutForm extends Component {
             </div>
           </React.Fragment>
         )}
-        <Button color="primary" type="submit" variant="raised" disabled={submitting} style={{ marginTop: '16px' }}>
-          {!submitting ? (
-            'Try it free for 30 days'
-          ) : (
-            <FontAwesomeIcon icon="spinner-third" spin style={{ fontSize: '1.25rem' }} />
-          )}
+        <Button
+          background={buttonColor}
+          type="submit"
+          variant="raised"
+          disabled={isSubmitting || signupSuccess}
+          style={{ marginTop: '16px' }}
+        >
+          {isSubmitting ? <FontAwesomeIcon icon="spinner-third" spin style={{ fontSize: '1.25rem' }} /> : buttonText}
         </Button>
         <Disclaimer className="disclaimer">
           By signing up you agree to our{' '}

@@ -5,6 +5,7 @@ import { graphql } from 'react-apollo'
 import ReactModal from 'react-modal'
 import Router from 'next/router'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { hasStorage } from 'common/utils/featureTests'
 import { ModalContainer, smallModalContentStyles } from '../styles'
 import { ForgotPassword } from './styles'
 import { Formik } from 'formik'
@@ -31,6 +32,7 @@ class Login extends Component {
   state = {
     showResetPassword: false,
     loginError: '',
+    loginSuccess: false,
   }
 
   validate = values => {
@@ -55,10 +57,13 @@ class Login extends Component {
       .signinUser({ variables: { email: values.email, password: values.password } })
       .then(response => {
         setSubmitting(false)
-        // using setItem here causes issues with Router.push as dashboard checks for this token and it doesn't exist yet.
-        // TODO undo this when a success message is displayed.
-        localStorage.graphcoolToken = response.data.authenticateUser.token
-        Router.push('/dashboard/portfolio')
+        if (hasStorage) {
+          localStorage.setItem('graphcoolToken', response.data.authenticateUser.token)
+        }
+
+        this.setState({ loginSuccess: true })
+        // shortly show the login success message before sending them to portfolio
+        setTimeout(() => Router.push('/dashboard/portfolio'), 200)
       })
       .catch(error => {
         console.error(error)
@@ -83,7 +88,10 @@ class Login extends Component {
 
   render() {
     const { onRequestClose, apolloClient } = this.props
-    const { showResetPassword } = this.state
+    const { showResetPassword, loginSuccess } = this.state
+
+    const buttonColor = loginSuccess ? 'green' : 'primary'
+    const buttonText = loginSuccess ? 'Success' : 'Login'
 
     return (
       <ReactModal
@@ -136,11 +144,16 @@ class Login extends Component {
                         value={values.password}
                       />
                     </Row>
-                    <Button type="submit" color="primary" variant="raised" disabled={isSubmitting}>
+                    <Button
+                      type="submit"
+                      background={buttonColor}
+                      variant="raised"
+                      disabled={isSubmitting || loginSuccess}
+                    >
                       {isSubmitting ? (
                         <FontAwesomeIcon icon="spinner-third" spin style={{ fontSize: '1.25rem' }} />
                       ) : (
-                        'Login'
+                        buttonText
                       )}
                     </Button>
                     <ForgotPassword onClick={this.toggleResetPassword}>Forgot your password?</ForgotPassword>

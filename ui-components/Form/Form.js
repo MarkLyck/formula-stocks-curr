@@ -59,7 +59,6 @@ export default styled.form`
     width: 100%;
     height: 40px;
     margin: 0 16px;
-    background-color: ${props => props.theme.colors.primary};
     border-radius: 4px;
     color: #fff;
     font-weight: 600;
