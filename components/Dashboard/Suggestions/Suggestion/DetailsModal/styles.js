@@ -17,6 +17,8 @@ export const Modal = styled(ReactModal)`
   transform: translate(-50%, -50%);
   outline: none;
   min-width: 400px;
+  height: 100%;
+  max-height: 520px;
 
   h2 {
     font-size: 1.2rem;
@@ -24,9 +26,14 @@ export const Modal = styled(ReactModal)`
   }
 
   button {
+    height: 40px;
     margin: auto 16px 16px;
     display: flex;
     justify-content: center;
+  }
+
+  @media (max-height: 580px) {
+    max-height: calc(100% - 32px);
   }
 
   ${mq.medium(css`
@@ -36,6 +43,7 @@ export const Modal = styled(ReactModal)`
   ${mq.small(css`
     width: 100%;
     height: 100%;
+    max-height: 100%;
     min-width: 0;
     border-radius: 0;
   `)};
