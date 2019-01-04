@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
-import fecha from 'fecha'
+import { format } from 'date-fns'
 import Router from 'next/router'
 
 import PlanContext from 'common/Contexts/PlanContext'
@@ -17,7 +17,7 @@ import StatisticsBox from 'ui-components/statisticsContainer/StatisticsBox'
 import Suggestion from 'components/Dashboard/Suggestions/Suggestion'
 import SuggestionsLoader from 'components/Dashboard/Suggestions/Loader'
 import LoadingError from 'ui-components/Error/LoadingError'
-import PlanPermissionError from 'ui-components/Error/PlanPermissionError'
+import PermissionError from 'ui-components/Error/PermissionError'
 
 import { SuggestionsList, LastUpdated, DateLabel } from 'components/Dashboard/Suggestions/styles'
 
@@ -65,7 +65,7 @@ class Suggestions extends Component {
   }
 
   render() {
-    const { amCharts4Loaded, userPlan, userType, history } = this.props
+    const { amCharts4Loaded, user, history } = this.props
 
     return (
       <PlanContext.Consumer>
@@ -79,7 +79,7 @@ class Suggestions extends Component {
               const plan = data.Plan
 
               const listStatTitle = suggestionsType === 'Trades' ? 'Trades this month' : 'Suggestions'
-              const hasPlanPerms = hasPermissions(planName, userPlan, userType)
+              const hasPlanPerms = hasPermissions(planName, user)
 
               const suggestions = plan.suggestions
                 .filter(sugg => {
@@ -104,7 +104,7 @@ class Suggestions extends Component {
                       icon="dollar-sign"
                     />
                   </StatisticsContainer>
-                  {hasPlanPerms === false && <PlanPermissionError planName={planName} history={history} />}
+                  {hasPlanPerms === false && <PermissionError planName={planName} history={history} user={user} />}
                   {hasPlanPerms === true && (
                     <SuggestionsList>
                       <Query
@@ -132,7 +132,7 @@ class Suggestions extends Component {
                   )}
                   {plan.updatedAt && (
                     <LastUpdated>
-                      Last updated: <DateLabel>{fecha.format(new Date(plan.updatedAt), 'MMM D, YYYY')}</DateLabel>
+                      Last updated: <DateLabel>{format(new Date(plan.updatedAt), 'MMM D, YYYY')}</DateLabel>
                     </LastUpdated>
                   )}
                 </React.Fragment>
