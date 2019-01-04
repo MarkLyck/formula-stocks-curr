@@ -63,9 +63,7 @@ const createChart = settings => {
   hand.pin.disabled = true
   hand.value = 0
 
-  setTimeout(() => {
-    hand.showValue(value, 1000, am4core.ease.cubicOut)
-  }, 500)
+  chart.events.on('ready', () => hand.showValue(value, 1000, am4core.ease.cubicOut))
 
   return chart
 }

@@ -17,9 +17,17 @@ let selectedPlan =
 class NavBar extends Component {
   state = {
     sideMenuVisible: false,
+    logoClickable: false,
+  }
+
+  componentDidMount() {
+    setTimeout(() => this.setState({ logoClickable: true }), 500)
   }
 
   handleSideMenuToggle = () => this.setState({ sideMenuVisible: !this.state.sideMenuVisible })
+  goToFrontPage = () => {
+    if (this.state.logoClickable) Router.push('/')
+  }
 
   render() {
     const { user } = this.props
@@ -42,7 +50,7 @@ class NavBar extends Component {
           {isAdminPage && <AdminButtons route={path} />}
         </LeftContent>
         {/* {isPlanPage && <PlanButtons selectedPlan={selectedPlan} actions={actions} />} */}
-        <Logo onClick={() => Router.push('/')} isAdminPage={isAdminPage} />
+        <Logo onClick={this.goToFrontPage} isAdminPage={isAdminPage} />
         <SlideIn isVisible={sideMenuVisible} onRequestClose={this.handleSideMenuToggle}>
           <SideMenu user={user} isPopOver onRequestClose={this.handleSideMenuToggle} />
         </SlideIn>

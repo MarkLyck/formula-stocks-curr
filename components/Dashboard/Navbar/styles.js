@@ -36,16 +36,19 @@ export const HamburgerButton = styled.button`
 `
 
 export const Bar = styled.div`
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 180px;
+  right: 0;
   height: 72px;
   padding: 0 24px;
-  width: 100%;
   box-sizing: border-box;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
   display: flex;
   justify-content: space-between;
   align-items: center;
   background: ${props => props.theme.colors.white};
+  z-index: 10;
 
   button {
     margin-right: 8px;
@@ -54,7 +57,12 @@ export const Bar = styled.div`
     cursor: pointer;
   }
 
+  @media (max-width: 1440px) {
+    left: 90px;
+  }
+
   @media (max-width: 850px) {
+    left: 0;
     padding-left: 12px;
   }
 `

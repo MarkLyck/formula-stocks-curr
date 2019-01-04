@@ -23,40 +23,44 @@ const getAll = async (T, apolloClient) => {
   return toIds(data[`all${T}s`])
 }
 
-const del = async (T, accounts, apolloClient, apiConsole) => {
-  try {
-    await Promise.all(
-      accounts.map(id =>
-        apolloClient.mutate({
-          mutation: DELETE_QUERY(T),
-          variables: { id },
-        })
-      )
+const del = async (T, accounts, apolloClient, apiConsole) =>
+  await Promise.all(
+    accounts.map(id =>
+      apolloClient.mutate({
+        mutation: DELETE_QUERY(T),
+        variables: { id },
+      })
     )
+  )
+
+const maxRuns = 3
+let allNodesDeleted = false
+const deleteAllNodes = async (T, apolloClient, apiConsole, runs) => {
+  apiConsole.log('fetching all node IDs...')
+  const allNodes = await getAll(T, apolloClient)
+  apiConsole.log('fetched ' + allNodes.length + ' IDs')
+  apiConsole.log('deleting nodes...')
+  try {
+    await del(T, allNodes, apolloClient, apiConsole)
+    apiConsole.log(`Deleted: ${allNodes.length} ${T}s`)
+    if (allNodes.length === 1000 && runs <= maxRuns) {
+      runs += 1
+      apiConsole.log('need to fetch more nodes to delete')
+      await deleteAllNodes(T, apolloClient, apiConsole)
+    }
   } catch (err) {
-    apiConsole.error('ERROR: deleting nodes' + err)
+    apiConsole.error('ERROR: deleting nodes ' + err)
     console.error(err)
     return
   }
-}
 
-let allNodesDeleted = false
-const deleteAllNodes = async (T, apolloClient, apiConsole) => {
-  apiConsole.log('getAll node IDs...')
-  const allNodes = await getAll(T, apolloClient)
-  apiConsole.log('deleting nodes...')
-  await del(T, allNodes, apolloClient, apiConsole)
-  apiConsole.log(`Deleted: ${allNodes.length} ${T}s`)
-  if (allNodes.length === 1000) {
-    apiConsole.log('need to fetch more nodes to delete')
-    await deleteAllNodes(T, apolloClient, apiConsole)
-  }
   return true
 }
 
 const detroyAllDataIn = async (T, apolloClient, apiConsole) => {
+  let runs = 1
   console.log('deleting all Nodes')
-  await deleteAllNodes(T, apolloClient, apiConsole)
+  await deleteAllNodes(T, apolloClient, apiConsole, runs)
   apiConsole.log('deleted all nodes')
 }
 

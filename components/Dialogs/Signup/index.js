@@ -64,7 +64,7 @@ class SignUp extends Component {
 
   nextPage = accountInfo => this.setState({ page: this.state.page + 1, accountInfo })
 
-  handleSignup = async (name, taxPercent, { token }) => {
+  handleSignup = async (name, taxPercent, showSuccess, { token }) => {
     const { apolloClient } = this.props
     const { accountInfo } = this.state
 
@@ -100,7 +100,9 @@ class SignUp extends Component {
       if (hasStorage) {
         localStorage.setItem('graphcoolToken', data.signupUser.token)
       }
-      Router.push('/dashboard/portfolio')
+      showSuccess()
+      // shortly show the signup success message before sending them to portfolio
+      setTimeout(() => Router.push('/dashboard/portfolio'), 200)
     } catch (error) {
       console.error('signup error', error)
       this.setState({ signupError: error.message })

@@ -12,7 +12,7 @@ const slideIn = keyframes`
 
 const expandedMenu = css`
   box-sizing: content-box;
-  width: 210px;
+  width: 180px;
   button {
     position: relative;
     box-sizing: border-box;
@@ -21,7 +21,7 @@ const expandedMenu = css`
     align-items: center;
     justify-content: flex-start;
     padding-left: 20px;
-    width: 100%;
+    width: 180px;
     height: 72px;
     svg {
       font-size: 1.4rem;
@@ -46,13 +46,17 @@ export const MenuList = styled.ul`
   position: relative;
   background: ${props => props.theme.colors.darkGray};
   box-shadow: 2px 0 4px rgba(0, 0, 0, 0.25);
-  z-index: 10;
+  z-index: 15;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100px;
+  width: 90px;
   height: 100%;
   box-sizing: border-box;
+  button {
+    width: 90px;
+  }
+
   > button:last-child {
     position: absolute;
     bottom: 0;
