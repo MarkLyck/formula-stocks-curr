@@ -19,26 +19,28 @@ const GET_DATA_SINCE_2009 = gql`
 `
 
 const Performance = ({ portfolioYields, planName, amCharts4Loaded }) => (
-  <LazyLoad height={690} offset={500} once>
-    <Query query={GET_DATA_SINCE_2009}>
-      {({ loading, error, data = {} }) => {
-        const { DJIA = {} } = data
-        return (
-          <Section>
-            <Element name="performance" />
-            <SectionTitle>Performance</SectionTitle>
-            <Subtitle>Unleveraged returns since 2009, compared to the Dow Jones Industrial Average.</Subtitle>
-            <LaunchPerformance
-              portfolioYields={portfolioYields}
-              marketPrices={DJIA.pricesSince2009 || []}
-              planName={planName}
-              amCharts4Loaded={amCharts4Loaded}
-            />
-          </Section>
-        )
-      }}
-    </Query>
-  </LazyLoad>
+  <React.Fragment>
+    <Element name="performance" />
+    <LazyLoad height={690} offset={500} once>
+      <Query query={GET_DATA_SINCE_2009}>
+        {({ loading, error, data = {} }) => {
+          const { DJIA = {} } = data
+          return (
+            <Section>
+              <SectionTitle>Performance</SectionTitle>
+              <Subtitle>Unleveraged returns since 2009, compared to the Dow Jones Industrial Average.</Subtitle>
+              <LaunchPerformance
+                portfolioYields={portfolioYields}
+                marketPrices={DJIA.pricesSince2009 || []}
+                planName={planName}
+                amCharts4Loaded={amCharts4Loaded}
+              />
+            </Section>
+          )
+        }}
+      </Query>
+    </LazyLoad>
+  </React.Fragment>
 )
 
 Performance.propTypes = {
