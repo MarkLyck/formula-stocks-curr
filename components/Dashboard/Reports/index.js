@@ -43,7 +43,7 @@ const getMarketCap = user => {
 
 const Reports = ({ user }) => {
   if (!user || !user.plan) return <Loader />
-  const hasSeenReportIntro = user.intros.reports
+  const hasSeenReportIntro = false //user.intros.reports
   const [searchTerm, setSearchTerm] = useState('')
   const [onboardingVisible, setOnboardingVisible] = useState(!hasSeenReportIntro)
   const [selectedReport, setSelectedReport] = useState(null)

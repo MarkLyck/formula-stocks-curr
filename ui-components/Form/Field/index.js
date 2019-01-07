@@ -27,6 +27,7 @@ class Field extends Component {
       required,
       // label,
       inputState,
+      ...otherProps
     } = this.props
     const { focused } = this.state
 
@@ -43,6 +44,7 @@ class Field extends Component {
           type={type || 'text'}
           placeholder={placeholder}
           required={required}
+          {...otherProps}
         />
       </FieldContainer>
     )

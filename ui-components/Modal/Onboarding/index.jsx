@@ -6,7 +6,8 @@ import useWindowWidth from 'common/hooks/useWindowWidth'
 import {
   OnboardingContainer,
   modalContentStyles,
-  Arrow,
+  ArrowLeft,
+  ArrowTop,
   XButton,
   Container,
   Divider,
@@ -15,8 +16,7 @@ import {
   ButtonWrapper,
 } from './styles'
 
-const getWidth = () => window.innerWidth
-const HelpModal = ({ isOpen, onRequestClose, activePageIndex, pages, setPageIndex }) => {
+const HelpModal = ({ isOpen, onRequestClose, activePageIndex, pages, setPageIndex, position }) => {
   const windowWidth = useWindowWidth()
 
   const next = () => (activePageIndex === pages.length - 1 ? onRequestClose() : setPageIndex(activePageIndex + 1))
@@ -28,8 +28,10 @@ const HelpModal = ({ isOpen, onRequestClose, activePageIndex, pages, setPageInde
       overlayClassName="modal-overlay"
       style={modalContentStyles}
     >
-      <OnboardingContainer>
-        <Arrow />
+      <OnboardingContainer position={position}>
+        {position !== 'center' && position !== 'plans' && <ArrowLeft />}
+        {position === 'plans' && <ArrowTop />}
+
         <XButton onClick={onRequestClose}>
           <FontAwesomeIcon icon={['far', 'times']} size="2x" />
         </XButton>

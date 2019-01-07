@@ -139,6 +139,7 @@ class AccountInfo extends Component {
                 }}
                 onBlur={handleBlur}
                 value={values.email}
+                data-hj-whitelist
               />
             </Row>
             <Row>

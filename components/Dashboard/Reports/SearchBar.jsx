@@ -42,6 +42,7 @@ const SearchBar = ({ searchTerm, handleSearchTermChange, loading }) => {
         value={searchTerm}
         onChange={handleSearchTermChange}
         autoFocus
+        data-hj-whitelist
       />
       {loading && <LoadingSpinner icon="spinner-third" spin />}
     </SearchContainer>
