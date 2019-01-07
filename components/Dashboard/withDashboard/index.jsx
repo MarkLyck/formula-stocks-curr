@@ -6,6 +6,7 @@ import { isClient, hasStorage } from 'common/utils/featureTests'
 import PlanContext from 'common/Contexts/PlanContext'
 import SideMenu from 'ui-components/SideMenu'
 import NavBar from 'components/Dashboard/Navbar'
+import Onboarding from './Onboarding'
 import { DashboardLayout, DashboardContent } from './styles'
 
 const GET_LOGGED_IN_USER = gql`
@@ -22,6 +23,8 @@ const GET_LOGGED_IN_USER = gql`
   }
 `
 
+let gottenInitialUser = false
+
 const withDashboard = WrappedComponent => {
   class WithDashboard extends Component {
     state = {
@@ -29,6 +32,7 @@ const withDashboard = WrappedComponent => {
         hasStorage && localStorage.getItem('selectedPlan')
           ? localStorage.getItem('selectedPlan').toUpperCase()
           : 'ENTRY',
+      oboardingVisible: false,
     }
 
     componentDidMount() {
@@ -47,6 +51,8 @@ const withDashboard = WrappedComponent => {
       this.setState({ planName })
     }
 
+    setOnboardingVisible = oboardingVisible => this.setState({ oboardingVisible })
+
     getContext = () => ({
       planName: this.state.planName,
       setPlan: this.setPlan,
@@ -54,6 +60,7 @@ const withDashboard = WrappedComponent => {
 
     render() {
       const { location, ...extraProps } = this.props
+      const { oboardingVisible } = this.state
       if (!isClient) return null
       return (
         <Query query={GET_LOGGED_IN_USER}>
@@ -72,10 +79,19 @@ const withDashboard = WrappedComponent => {
               if (hasStorage && !localStorage.getItem('selectedPlan')) {
                 this.setPlan(userPlan)
               }
+              if (!gottenInitialUser && user.intros && !user.intros.formulaStocks) {
+                gottenInitialUser = true
+                this.setOnboardingVisible(true)
+              }
             }
 
             return (
               <DashboardLayout>
+                <Onboarding
+                  onboardingVisible={oboardingVisible}
+                  user={user}
+                  setOnboardingVisible={this.setOnboardingVisible}
+                />
                 <SideMenu location={location} user={user} />
                 <PlanContext.Provider value={this.getContext()}>
                   <DashboardContent>

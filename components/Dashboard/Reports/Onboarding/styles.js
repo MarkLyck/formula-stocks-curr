@@ -11,11 +11,13 @@ export const AIReportsWrapper = styled.div`
 export const AIReportsTextWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 400px;
+  width: 100%;
+  max-width: 400px;
   padding: 24px 32px;
   @media (max-width: 850px) {
     margin-top: 16px;
     padding: 0;
+    max-width: 600px;
   }
   @media (max-width: 480px) {
     width: 100%;
@@ -63,7 +65,7 @@ export const AIScoreTextWrapper = styled.div`
   }
   @media (max-width: 850px) {
     margin-top: 16px;
-    width: 400px;
+    width: 100%;
   }
   @media (max-width: 480px) {
     width: 100%;

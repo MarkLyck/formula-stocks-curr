@@ -14,27 +14,52 @@ export const modalContentStyles = {
   },
 }
 
+const leftAligned = css`
+  left: 200px;
+  @media (max-width: 1440px) {
+    left: 110px;
+  }
+`
+const centered = css`
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(100% - 32px);
+  max-width: 600px;
+`
+
+const modalPositions = {
+  center: centered,
+  portfolio: css`
+    top: 60px;
+  `,
+  suggestions: css`
+    top: 130px;
+  `,
+  AIReports: css`
+    top: 200px;
+  `,
+  plans: css`
+    top: 80px;
+  `,
+}
+
 export const OnboardingContainer = styled.div`
   box-sizing: border-box;
   position: absolute;
-  top: 200px;
-  left: 220px;
   transform: none;
   background: white;
   outline: none;
   z-index: 11;
   border-radius: 8px;
   transition: all 0.2s;
-
-  @media (max-width: 1440px) {
-    left: 110px;
-  }
+  ${props => (props.position === 'center' ? centered : leftAligned)}
+  ${props => (props.position ? modalPositions[props.position] : modalPositions.portfolio)}
 
   @media (max-width: 850px) {
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    ${centered}
   }
+
   @media (max-width: 480px) {
     top: unset;
     right: 0;
@@ -43,6 +68,7 @@ export const OnboardingContainer = styled.div`
     transform: none;
     border-radius: 0;
     width: 100%;
+    max-height: 100vh;
   }
 `
 
@@ -54,6 +80,9 @@ export const Divider = styled.div`
 
 export const IndicatorContainer = styled.div`
   display: flex;
+  @media (max-width: 440px) {
+    display: none;
+  }
 `
 
 export const PageIndicator = styled.button`
@@ -84,15 +113,30 @@ export const XButton = styled.button`
   }
 `
 
-export const Arrow = styled.div`
+export const ArrowLeft = styled.div`
   position: absolute;
-  top: 40px;
+  top: 36px;
   left: -12px;
   width: 0;
   height: 0;
   border-top: 12px solid transparent;
   border-bottom: 12px solid transparent;
   border-right: 12px solid white;
+
+  @media (max-width: 850px) {
+    display: none;
+  }
+`
+
+export const ArrowTop = styled.div`
+  position: absolute;
+  top: -12px;
+  left: 24px;
+  width: 0;
+  height: 0;
+  border-left: 12px solid transparent;
+  border-bottom: 12px solid white;
+  border-right: 12px solid transparent;
 
   @media (max-width: 850px) {
     display: none;
@@ -111,13 +155,17 @@ export const ButtonWrapper = styled.div`
   button {
     margin-left: 16px;
   }
+  @media (max-width: 440px) {
+    justify-content: flex-end;
+    width: 100%;
+  }
 `
 
 export const OnboardingHeader = styled.h3`
   font-size: 1.2rem;
   font-weight: 600;
   color: ${props => props.theme.colors.purple};
-  margin-bottom: 16px;
+  margin: 16px 0;
 `
 
 export const OnboardingText = styled.p`

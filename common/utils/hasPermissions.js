@@ -1,5 +1,4 @@
 const hasPermissions = (viewingPlan, user) => {
-  console.log(user)
   if (!user.type) return 'WAITING'
   if (user.type === 'admin' || user.type === 'demo') return true
   if (user.type === 'unpaid') return false

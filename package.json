@@ -26,7 +26,6 @@
     "d3-queue": "^3.0.7",
     "draft-js": "^0.10.5",
     "draftjs-to-html": "^0.8.4",
-    "emotion": "^10.0.5",
     "emotion-server": "^10.0.5",
     "emotion-theming": "^10.0.5",
     "fetch-jsonp": "^1.1.3",

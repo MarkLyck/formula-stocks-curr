@@ -31,6 +31,7 @@ export const UPDATE_USER = gql`
 const ReportsOnboarding = ({ amCharts4Loaded, onboardingVisible, setOnboardingVisible, user }) => {
   if (!amCharts4Loaded) return null
   const [pageIndex, setPageIndex] = useState(0)
+
   const onRequestClose = updateUser => {
     if (user.intros.reports !== true) {
       user.intros.reports = true
@@ -77,7 +78,7 @@ const ReportsOnboarding = ({ amCharts4Loaded, onboardingVisible, setOnboardingVi
   const getChartWidth = () => {
     if (windowWidth > 1020) return '480px'
     if (windowWidth < 1020 && windowWidth > 850) return '600px'
-    else if (windowWidth > 480) return '400px'
+    else if (windowWidth > 480) return ''
     return windowWidth - 48
   }
 
@@ -124,7 +125,7 @@ const ReportsOnboarding = ({ amCharts4Loaded, onboardingVisible, setOnboardingVi
           activePageIndex={pageIndex}
           setPageIndex={setPageIndex}
           pages={[Intro, AIScoreIntro]}
-          section="AIReports"
+          position="AIReports"
         />
       )}
     </Mutation>
