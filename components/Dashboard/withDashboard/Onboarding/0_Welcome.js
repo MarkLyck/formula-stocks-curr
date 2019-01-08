@@ -7,13 +7,13 @@ const Welcome = () => (
     <OnboardingContent>
       <OnboardingHeader>Welcome to Formula Stocks!</OnboardingHeader>
       <OnboardingText>
-        Use stocks selected by Formula Stocks to better your returns. The stock selections have an above average
-        probability of becoming winners in the future. ~90% of selections have typically been sold with a profit. You
-        buy these selections through your regular bank or broker.
+        Use stocks selected by Formula Stocks to better your returns. These stocks have an above average probability of
+        becoming winners in the future. ~90% of these have typically been sold with a profit. You buy the stocks through
+        your regular bank or broker.
       </OnboardingText>
       <OnboardingText>
         You should always own a diversified portfolio of stocks in order to minimize risk. Depending on your personal
-        preference you can build this portfolio in a few different ways.
+        preference you can build this portfolio in different ways.
       </OnboardingText>
       <OnboardingText>
         You can use our pre-constructed portfolios for ease of use, or build your own. You'll have to decide which

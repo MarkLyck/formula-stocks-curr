@@ -23,8 +23,6 @@ const GET_LOGGED_IN_USER = gql`
   }
 `
 
-let gottenInitialUser = false
-
 const withDashboard = WrappedComponent => {
   class WithDashboard extends Component {
     state = {
@@ -79,20 +77,18 @@ const withDashboard = WrappedComponent => {
               if (hasStorage && !localStorage.getItem('selectedPlan')) {
                 this.setPlan(userPlan)
               }
-              if (!gottenInitialUser && user.intros && !user.intros.formulaStocks) {
-                gottenInitialUser = true
-                this.setOnboardingVisible(true)
-              }
             }
+
+            const showIntroFirstTime = user.intros && !user.intros.formulaStocks
 
             return (
               <DashboardLayout>
                 <Onboarding
-                  onboardingVisible={oboardingVisible}
+                  onboardingVisible={showIntroFirstTime || oboardingVisible}
                   user={user}
                   setOnboardingVisible={this.setOnboardingVisible}
                 />
-                <SideMenu location={location} user={user} />
+                <SideMenu location={location} user={user} setOnboardingVisible={this.setOnboardingVisible} />
                 <PlanContext.Provider value={this.getContext()}>
                   <DashboardContent>
                     <NavBar location={location} user={user} />

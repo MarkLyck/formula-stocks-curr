@@ -57,7 +57,7 @@ export const MenuList = styled.ul`
     width: 90px;
   }
 
-  > button:last-child {
+  > button:last-of-type {
     position: absolute;
     bottom: 0;
   }
