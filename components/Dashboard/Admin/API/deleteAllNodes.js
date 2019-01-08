@@ -19,7 +19,10 @@ mutation Delete${T}($id: ID!) {
 const toIds = array => array.map(e => e.id)
 // Returns up to 1,000 ids
 const getAll = async (T, apolloClient) => {
-  const { data } = await apolloClient.query({ query: GET_ALL_QUERY(T) })
+  const { data } = await apolloClient.query({
+    query: GET_ALL_QUERY(T),
+    fetchPolicy: 'network-only', // don't use cache.
+  })
   return toIds(data[`all${T}s`])
 }
 
@@ -35,7 +38,7 @@ const del = async (T, accounts, apolloClient, apiConsole) =>
 
 const maxRuns = 3
 let allNodesDeleted = false
-const deleteAllNodes = async (T, apolloClient, apiConsole, runs) => {
+const deleteAllNodes = async (T, apolloClient, apiConsole, runs, resolve, reject) => {
   apiConsole.log('fetching all node IDs...')
   const allNodes = await getAll(T, apolloClient)
   apiConsole.log('fetched ' + allNodes.length + ' IDs')
@@ -46,22 +49,27 @@ const deleteAllNodes = async (T, apolloClient, apiConsole, runs) => {
     if (allNodes.length === 1000 && runs <= maxRuns) {
       runs += 1
       apiConsole.log('need to fetch more nodes to delete')
-      await deleteAllNodes(T, apolloClient, apiConsole)
+      await deleteAllNodes(T, apolloClient, apiConsole, runs, resolve, reject)
+    } else {
+      apiConsole.log('deleted all nodes')
+      resolve()
     }
   } catch (err) {
     apiConsole.error('ERROR: deleting nodes ' + err)
     console.error(err)
+    reject()
     return
   }
 
   return true
 }
 
-const detroyAllDataIn = async (T, apolloClient, apiConsole) => {
-  let runs = 1
-  console.log('deleting all Nodes')
-  await deleteAllNodes(T, apolloClient, apiConsole, runs)
-  apiConsole.log('deleted all nodes')
+const detroyAllDataIn = (T, apolloClient, apiConsole) => {
+  return new Promise((resolve, reject) => {
+    let runs = 1
+    console.log('deleting all Nodes')
+    deleteAllNodes(T, apolloClient, apiConsole, runs, resolve, reject)
+  })
 }
 
 export default detroyAllDataIn
