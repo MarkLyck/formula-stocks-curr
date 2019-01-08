@@ -58,7 +58,7 @@ class Login extends Component {
       .then(response => {
         setSubmitting(false)
         if (hasStorage) {
-          localStorage.setItem('graphcoolToken', response.data.authenticateUser.token)
+          localStorage.graphcoolToken = response.data.authenticateUser.token
         }
 
         this.setState({ loginSuccess: true })
