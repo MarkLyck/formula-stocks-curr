@@ -8,7 +8,7 @@ export const DashboardContent = styled.div`
   width: 100%;
 
   background: ${props => props.theme.colors.polar};
-  ${'' /* overflow-y: scroll; */}
+  overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   position: relative;
   @media (max-width: 850px) {
