@@ -48,7 +48,7 @@ export const Bar = styled.div`
   justify-content: space-between;
   align-items: center;
   background: ${props => props.theme.colors.white};
-  z-index: 100;
+  z-index: 10;
 
   button {
     margin-right: 8px;
@@ -64,6 +64,7 @@ export const Bar = styled.div`
   @media (max-width: 850px) {
     left: 0;
     padding-left: 12px;
+    position: absolute;
   }
 `
 

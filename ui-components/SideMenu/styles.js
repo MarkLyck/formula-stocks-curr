@@ -46,7 +46,7 @@ export const MenuList = styled.ul`
   position: relative;
   background: ${props => props.theme.colors.darkGray};
   box-shadow: 2px 0 4px rgba(0, 0, 0, 0.25);
-  z-index: 150;
+  z-index: 15;
   display: flex;
   flex-direction: column;
   align-items: center;
