@@ -6,9 +6,12 @@ export const DashboardLayout = styled.div`
 `
 export const DashboardContent = styled.div`
   width: 100%;
-  margin-top: 72px;
+
   background: ${props => props.theme.colors.polar};
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   position: relative;
+  @media (max-width: 850px) {
+    margin-top: 0;
+  }
 `

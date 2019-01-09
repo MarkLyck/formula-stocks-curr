@@ -64,6 +64,8 @@ export const Bar = styled.div`
   @media (max-width: 850px) {
     left: 0;
     padding-left: 12px;
+    position: relative;
+    width: 100%;
   }
 `
 
