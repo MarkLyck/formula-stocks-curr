@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import Router from 'next/router'
 import { StripeProvider, Elements } from 'react-stripe-elements'
 import CheckoutForm from './checkoutForm'
 
@@ -8,8 +9,13 @@ class BillingInfo extends Component {
     termsIsVisible: false,
   }
 
+  componentDidMount() {
+    const href = '/?billing'
+    const as = href
+    Router.push(href, as, { shallow: true })
+  }
+
   submitBillingInfo = () => {
-    // TODO add Form validation here...
     const { name, cardNumber, expiryDate, cvc } = this.state
     const billingDetails = {
       name,

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Formik } from 'formik'
+import Router from 'next/router'
 import Form, { Field, Row, ErrorMessage } from 'ui-components/Form'
 import Button from 'ui-components/Button'
 import CountrySelect from './CountrySelect'
@@ -17,6 +18,12 @@ class AccountInfo extends Component {
 
   countrySelectBlur = () => this.setState({ countryTouched: true })
   onCountryChange = country => this.setState({ country })
+
+  componentDidMount() {
+    const href = '/?signup'
+    const as = href
+    Router.push(href, as, { shallow: true })
+  }
 
   validate = values => {
     let errors = {}
