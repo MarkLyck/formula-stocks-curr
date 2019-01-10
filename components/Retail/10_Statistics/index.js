@@ -35,12 +35,12 @@ const Statistics = ({ winRatio, planName, avgGain, avgLoss }) => (
           </Left>
           <Right data-center className="outperforming-years-chart">
             <DualBarChart
-              primaryStatistic={36}
+              primaryStatistic={37}
               secondaryStatistic={12}
               primaryName={planName || 'entry'}
               secondaryName="Market"
-              primaryHeight={90}
-              secondaryHeight={30}
+              primaryHeight={92}
+              secondaryHeight={28}
               maxHeight="200px"
               description="Outperforming years"
             />

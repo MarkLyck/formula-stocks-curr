@@ -48,7 +48,7 @@ const WhatToExpect = ({ latestSells, winRatio }) => (
       </BesideContainer>
       <p>
         Using Formula Stocks gives you an edge. Use it consistently, diversified, for years: Odds accumulate in your
-        favour, and you will likely outperform most competing investment methods.
+        favour, and you are likely to perform better than most.
         <br />
         <br />
         Latest portfolio sales:
