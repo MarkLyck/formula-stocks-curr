@@ -3,6 +3,7 @@ import get from 'lodash.get'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import Script from 'react-load-script'
+import Router from 'next/router'
 import { planIds } from 'common/constants'
 import { hasStorage, usingMocks } from 'common/utils/featureTests'
 import newVisitor from 'common/utils/newVisitor'
@@ -47,8 +48,8 @@ const GET_ENTRY_AND_MARKET_DATA = gql`
 
 class Retail extends Component {
   state = {
-    signUpVisible: false,
-    loginVisible: false,
+    signUpVisible: Router.router && Router.router.query.signup === '' ? true : false,
+    loginVisible: Router.router && Router.router.query.login === '' ? true : false,
     FAQVisible: false,
   }
 
