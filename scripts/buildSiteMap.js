@@ -5,7 +5,7 @@ const path = require('path')
 const glob = require('glob')
 const fs = require('fs')
 
-const SITE_ROOT = process.env.SITE_ROOT || 'https://www.actionherojs.com'
+const SITE_ROOT = process.env.SITE_ROOT || 'https://www.formulastocks.com'
 const SOURCE = process.env.SOURCE || path.join(__dirname, '..', 'pages', '/**/*.js')
 const DESTINATION = process.env.DESTINATION || path.join(__dirname, '..', 'static', 'sitemap.xml')
 
