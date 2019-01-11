@@ -21,6 +21,12 @@ app.prepare().then(() => {
     if (pathname === '/service-worker.js') {
       const filePath = join(__dirname, '.next', pathname)
       app.serveStatic(req, res, filePath)
+    } else if (pathname.indexOf('/robots.txt') > -1) {
+      const filePath = join(__dirname, 'static', pathname)
+      app.serveStatic(req, res, filePath)
+    } else if (pathname.indexOf('/sitemap.xml') > -1) {
+      const filePath = join(__dirname, 'static', pathname)
+      app.serveStatic(req, res, filePath)
     } else if (pathname.indexOf('dashboard/articles/') > -1) {
       app.render(req, res, '/dashboard/articles/article', query)
     } else if (pathname.indexOf('articles/') > -1) {

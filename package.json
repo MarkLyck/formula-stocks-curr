@@ -5,8 +5,9 @@
   "license": "MIT",
   "scripts": {
     "dev": "node server.js",
-    "build": "next build",
+    "build": "gen-sitemap && next build",
     "start": "NODE_ENV=production node server.js",
+    "gen-sitemap": "node ./scripts/buildSiteMap.js",
     "now-build": "next build",
     "now-start": "NODE_ENV=production node --optimize_for_size --max_old_space_size=920 --gc_interval=100 server.js",
     "analyze": "BUNDLE_ANALYZE=both yarn build",
