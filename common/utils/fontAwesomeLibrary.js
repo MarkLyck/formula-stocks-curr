@@ -15,6 +15,7 @@ import { faDesktop } from '@fortawesome/pro-solid-svg-icons/faDesktop'
 import { faDollarSign } from '@fortawesome/pro-solid-svg-icons/faDollarSign'
 import { faEnvelope } from '@fortawesome/pro-solid-svg-icons/faEnvelope'
 import { faExclamationCircle } from '@fortawesome/pro-solid-svg-icons/faExclamationCircle'
+import { faFacebookF } from '@fortawesome/free-brands-svg-icons/faFacebookF'
 import { faFlask } from '@fortawesome/pro-solid-svg-icons/faFlask'
 import { faGift } from '@fortawesome/pro-solid-svg-icons/faGift'
 import { faGlobeAmericas } from '@fortawesome/pro-solid-svg-icons/faGlobeAmericas'
@@ -37,6 +38,7 @@ import { faTablet } from '@fortawesome/pro-solid-svg-icons/faTablet'
 import { faTachometer } from '@fortawesome/pro-solid-svg-icons/faTachometer'
 import { faTasks } from '@fortawesome/pro-solid-svg-icons/faTasks'
 import { faTimes } from '@fortawesome/pro-regular-svg-icons/faTimes'
+import { faTwitter } from '@fortawesome/free-brands-svg-icons/faTwitter'
 import { faUser } from '@fortawesome/pro-solid-svg-icons/faUser'
 import { faUsers } from '@fortawesome/pro-solid-svg-icons/faUsers'
 
@@ -55,6 +57,7 @@ library.add(
   faDesktop,
   faDollarSign,
   faEnvelope,
+  faFacebookF,
   faFlask,
   faGlobeAmericas,
   faGift,
@@ -78,6 +81,7 @@ library.add(
   faTachometer,
   faTasks,
   faTimes,
+  faTwitter,
   faUser,
   faUsers
 )

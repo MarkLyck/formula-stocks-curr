@@ -57,3 +57,24 @@ export const ProfileTextContainer = styled.div`
     margin: 0;
   }
 `
+
+export const SocialMediaContainer = styled.div`
+  display: flex;
+  margin-top: 8px;
+`
+
+export const SocialMediaLink = styled.a`
+  height: 32px;
+  width: 32px;
+  border-radius: 16px;
+  background: ${props => props.theme.colors.polar};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 8px;
+
+  &:hover {
+    background: ${props => props.theme.colors.primary};
+    color: white;
+  }
+`
