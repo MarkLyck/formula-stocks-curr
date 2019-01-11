@@ -5,6 +5,7 @@ import { Container, PieChartsContainer, ChartContainer } from './styles'
 
 const createChartData = data =>
   Object.entries(data)
+    .filter(obj => obj[1] >= 5)
     .map(obj => ({ title: obj[0], value: obj[1] }))
     .sort((a, b) => b.value - a.value)
 
