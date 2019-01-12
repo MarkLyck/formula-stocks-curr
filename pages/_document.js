@@ -54,6 +54,48 @@ export default class FSDocument extends Document {
           <link rel="preconnect" href="https://api.ipapi.com" />
 
           <style dangerouslySetInnerHTML={{ __html: this.props.css }} />
+
+          {/* Google Analytics */}
+          <script
+            async
+            dangerouslySetInnerHTML={{
+              __html: `
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+            ga('create', 'UA-68151102-1', 'auto');
+            ga('send', 'pageview');`,
+            }}
+          />
+
+          {/* Facebook Pixel */}
+          <script
+            async
+            dangerouslySetInnerHTML={{
+              __html: `
+                !function(f,b,e,v,n,t,s)
+                {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+                n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+                if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+                n.queue=[];t=b.createElement(e);t.async=!0;
+                t.src=v;s=b.getElementsByTagName(e)[0];
+                s.parentNode.insertBefore(t,s)}(window, document,'script',
+                'https://connect.facebook.net/en_US/fbevents.js');
+                fbq('init', '467969993709783');
+                fbq('track', 'PageView');
+              `,
+            }}
+          />
+          <noscript>
+            <img
+              height="1"
+              width="1"
+              style={{ display: 'none' }}
+              src="https://www.facebook.com/tr?id=467969993709783&ev=PageView&noscript=1"
+            />
+          </noscript>
         </Head>
         <body>
           <Main />
@@ -102,21 +144,6 @@ export default class FSDocument extends Document {
               r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
               a.appendChild(r);
               })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');`,
-            }}
-          />
-
-          {/* Google Analytics */}
-          <script
-            async
-            dangerouslySetInnerHTML={{
-              __html: `
-            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-            ga('create', 'UA-68151102-1', 'auto');
-            ga('send', 'pageview');`,
             }}
           />
         </body>

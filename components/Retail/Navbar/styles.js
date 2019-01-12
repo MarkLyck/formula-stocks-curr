@@ -41,32 +41,27 @@ export const NavBar = styled.div`
   z-index: 10;
   box-shadow: 0 8px 16px rgba(16, 33, 53, 0.05);
 
-  @media (max-width: 1069px) {
+  @media (max-width: 1085px) {
     .performance {
       display: none;
     }
   }
 
-  @media (max-width: 930px) {
+  @media (max-width: 940px) {
     .how-it-works {
       display: none;
     }
   }
 
-  @media (max-width: 790px) {
+  @media (max-width: 794px) {
     .faq-link {
       display: none;
     }
   }
 
-  @media (max-width: 497px) {
+  @media (max-width: 501px) {
     padding: 0 8px;
     .pricing {
-      display: none;
-    }
-  }
-  @media (max-width: 1069px) {
-    .performance {
       display: none;
     }
   }

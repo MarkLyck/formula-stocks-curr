@@ -40,7 +40,7 @@ const getDeviceIcon = device => {
 
 const Visitor = ({ visitor }) => (
   <TableRow key={visitor.id} onClick={() => console.log(visitor)}>
-    <TableCell style={countryStyle}>
+    <TableCell css={countryStyle}>
       {visitor.location && visitor.location.country_flag_emoji}
       <CountryName>{visitor.location && visitor.location.country_name}</CountryName>
     </TableCell>
