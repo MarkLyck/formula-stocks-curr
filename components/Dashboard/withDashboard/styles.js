@@ -13,6 +13,6 @@ export const DashboardContent = styled.div`
   position: relative;
 
   @media (max-width: 850px) {
-    margin-top: 0;
+    padding-top: 0;
   }
 `

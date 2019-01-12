@@ -73,7 +73,7 @@ export const AIScoreTextWrapper = styled.div`
 `
 
 export const IconBackground = styled.div`
-  height: 240px;
+  height: 380px;
   width: 240px;
   display: flex;
   justify-content: center;
@@ -81,6 +81,7 @@ export const IconBackground = styled.div`
   background: ${props => props.theme.colors.polar};
   border-radius: 4px;
   @media (max-width: 850px) {
+    height: 240px;
     width: 100%;
   }
 `
