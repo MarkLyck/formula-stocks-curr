@@ -41,7 +41,7 @@ export const NavBar = styled.div`
   z-index: 10;
   box-shadow: 0 8px 16px rgba(16, 33, 53, 0.05);
 
-  @media (max-width: 1069px) {
+  @media (max-width: 1085px) {
     .performance {
       display: none;
     }
