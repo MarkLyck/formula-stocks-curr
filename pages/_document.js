@@ -54,6 +54,25 @@ export default class FSDocument extends Document {
           <link rel="preconnect" href="https://api.ipapi.com" />
 
           <style dangerouslySetInnerHTML={{ __html: this.props.css }} />
+        </Head>
+        <body>
+          <Main />
+          <NextScript />
+
+          {/* webfont loader */}
+          <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" />
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+              WebFont.load({
+                google: {
+                  families: ['Rubik:300,400,500,700'],
+                  text: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789,. $@*"!?/~+-%()'
+                }
+              });
+             `,
+            }}
+          />
 
           {/* Google Analytics */}
           <script
@@ -96,25 +115,6 @@ export default class FSDocument extends Document {
               src="https://www.facebook.com/tr?id=467969993709783&ev=PageView&noscript=1"
             />
           </noscript>
-        </Head>
-        <body>
-          <Main />
-          <NextScript />
-
-          {/* webfont loader */}
-          <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" />
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `
-              WebFont.load({
-                google: {
-                  families: ['Rubik:300,400,500,700'],
-                  text: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789,. $@*"!?/~+-%()'
-                }
-              });
-             `,
-            }}
-          />
 
           {/* Intercom */}
           <script
