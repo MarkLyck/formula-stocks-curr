@@ -73,7 +73,7 @@ export const AIScoreTextWrapper = styled.div`
 `
 
 export const IconBackground = styled.div`
-  height: 380px;
+  height: 280px;
   width: 240px;
   display: flex;
   justify-content: center;
