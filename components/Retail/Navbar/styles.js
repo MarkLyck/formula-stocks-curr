@@ -47,26 +47,21 @@ export const NavBar = styled.div`
     }
   }
 
-  @media (max-width: 930px) {
+  @media (max-width: 940px) {
     .how-it-works {
       display: none;
     }
   }
 
-  @media (max-width: 790px) {
+  @media (max-width: 794px) {
     .faq-link {
       display: none;
     }
   }
 
-  @media (max-width: 497px) {
+  @media (max-width: 501px) {
     padding: 0 8px;
     .pricing {
-      display: none;
-    }
-  }
-  @media (max-width: 1069px) {
-    .performance {
       display: none;
     }
   }
