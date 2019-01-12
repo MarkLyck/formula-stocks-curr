@@ -70,10 +70,7 @@ const ReportsOnboarding = ({ amCharts4Loaded, onboardingVisible, setOnboardingVi
           looks ahead into the probable future, which may be non-linear, cyclical and mean-reverting. Hence, a stock
           that did well in the past, might well score low, or vice versa.
         </OnboardingText>
-        <OnboardingText>
-          Type the name or symbol of a stock you are interested in, and gain unique insight available nowhere else. Try
-          Business for access to more AI reports by market cap.
-        </OnboardingText>
+        <OnboardingText>Try Business for access to more AI reports by market cap.</OnboardingText>
       </AIReportsTextWrapper>
     </AIReportsWrapper>
   )
