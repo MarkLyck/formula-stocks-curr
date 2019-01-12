@@ -2,9 +2,9 @@ import { css } from '@emotion/core'
 import styled from '@emotion/styled'
 
 export const countryStyle = css`
-  display: 'flex',
-  height: '48px',
-  alignItems: 'center',
+  display: flex;
+  height: 48px;
+  alignitems: center;
 `
 
 export const CountryName = styled.p`
