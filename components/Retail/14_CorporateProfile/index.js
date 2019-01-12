@@ -37,16 +37,15 @@ const CorporateProfile = () => (
               <br />
               <br />
               Contact us at: <a href="mailto:info@formulastocks.com">info@formulastocks.com</a>
-              <br />
-              <SocialMediaContainer>
-                <SocialMediaLink href="https://www.facebook.com/formulastocks/" target="_blank">
-                  <FontAwesomeIcon icon={['fab', 'facebook-f']} />
-                </SocialMediaLink>
-                <SocialMediaLink href="https://twitter.com/FormulaStocks" target="_blank">
-                  <FontAwesomeIcon icon={['fab', 'twitter']} />
-                </SocialMediaLink>
-              </SocialMediaContainer>
             </p>
+            <SocialMediaContainer>
+              <SocialMediaLink href="https://www.facebook.com/formulastocks/" target="_blank">
+                <FontAwesomeIcon icon={['fab', 'facebook-f']} />
+              </SocialMediaLink>
+              <SocialMediaLink href="https://twitter.com/FormulaStocks" target="_blank">
+                <FontAwesomeIcon icon={['fab', 'twitter']} />
+              </SocialMediaLink>
+            </SocialMediaContainer>
           </Left>
 
           <Right>
