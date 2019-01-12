@@ -65,10 +65,15 @@ const ReportsOnboarding = ({ amCharts4Loaded, onboardingVisible, setOnboardingVi
       <AIReportsTextWrapper>
         <OnboardingHeader>AI Reports</OnboardingHeader>
         <OnboardingText>
-          Introducing a revolutionary easy way to pick stocks. Our Artificial Intelligence analyzes stocks thoroughly
-          and produces a single measure, the <Bold>AI score</Bold>, which indicates the relative attractiveness of an
-          investment. Type the name or symbol of a stock you are interested in, and gain unique insight available
-          nowhere else.
+          Introducing a revolutionary easy way to pick stocks. Artificial Intelligence analyzes stocks thoroughly and
+          produces a single measure, the <Bold>AI score</Bold>, which indicates the relative attractiveness of an
+          investment. AI looks ahead into the probable future. Do not be surprised if you see a stock that did well in
+          the past, score low, or vice versa. As an investor you care about the future, which may well be non-linear,
+          cyclical and mean-reverting.
+        </OnboardingText>
+        <OnboardingText>
+          Type the name or symbol of a stock you are interested in, and gain unique insight available nowhere else. Try
+          Business for access to more AI reports by market cap.
         </OnboardingText>
         <OnboardingText>Try Business for access to more AI reports by market cap.</OnboardingText>
       </AIReportsTextWrapper>

@@ -30,13 +30,17 @@ export default class FSDocument extends Document {
           <meta name="msapplication-config" content="/static/favicons/browserconfig.xml" />
           <meta name="theme-color" content="#ffffff" />
 
-          <meta name="description" content="Formula Stocks" />
+          <meta name="description" content="Beat the stock market using quantitative analysis. " />
           <meta property="og:type" content="website" />
           <meta property="og:description" content="Beat the stock market using quantitative analysis." />
           <meta property="og:site_name" content="Formula Stocks" />
           <meta property="og:locale" content="en_us" />
-          <meta property="og:url" content="Formula Stocks" />
+          <meta property="og:url" content="https://formulastocks.com" />
           <meta property="og:title" content="Formula Stocks" />
+          <meta
+            property="og:image"
+            content="https://formulastocks.com/static/images/marketing/shareImage1200x627.jpg"
+          />
 
           <link rel="apple-touch-icon" sizes="180x180" href="/static/favicons/apple-touch-icon.png" />
           <link rel="icon" type="image/png" sizes="32x32" href="/static/favicons/favicon-32x32.png" />
