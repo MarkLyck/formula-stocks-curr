@@ -4,7 +4,7 @@ import styled from '@emotion/styled'
 export const countryStyle = css`
   display: flex;
   height: 48px;
-  alignitems: center;
+  align-items: center;
 `
 
 export const CountryName = styled.p`

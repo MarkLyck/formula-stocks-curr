@@ -35,18 +35,18 @@ const Statistics = ({ winRatio, planName, avgGain, avgLoss }) => (
           </Left>
           <Right data-center className="outperforming-years-chart">
             <DualBarChart
-              primaryStatistic={37}
-              secondaryStatistic={12}
+              primaryStatistic={40}
+              secondaryStatistic={9}
               primaryName={planName || 'entry'}
               secondaryName="Market"
-              primaryHeight={92}
-              secondaryHeight={28}
+              primaryHeight={81}
+              secondaryHeight={18}
               maxHeight="200px"
               description="Outperforming years"
             />
             <p style={{ marginTop: '16px' }}>
               Recommendations and model portfolio are based on timeless and proven investment principles, mathematical
-              probabilities, and sound logic. The model portfolio has outperformed the S&P 500 in 75% of all years.
+              probabilities, and sound logic. The model portfolio has outperformed the S&P 500 in 81.6% of all years.
             </p>
           </Right>
         </Beside>

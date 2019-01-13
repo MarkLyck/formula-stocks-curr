@@ -19,21 +19,15 @@ const WhatIsIt = () => (
         </Left>
         <Right>
           <p>
-            We offer stock recommendations: what to buy and when to sell. With an unusual twist offering higher expected
-            reward, with lower expected risk.
+            We offer stock recommendations: What to buy and when to sell.
             <br />
             <br />
-            Included is a model portfolio designed to build wealth through intelligent portfolio management. You can
-            replicate it to better your investment performance. Or use our AI investment reports for individual stock
-            picking.
+            Intelligent portfolio management is designed to build wealth through a model portfolio that you can easily
+            replicate. We systematically buy low and sell high, combining higher reward with lower risk.
             <br />
             <br />
-            Recommendations are for stocks trading on all US exchanges including larger international stocks. Trade
-            these from anywhere in the world, through a bank or broker you already use.
-            <br />
-            <br />
-            Using Formula Stocks is easy. Simply follow the instructions, and you'll be handling your own account in no
-            time.
+            You can also pick better stocks individually via AI investment reports and recommendations. He who has the
+            best information wins.
           </p>
         </Right>
       </Beside>

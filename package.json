@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "node server.js",
-    "build": "gen-sitemap && next build",
+    "build": "yarn gen-sitemap && next build",
     "start": "NODE_ENV=production node server.js",
     "gen-sitemap": "node ./scripts/buildSiteMap.js",
     "now-build": "next build",

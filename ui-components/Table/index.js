@@ -79,4 +79,5 @@ export const TableCell = styled.td`
   padding: 12px 16px;
   font-weight: 400;
   color: ${props => props.theme.colors.black};
+  ${props => (props.css ? props.css : '')}
 `

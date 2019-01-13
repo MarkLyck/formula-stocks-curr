@@ -61,7 +61,7 @@ const AIScoreSection = ({ amCharts4Loaded }) => (
                 <Disclaimer>
                   <sup>*</sup>Based on statistical studies involving more than 12,000 stocks during several decades.
                   <br />
-                  <sup>**</sup>Not all membership levels have access to all stocks.
+                  <sup>**</sup>number of stocks accessible varies by membership level.
                 </Disclaimer>
               </HideSmall>
             </div>
