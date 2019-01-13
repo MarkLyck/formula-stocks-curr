@@ -142,7 +142,7 @@ class Portfolio extends Component {
                     <StatisticsBox title="Holdings" value={Plan.portfolio.length} icon="list-ul" />
                     <StatisticsBox
                       title="Percent in cash"
-                      value={`${Plan.launchStatistics.percentInCash.toFixed(2)}%`}
+                      value={`${allocationMap.CASH.toFixed(2)}%`}
                       icon="dollar-sign"
                     />
                   </StatisticsContainer>
