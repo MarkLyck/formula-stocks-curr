@@ -17,6 +17,7 @@ export default class FSDocument extends Document {
   }
 
   render() {
+    const description = `We forecast which stocks will go up, before they go up. Get yourself an edge and win. AI, fundamental, quantitative analysis maps the probable future. Intelligent portfolio management buys low, sells high, wins systematically. Indispensable investment system for smart growth and value investors.`
     return (
       <html lang="en">
         <Head>
@@ -32,8 +33,8 @@ export default class FSDocument extends Document {
 
           <meta property="og:title" content="Formula Stocks - algorithmic trading" />
           <meta property="og:site_name" content="Formula Stocks - algorithmic trading" />
-          <meta name="description" content="Beat the stock market using quantitative analysis & algo trading." />
-          <meta property="og:description" content="Beat the stock market using quantitative analysis & algo trading." />
+          <meta name="description" content={description} />
+          <meta property="og:description" content={description} />
           <meta property="og:type" content="website" />
           <meta property="og:locale" content="en_us" />
           <meta property="og:url" content="https://formulastocks.com" />
