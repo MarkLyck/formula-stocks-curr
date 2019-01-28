@@ -57,7 +57,7 @@ export const Bar = styled.div`
     cursor: pointer;
   }
 
-  @media (max-width: 1440px) {
+  @media (max-width: 1439px) {
     left: 90px;
   }
 
