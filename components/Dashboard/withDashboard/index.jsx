@@ -37,7 +37,11 @@ const withDashboard = WrappedComponent => {
       // if they have no token saved. Push them to the front page immediately.
       if (hasStorage && !localStorage.getItem('graphcoolToken')) {
         console.warn('!!! NO localStorage token')
-        Router.push('/')
+        if (isClient && !window.graphcoolToken) {
+          console.warn('!!! NO window token')
+          Router.push('/')
+          return
+        }
       }
       if (isClient && window.Intercom) {
         window.Intercom('shutdown')

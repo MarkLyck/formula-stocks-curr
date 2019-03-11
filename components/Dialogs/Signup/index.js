@@ -4,7 +4,7 @@ import gql from 'graphql-tag'
 import Router from 'next/router'
 import { graphql, compose } from 'react-apollo'
 import ReactModal from 'react-modal'
-import { hasStorage } from 'common/utils/featureTests'
+import { hasStorage, isClient } from 'common/utils/featureTests'
 import { getDeviceType } from 'common/utils/helpers'
 import ModalHeader from 'components/Dialogs/ModalHeader'
 import AccountInfo from './AccountInfo'
@@ -97,6 +97,9 @@ class SignUp extends Component {
           },
         },
       })
+      if (isClient) {
+        window.graphcoolToken = data.signupUser.token
+      }
       if (hasStorage) {
         localStorage.setItem('graphcoolToken', data.signupUser.token)
       }

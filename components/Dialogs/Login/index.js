@@ -5,7 +5,7 @@ import { graphql } from 'react-apollo'
 import ReactModal from 'react-modal'
 import Router from 'next/router'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { hasStorage } from 'common/utils/featureTests'
+import { hasStorage, isClient } from 'common/utils/featureTests'
 import { ModalContainer, smallModalContentStyles } from '../styles'
 import { ForgotPassword } from './styles'
 import { Formik } from 'formik'
@@ -57,16 +57,23 @@ class Login extends Component {
       .signinUser({ variables: { email: values.email, password: values.password } })
       .then(response => {
         setSubmitting(false)
+
         if (hasStorage) {
           localStorage.graphcoolToken = response.data.authenticateUser.token
+        }
+        // used for backup if localStorage doesn't exist
+        if (isClient) {
+          window.graphcoolToken = response.data.authenticateUser.token
         }
 
         this.setState({ loginSuccess: true })
         // shortly show the login success message before sending them to portfolio
-        setTimeout(() => Router.push('/dashboard/portfolio'), 200)
+        setTimeout(() => {
+          Router.push('/dashboard/portfolio')
+        }, 200)
       })
       .catch(error => {
-        console.error(error)
+        console.error('handleLogin error', error)
         const errorText = error.message.includes('Invalid Credentials')
           ? 'Invalid login details'
           : 'Something went wrong'
