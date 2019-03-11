@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Router from 'next/router'
 import { StripeProvider, Elements } from 'react-stripe-elements'
+import { STRIPE_API_KEY } from 'common/constants'
 import CheckoutForm from './checkoutForm'
 
 class BillingInfo extends Component {
@@ -34,7 +35,7 @@ class BillingInfo extends Component {
     const taxAmount = planPrice * (taxPercent / 100)
 
     return (
-      <StripeProvider apiKey="pk_live_UTFEdLHeTQIAA0o2JSBM3fwL">
+      <StripeProvider apiKey={STRIPE_API_KEY}>
         <Elements>
           <CheckoutForm
             taxPercent={taxPercent}

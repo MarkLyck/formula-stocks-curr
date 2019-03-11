@@ -1,12 +1,16 @@
 import React, { Component } from 'react'
 import gql from 'graphql-tag'
 import { Query, Mutation } from 'react-apollo'
+import Script from 'react-load-script'
+import { StripeProvider, Elements } from 'react-stripe-elements'
+import { STRIPE_API_KEY } from 'common/constants'
 import withDashboard from 'components/Dashboard/withDashboard'
 import GenericLoader from 'ui-components/Loader'
 import LoadingError from 'ui-components/Error/LoadingError'
 import ChangePlan from './ChangePlan'
 import CancelSubscription from './CancelSubscription'
 import ReactivateSubscription from './ReactivateSubscription'
+import UpdatePaymentDetails from './UpdatePaymentDetails'
 import { MyAccountContainer, Title } from './styles'
 
 const GET_LOGGED_IN_USER = gql`
@@ -44,8 +48,30 @@ export const UPDATE_USER = gql`
 `
 
 class MyAccount extends Component {
+  state = { stripeLoaded: false }
+
+  checkIfStripeIsLoaded = () => {
+    if (typeof window.Stripe === 'function') {
+      this.setState({ stripeLoaded: true })
+    } else {
+      this.timeOut = setTimeout(this.checkIfStripeIsLoaded, 1000)
+    }
+  }
+
+  componentDidMount() {
+    if (!this.state.stripeLoaded) {
+      this.timeOut = setTimeout(this.checkIfStripeIsLoaded, 1000)
+    }
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.timeOut)
+  }
+
   render() {
     const { apolloClient } = this.props
+    const { stripeLoaded } = this.state
+
     return (
       <Query query={GET_LOGGED_IN_USER}>
         {({ loading, error, data, refetch }) => {
@@ -60,6 +86,7 @@ class MyAccount extends Component {
 
                 return (
                   <div>
+                    <Script url="https://js.stripe.com/v3/" />
                     <MyAccountContainer>
                       <Title>My Account</Title>
                       <div>
@@ -79,6 +106,19 @@ class MyAccount extends Component {
                       refetchUser={refetch}
                       apolloClient={apolloClient}
                     />
+                    {stripeLoaded ? (
+                      <StripeProvider apiKey={STRIPE_API_KEY}>
+                        <Elements>
+                          <UpdatePaymentDetails
+                            stripeCustomer={User.stripeCustomer}
+                            signupError=""
+                            apolloClient={apolloClient}
+                          />
+                        </Elements>
+                      </StripeProvider>
+                    ) : (
+                      ''
+                    )}
                     <CancelSubscription
                       stripeSubscription={User.stripeSubscription}
                       updateUser={updateUser}
