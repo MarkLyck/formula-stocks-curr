@@ -18,7 +18,7 @@ const createChartData = (portfolioYields, marketPrices) => {
     const balance = (((portfolioYields[i].balance - startValue) / startValue) * 100).toFixed(2)
     const marketBalance = marketPrices[i]
       ? (((Number(marketPrices[i].price) - marketStartValue) / marketStartValue) * 100).toFixed(2)
-      : Number(marketPrices[marketPrices.length - 1].price)
+      : (((Number(marketPrices[marketPrices.length - 1].price) - marketStartValue) / marketStartValue) * 100).toFixed(2)
 
     const month = Number(point.date.month) > 9 ? point.date.month : `0${point.date.month}`
 
