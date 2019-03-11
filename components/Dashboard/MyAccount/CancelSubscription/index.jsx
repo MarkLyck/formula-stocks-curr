@@ -93,7 +93,7 @@ const CancelSubscription = ({ stripeSubscription, updateUser, userID, apolloClie
           color="error"
           background="white"
           hoverColor="error"
-          style={{ margin: '0 auto 16px' }}
+          style={{ margin: '0 auto 32px' }}
           onClick={handleOnClick}
         >
           <FontAwesomeIcon icon={['far', 'times']} />

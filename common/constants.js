@@ -12,5 +12,6 @@ export const marketIds = {
 
 export const statisticsId = 'cj85zcxpn06bj0185bwegkd82'
 export const IP_API_KEY = 'fd6a920ff332b6059c50f08a0481751f'
+export const STRIPE_API_KEY = 'pk_live_UTFEdLHeTQIAA0o2JSBM3fwL'
 
 export const graphCoolEndpoint = 'https://api.graph.cool/simple/v1/cj5p24f2bblwp0122hin6ek1u'
