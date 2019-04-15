@@ -100,7 +100,7 @@ The total allocation in % of this stock in the portfolio, after this and all pre
               <ListItem name="Purchase price" value={`$${suggestion.original_purchase.toFixed(2)}`} />
             )}
             {suggestion.action === 'SELL' && (
-              <ListItem name="Return" value={`${percentIncrease > 0 && '+'}${percentIncrease.toFixed(2)}%`} />
+              <ListItem name="Return" value={`${percentIncrease > 0 ? '+' : ''}${percentIncrease.toFixed(2)}%`} />
             )}
             {suggestion.advanced_data ? (
               <Button type="light" variant="raised" onClick={this.toggleDetails}>
