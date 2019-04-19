@@ -7,11 +7,7 @@ export const GraphContainer = styled.div`
   br {
     display: none;
   }
-  .portfolio-legends {
-    top: 24px;
-  }
   #portfolio-graph {
-
     height: 100%;
   }
   .chart-balloon {

@@ -5,7 +5,7 @@ export const Legend = styled.div`
   position: relative;
   margin: 0;
   padding: 0;
-  margin-bottom: 8px;
+  margin: 0 40px 8px 0;
   font-size: 0.75rem;
   margin-right: ${props => `${props.width}px` || 0};
   &:before {

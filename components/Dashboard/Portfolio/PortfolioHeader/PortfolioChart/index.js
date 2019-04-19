@@ -102,7 +102,7 @@ const PortfolioGraph = ({
 
   return (
     <GraphContainer>
-      <Legends className="portfolio-legends" style={{ top: '50px' }}>
+      <Legends className="portfolio-legends" left={40} top={40} horizontal={true}>
         <Legend color={theme.colors.primary}>
           <p>{planName}</p>
         </Legend>
