@@ -73,7 +73,7 @@ class Retail extends Component {
       <Query query={GET_ENTRY_AND_MARKET_DATA}>
         {({ loading, error, data }) => {
           if (loading) return <HomeLoader />
-          if (!data || !data.Plan || (error && !usingMocks)) return <LoadingError />
+          if (!data || !data.Plan || (error && !usingMocks)) return <LoadingError error={error} />
 
           const { Plan } = data
 

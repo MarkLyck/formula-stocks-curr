@@ -92,7 +92,6 @@ const LaunchPerformance = ({ portfolioYields, marketPrices, planName, amCharts4L
         labelXOffset={50}
         categoryBoldLabels
         categoryAxisColor="#FFF"
-        strictMinMax
         maximum={maximum}
         minimum={minimum - 10}
       />

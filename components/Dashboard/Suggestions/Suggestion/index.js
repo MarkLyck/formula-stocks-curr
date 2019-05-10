@@ -61,9 +61,10 @@ The total allocation in % of this stock in the portfolio, after this and all pre
     const allocation = suggestion.percentage_weight ? suggestion.percentage_weight : suggestion.portfolio_weight
 
     const latestPrice = stock ? stock.latestPrice : suggestion.suggested_price
+
     const percentIncrease =
       suggestion.action === 'SELL'
-        ? ((latestPrice - suggestion.original_purchase) / suggestion.original_purchase) * 100
+        ? ((suggestion.suggested_price - suggestion.original_purchase) / suggestion.original_purchase) * 100
         : null
 
     return (
