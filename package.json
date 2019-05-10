@@ -16,7 +16,7 @@
     "cypress": "$(npm bin)/cypress run --record"
   },
   "dependencies": {
-    "@amcharts/amcharts4": "^4.4.0",
+    "@amcharts/amcharts4": "^4.4.4",
     "@emotion/core": "^10.0.10",
     "@emotion/styled-base": "^10.0.10",
     "@fortawesome/fontawesome-svg-core": "^1.2.17",
