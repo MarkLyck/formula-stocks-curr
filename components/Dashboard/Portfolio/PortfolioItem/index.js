@@ -71,7 +71,7 @@ class PortfolioItem extends Component {
 
             const percentIncrease = (((latestPrice - costBasisPrice) * 100) / costBasisPrice).toFixed(2)
             const increasePrefix = percentIncrease > 0 ? '+' : ''
-            const latestPriceFormatted = latestPrice ? `$${latestPrice.toFixed(2)}` : ''
+            const latestPriceFormatted = latestPrice && stock.ticker !== 'CASH' ? `$${latestPrice.toFixed(2)}` : ''
             return (
               <ItemRow hover onClick={this.toggleExpanded}>
                 <TableCell className="name">
