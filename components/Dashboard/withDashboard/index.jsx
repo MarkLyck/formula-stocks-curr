@@ -79,7 +79,7 @@ const withDashboard = WrappedComponent => {
               user = data.loggedInUser
 
               if (hasStorage && !localStorage.getItem('selectedPlan')) {
-                this.setPlan(userPlan)
+                this.setPlan(user.plan)
               }
             }
 
