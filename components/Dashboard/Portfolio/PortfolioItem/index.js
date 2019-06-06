@@ -15,15 +15,8 @@ const STOCK_QUERY = gql`
   }
 `
 
-const STOCK_PRICE_QUERY = gql`
-  query stocks($ticker: String!) {
-    allStocks(filter: { ticker: $ticker }) {
-      latestPrice
-    }
-  }
-`
-
 const numberToFirstDecimal = number => {
+  if (!number) return number // if it's missing from stocks it will be undefined.
   if (number >= 0.01) return number.toFixed(2)
   const decimals = String(number)
     .split('.')[1]
@@ -60,37 +53,28 @@ class PortfolioItem extends Component {
     const today = new Date()
     const daysSinceUpdated = differenceInDays(today, updatedDate)
 
+    const latestPrice = stock.latest_price
+    const percentIncrease = (((latestPrice - costBasisPrice) * 100) / costBasisPrice).toFixed(2)
+    const increasePrefix = percentIncrease > 0 ? '+' : ''
+    const latestPriceFormatted = latestPrice && stock.ticker !== 'CASH' ? `$${latestPrice.toFixed(2)}` : ''
+
     return (
       <React.Fragment>
-        <Query query={STOCK_PRICE_QUERY} variables={{ ticker: stock.ticker }}>
-          {({ loading, error, data }) => {
-            const latestPrice =
-              data && data.allStocks && data.allStocks[0] && data.allStocks[0].latestPrice
-                ? data.allStocks[0].latestPrice
-                : stock.latest_price
-
-            const percentIncrease = (((latestPrice - costBasisPrice) * 100) / costBasisPrice).toFixed(2)
-            const increasePrefix = percentIncrease > 0 ? '+' : ''
-            const latestPriceFormatted = latestPrice && stock.ticker !== 'CASH' ? `$${latestPrice.toFixed(2)}` : ''
-            return (
-              <ItemRow hover onClick={this.toggleExpanded}>
-                <TableCell className="name">
-                  <h4 className="stock-name">{stock.name}</h4>
-                  {stock.ticker !== 'CASH' && <p className="ticker">{stock.ticker}</p>}
-                </TableCell>
-                <TableCell className="allocation">{stockAllocation}%</TableCell>
-                <TableCell className={`return ${percentIncrease >= 0 ? 'positive' : 'negative'}`}>
-                  {isNaN(percentIncrease) ? '' : `${increasePrefix}${percentIncrease}%`}
-                </TableCell>
-                <TableCell className="cost-basis">{costBasisPrice ? `$${costBasisPrice.toFixed(2)}` : ''}</TableCell>
-                <TableCell className="last-price">{latestPriceFormatted}</TableCell>
-                {stock.ticker !== 'CASH' && (
-                  <TableCell className="days-owned">{stock.days_owned + daysSinceUpdated}</TableCell>
-                )}
-              </ItemRow>
-            )
-          }}
-        </Query>
+        <ItemRow hover onClick={this.toggleExpanded}>
+          <TableCell className="name">
+            <h4 className="stock-name">{stock.name}</h4>
+            {stock.ticker !== 'CASH' && <p className="ticker">{stock.ticker}</p>}
+          </TableCell>
+          <TableCell className="allocation">{stockAllocation}%</TableCell>
+          <TableCell className={`return ${percentIncrease >= 0 ? 'positive' : 'negative'}`}>
+            {isNaN(percentIncrease) ? '' : `${increasePrefix}${percentIncrease}%`}
+          </TableCell>
+          <TableCell className="cost-basis">{costBasisPrice ? `$${costBasisPrice.toFixed(2)}` : ''}</TableCell>
+          <TableCell className="last-price">{latestPriceFormatted}</TableCell>
+          {stock.ticker !== 'CASH' && (
+            <TableCell className="days-owned">{stock.days_owned + daysSinceUpdated}</TableCell>
+          )}
+        </ItemRow>
         {stock.ticker !== 'CASH' && expanded && (
           <Query query={STOCK_QUERY} variables={{ ticker: stock.ticker }}>
             {({ loading, error, data }) => {
