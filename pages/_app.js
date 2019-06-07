@@ -4,7 +4,6 @@ import Head from 'next/head'
 import withApolloClient from 'lib/with-apollo-client'
 import { ApolloProvider } from 'react-apollo'
 import { Global } from '@emotion/core'
-import { ThemeProvider } from 'emotion-theming'
 import Layout, { globalStyles } from 'lib/layout'
 import 'common/utils/fontAwesomeLibrary'
 
