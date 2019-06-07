@@ -16,28 +16,23 @@ const ARTICLE_QUERY = gql`
   }
 `
 
-const Article = () => {
-  const locationArr = Router.router.asPath.split('/')
-  const articleTitle = locationArr[locationArr.length - 1].split('-').join(' ')
+const Article = () => (
+  <Query query={ARTICLE_QUERY} variables={{ title: Router.router.query.title.split('-').join(' ') }}>
+    {({ loading, error, data }) => {
+      if (loading) return <Loader />
+      if (error || !data.allArticles[0]) return <LoadingError />
 
-  return (
-    <Query query={ARTICLE_QUERY} variables={{ title: articleTitle }}>
-      {({ loading, error, data }) => {
-        if (loading) return <Loader />
-        if (error || !data.allArticles[0]) return <LoadingError />
+      const article = data.allArticles[0]
 
-        const article = data.allArticles[0]
-
-        return (
-          <ArticleContainer>
-            <HeaderImage data-headerimageurl={article.headerImageUrl} />
-            <Title>{article.title}</Title>
-            <Body dangerouslySetInnerHTML={{ __html: article.body }} />
-          </ArticleContainer>
-        )
-      }}
-    </Query>
-  )
-}
+      return (
+        <ArticleContainer>
+          <HeaderImage data-headerimageurl={article.headerImageUrl} />
+          <Title>{article.title}</Title>
+          <Body dangerouslySetInnerHTML={{ __html: article.body }} />
+        </ArticleContainer>
+      )
+    }}
+  </Query>
+)
 
 export default Article

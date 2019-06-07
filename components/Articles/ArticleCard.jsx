@@ -8,8 +8,8 @@ const ArticleCard = ({ article }) => {
   if (!Router.router.pathname || !article.title) return null
   const articleURLName = article.title.split(' ').join('-')
   const articleLink = location.pathname.includes('dashboard')
-    ? `/dashboard/articles/${articleURLName}`
-    : `/articles/${articleURLName}`
+    ? `/dashboard/articles/article?title=${articleURLName}`
+    : `/articles/article?title=${articleURLName}`
 
   return (
     <Link href={articleLink}>
