@@ -7,7 +7,7 @@ import Router from 'next/router'
 
 import PlanContext from 'common/Contexts/PlanContext'
 import { planIds } from 'common/constants'
-import { isClient, usingMocks } from 'common/utils/featureTests'
+import { isBrowser, usingMocks } from 'common/utils/featureTests'
 import hasPermissions from 'common/utils/hasPermissions'
 
 import withDashboard from 'components/Dashboard/withDashboard'
@@ -72,7 +72,7 @@ class Suggestions extends Component {
         {({ planName }) => (
           <Query query={SUGGESTIONS_QUERY} variables={{ id: planIds[planName] }}>
             {({ loading, error, data }) => {
-              const suggestionsType = isClient && Router.router.pathname.includes('/trades') ? 'Trades' : 'Suggestions'
+              const suggestionsType = isBrowser && Router.router.pathname.includes('/trades') ? 'Trades' : 'Suggestions'
               if (loading) return <SuggestionsLoader suggestionsType={suggestionsType} />
               if (!usingMocks && (error || !data)) return <LoadingError error={error} />
 

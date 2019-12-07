@@ -2,7 +2,7 @@ import gql from 'graphql-tag'
 import platform from 'platform'
 import fetchJsonP from 'fetch-jsonp'
 import { getDeviceType } from 'common/utils/helpers'
-import { isClient, hasStorage } from 'common/utils/featureTests'
+import { isBrowser, hasStorage } from 'common/utils/featureTests'
 import { IP_API_KEY } from 'common/constants'
 
 const CREATE_VISITOR = gql`
@@ -58,7 +58,7 @@ const newVisitor = apolloClient => {
   if (blackListedReferrers.includes(document.referrer)) return null
   // ignore E2E tests and programatic browsers.
   if (platform.name === 'Electron') return null
-  if (!isClient || (hasStorage && localStorage.getItem('visitorID'))) return null
+  if (!isBrowser || (hasStorage && localStorage.getItem('visitorID'))) return null
 
   // TODO create a microservice for this call to hide API_KEY
   // - MINOR priority free API and no security concerns. Only statistics from where visitors come from

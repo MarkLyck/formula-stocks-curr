@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
 import Router from 'next/router'
-import { isClient, hasStorage } from 'common/utils/featureTests'
+import { isBrowser, hasStorage } from 'common/utils/featureTests'
 import PlanContext from 'common/Contexts/PlanContext'
 import SideMenu from 'ui-components/SideMenu'
 import NavBar from 'components/Dashboard/Navbar'
@@ -37,13 +37,13 @@ const withDashboard = WrappedComponent => {
       // if they have no token saved. Push them to the front page immediately.
       if (hasStorage && !localStorage.getItem('graphcoolToken')) {
         console.warn('!!! NO localStorage token')
-        if (isClient && !window.graphcoolToken) {
+        if (isBrowser && !window.graphcoolToken) {
           console.warn('!!! NO window token')
           Router.push('/')
           return
         }
       }
-      if (isClient && window.Intercom) {
+      if (isBrowser && window.Intercom) {
         window.Intercom('shutdown')
       }
     }
@@ -63,7 +63,7 @@ const withDashboard = WrappedComponent => {
     render() {
       const { location, ...extraProps } = this.props
       const { oboardingVisible } = this.state
-      if (!isClient) return null
+      if (!isBrowser) return null
       return (
         <Query query={GET_LOGGED_IN_USER}>
           {({ loading, error, data, refetch }) => {
@@ -94,16 +94,21 @@ const withDashboard = WrappedComponent => {
                 />
                 <SideMenu location={location} user={user} setOnboardingVisible={this.setOnboardingVisible} />
                 <PlanContext.Provider value={this.getContext()}>
-                  <DashboardContent>
-                    <NavBar location={location} user={user} />
-                    <WrappedComponent
-                      location={location}
-                      userType={user.type}
-                      userPlan={user.plan}
-                      user={user}
-                      {...extraProps}
-                    />
-                  </DashboardContent>
+                  <PlanContext.Consumer>
+                    {({ planName }) => (
+                      <DashboardContent>
+                        <NavBar location={location} user={user} />
+                        <WrappedComponent
+                          location={location}
+                          userType={user.type}
+                          userPlan={user.plan}
+                          activePlan={planName}
+                          user={user}
+                          {...extraProps}
+                        />
+                      </DashboardContent>
+                    )}
+                  </PlanContext.Consumer>
                 </PlanContext.Provider>
               </DashboardLayout>
             )

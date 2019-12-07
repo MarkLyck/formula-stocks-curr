@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { isClient } from 'common/utils/featureTests'
+import { isBrowser } from 'common/utils/featureTests'
 import theme from 'common/theme'
 
 const chartData = [
@@ -27,7 +27,7 @@ const chartData = [
 
 const createChart = settings => {
   const { zoomOutButtonMarginRight = 0 } = settings
-  if (!isClient) return () => {}
+  if (!isBrowser) return () => {}
   const { id, paddingBottom = 0, irrOposite = false } = settings
 
   const { am4core, am4charts } = window

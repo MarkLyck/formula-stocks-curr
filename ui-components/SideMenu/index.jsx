@@ -1,7 +1,7 @@
 /* eslint max-len: 0 */
 import React, { Component } from 'react'
 import Router from 'next/router'
-import { isClient } from 'common/utils/featureTests'
+import { isBrowser } from 'common/utils/featureTests'
 import MenuItem from './MenuItem'
 import { MenuList } from './styles'
 
@@ -20,7 +20,7 @@ const routes = [
 class SideMenu extends Component {
   state = { activeRoute: '', isVisible: this.props.isPopOver }
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (isClient) {
+    if (isBrowser) {
       const route = routes.reduce((acc, curr, i) => {
         if (Router.router.pathname.includes(curr.route)) {
           acc = curr.route

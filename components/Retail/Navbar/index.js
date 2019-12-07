@@ -5,7 +5,7 @@ import Router from 'next/router'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import gql from 'graphql-tag'
 import { scroller } from 'react-scroll'
-import { hasStorage, isClient } from 'common/utils/featureTests'
+import { hasStorage, isBrowser } from 'common/utils/featureTests'
 
 // UI
 import Button from 'ui-components/Button'
@@ -22,11 +22,11 @@ const LOGGED_IN_USER_QUERY = gql`
 
 class Navbar extends Component {
   state = {
-    loggedIn: (hasStorage && localStorage.getItem('graphcoolToken')) || (isClient && window.graphcoolToken),
+    loggedIn: (hasStorage && localStorage.getItem('graphcoolToken')) || (isBrowser && window.graphcoolToken),
   }
 
   logout = () => {
-    if (isClient) {
+    if (isBrowser) {
       window.graphcoolToken = undefined
     }
     if (hasStorage) localStorage.removeItem('graphcoolToken')

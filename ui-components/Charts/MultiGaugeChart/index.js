@@ -1,9 +1,9 @@
 import { useEffect } from 'react'
-import { isClient } from 'common/utils/featureTests'
+import { isBrowser } from 'common/utils/featureTests'
 import theme from 'common/theme'
 
 const createChart = settings => {
-  if (!isClient) return () => {}
+  if (!isBrowser) return () => {}
   const { numberOfSections, min, max, value } = settings
 
   const { am4core, am4charts } = window

@@ -1,54 +1,17 @@
 import React, { Component } from 'react'
 import platform from 'platform'
-import gql from 'graphql-tag'
 import Router from 'next/router'
-import { graphql, compose } from 'react-apollo'
+import { useMutation } from '@apollo/react-hooks'
 import ReactModal from 'react-modal'
-import { hasStorage, isClient } from 'common/utils/featureTests'
+import { hasStorage, isBrowser } from 'common/utils/featureTests'
 import { getDeviceType } from 'common/utils/helpers'
 import ModalHeader from 'components/Dialogs/ModalHeader'
 import AccountInfo from './AccountInfo'
 import BillingInfo from './BillingInfo'
 import { ModalContainer, smallModalContentStyles } from '../styles'
+import { USER_SIGNUP, USER_LOGIN } from 'common/queries'
 
-const SIGNUP_USER = gql`
-  query signupUser(
-    $email: String!
-    $password: String!
-    $name: String!
-    $plan: String!
-    $type: String!
-    $stripeToken: String!
-    $address: Json
-    $device: Json
-    $taxPercent: Float!
-    $billingPeriod: String
-  ) {
-    signupUser(
-      email: $email
-      password: $password
-      name: $name
-      plan: $plan
-      type: $type
-      stripeToken: $stripeToken
-      address: $address
-      device: $device
-      taxPercent: $taxPercent
-      billingPeriod: $billingPeriod
-    ) {
-      id
-      token
-    }
-  }
-`
-
-const SIGNIN_USER_MUTATION = gql`
-  mutation SigninUserMutation($email: String!, $password: String!) {
-    signinUser(email: { email: $email, password: $password }) {
-      token
-    }
-  }
-`
+// TODO redo as functional component
 
 class SignUp extends Component {
   static getDerivedStateFromProps(props, state) {
@@ -97,7 +60,7 @@ class SignUp extends Component {
           },
         },
       })
-      if (isClient) {
+      if (isBrowser) {
         window.graphcoolToken = data.signupUser.token
       }
       if (hasStorage) {
