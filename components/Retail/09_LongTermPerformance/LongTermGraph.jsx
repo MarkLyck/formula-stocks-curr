@@ -35,7 +35,7 @@ const createChartData = (planData, marketPrices) => {
       fs: Number(balance),
       fsBalloon: formatPrice(balance, false, false, '$'),
       marketBalloon: formatPrice(marketBalance, false, false, '$'),
-      date: new Date(point.date.year, point.date.month - 1, point.date.day),
+      date: point.date,
     }
   })
 }

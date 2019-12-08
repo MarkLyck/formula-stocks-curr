@@ -1,92 +1,72 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { Query } from 'react-apollo'
 import Router from 'next/router'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import gql from 'graphql-tag'
 import { scroller } from 'react-scroll'
 import { hasStorage, isBrowser } from 'common/utils/featureTests'
+// import useWindowSize from 'common/utils/useWindowSize'
 
 // UI
 import Button from 'ui-components/Button'
 
-import { NavLinks, ScrollLink, NavBar, Logo } from './styles'
+import { NavLinks, ScrollLink, NavbarContainer, Logo } from './styles'
 
-const LOGGED_IN_USER_QUERY = gql`
-  query LoggedInUserQuery {
-    loggedInUser {
-      id
-    }
-  }
-`
+const Navbar = ({ toggleFAQModal, toggleLoginModal, toggleSignUpModal }) => {
+  const [loggedIn, setLoggedIn] = useState(
+    (hasStorage && localStorage.getItem('authToken')) || (isBrowser && window.authToken)
+  )
+  // const windowSize = useWindowSize()
 
-class Navbar extends Component {
-  state = {
-    loggedIn: (hasStorage && localStorage.getItem('graphcoolToken')) || (isBrowser && window.graphcoolToken),
+  const logout = () => {
+    logoutUser()
+    setLoggedIn(false)
   }
 
-  logout = () => {
-    if (isBrowser) {
-      window.graphcoolToken = undefined
-    }
-    if (hasStorage) localStorage.removeItem('graphcoolToken')
-    this.setState({ loggedIn: false })
-  }
+  const goToDashboard = () => Router.push('/dashboard/portfolio')
 
-  goToDashboard = () => Router.push('/dashboard/portfolio')
-
-  renderLoggedOutLinks = () => (
+  const LoggedOutLinks = () => (
     <NavLinks>
-      <Button variant="raised" type="light" onClick={this.props.toggleLoginModal}>
+      <Button variant="raised" type="light" onClick={toggleLoginModal}>
         <FontAwesomeIcon icon="sign-in-alt" />
         Login
       </Button>
-      <Button variant="raised" background="primary" onClick={this.props.toggleSignUpModal}>
+      <Button variant="raised" background="primary" onClick={toggleSignUpModal}>
         Sign up
       </Button>
     </NavLinks>
   )
 
-  renderLoggedInLinks = () => (
+  const LoggedInLinks = () => (
     <NavLinks>
-      <Button variant="raised" onClick={this.goToDashboard}>
+      <Button variant="raised" onClick={goToDashboard}>
         <FontAwesomeIcon icon="chart-line" />
         Dashboard
       </Button>
-      <Button variant="raised" type="light" color="black" hoverColor="error" onClick={() => this.logout()}>
+      <Button variant="raised" type="light" color="black" hoverColor="error" onClick={logout}>
         <FontAwesomeIcon icon="sign-out-alt" />
         Log out
       </Button>
     </NavLinks>
   )
 
-  render() {
-    const { toggleFAQModal } = this.props
-    const { loggedIn } = this.state
-
-    return (
-      <Query query={LOGGED_IN_USER_QUERY}>
-        {({ loading, error, data }) => (
-          <NavBar position="fixed" color="default">
-            <Logo onClick={() => scroller.scrollTo('hero', { smooth: true, offset: -100 })} />
-            <ScrollLink className="performance" to="performance" smooth offset={-100}>
-              Performance
-            </ScrollLink>
-            <ScrollLink className="how-it-works" to="how-it-works" smooth offset={-100}>
-              How it works
-            </ScrollLink>
-            <ScrollLink className="pricing" to="first-month-on-us" smooth offset={-100}>
-              Pricing
-            </ScrollLink>
-            <ScrollLink className="faq-link" to="" onClick={toggleFAQModal}>
-              FAQ
-            </ScrollLink>
-            {loggedIn ? this.renderLoggedInLinks() : this.renderLoggedOutLinks()}
-          </NavBar>
-        )}
-      </Query>
-    )
-  }
+  return (
+    <NavbarContainer position="fixed" color="default">
+      <Logo onClick={() => scroller.scrollTo('hero', { smooth: true, offset: -100 })} />
+      <ScrollLink className="performance" to="performance" smooth offset={-100}>
+        Performance
+      </ScrollLink>
+      <ScrollLink className="how-it-works" to="how-it-works" smooth offset={-100}>
+        How it works
+      </ScrollLink>
+      <ScrollLink className="pricing" to="first-month-on-us" smooth offset={-100}>
+        Pricing
+      </ScrollLink>
+      <ScrollLink className="faq-link" to="" onClick={toggleFAQModal}>
+        FAQ
+      </ScrollLink>
+      {loggedIn ? <LoggedInLinks /> : <LoggedOutLinks />}
+    </NavbarContainer>
+  )
 }
 
 Navbar.propTypes = {

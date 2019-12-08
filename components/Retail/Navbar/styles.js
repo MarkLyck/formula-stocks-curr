@@ -25,7 +25,7 @@ export const Logo = styled.div`
   }
 `
 
-export const NavBar = styled.div`
+export const NavbarContainer = styled.div`
   top: 0;
   left: auto;
   right: 0;

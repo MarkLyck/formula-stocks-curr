@@ -1,7 +1,6 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import get from 'lodash.get'
-import { Query } from 'react-apollo'
-import gql from 'graphql-tag'
+import { useQuery } from '@apollo/react-hooks'
 import Script from 'react-load-script'
 import Router from 'next/router'
 import { planIds } from 'common/constants'
@@ -31,112 +30,92 @@ import RiskManagement from 'components/Retail/13_RiskManagement'
 import CorporateProfile from 'components/Retail/14_CorporateProfile'
 import ScrolledToBottom from 'components/Retail/15_ScrolledToBottom'
 import Footer from 'components/Retail/16_Footer'
+import { LAUNCH_STATISTICS, BACKTESTED_STATISTICS } from 'common/queries'
 
-const GET_ENTRY_AND_MARKET_DATA = gql`
-  query {
-    Plan(id: "${planIds.ENTRY}") {
-      name
-      info
-      price
-      portfolioYields
-      launchStatistics
-      latestSells
-      statistics
-    }
-  }
-`
+const price = 49.99
+const planName = 'entry'
 
-class Retail extends Component {
-  state = {
-    signUpVisible: Router.router && Router.router.query.signup === '' ? true : false,
-    loginVisible: Router.router && Router.router.query.login === '' ? true : false,
-    FAQVisible: false,
-  }
+const Retail = ({ apolloClient, amCharts4Loaded }) => {
+  const { loading: launchStatisticsLoading, data: launchStatisticsData } = useQuery(LAUNCH_STATISTICS, {
+    variables: { planName },
+  })
+  const { loading: backtestedStatisticsLoading, data: backtestedStatisticsData } = useQuery(BACKTESTED_STATISTICS, {
+    variables: { planName },
+  })
 
-  componentDidMount() {
+  const [signupVisible, setSignupVisible] = useState(false)
+  const [loginVisible, setLoginVisible] = useState(false)
+  const [termsVisible, setTermsVisible] = useState(false)
+  const [privacyVisible, setPrivacyVisible] = useState(false)
+  const [FAQVisible, setFAQVisible] = useState(false)
+
+  useEffect(() => {
     if (typeof window !== 'undefined' && window.Intercom) {
       window.Intercom('boot', { app_id: 'i194mpvo' })
+      window.intercomSettings = {
+        app_id: '194mpvo',
+        custom_launcher_selector: '#talk-to-us',
+      }
     }
     hasStorage && localStorage.setItem('selectedPlan', 'ENTRY')
-    newVisitor(this.props.apolloClient)
-  }
+    newVisitor(apolloClient)
+  })
 
-  toggleSignUpModal = () => this.setState(state => ({ signUpVisible: !state.signUpVisible }))
-  toggleLoginModal = () => this.setState(state => ({ loginVisible: !state.loginVisible }))
-  toggleFAQModal = () => this.setState(state => ({ FAQVisible: !state.FAQVisible }))
+  console.log('launchStatisticsLoading', launchStatisticsLoading)
+  console.log('backtestedStatisticsLoading', backtestedStatisticsLoading)
 
-  render() {
-    const { apolloClient, amCharts4Loaded } = this.props
-    const { signUpVisible, loginVisible, FAQVisible } = this.state
+  if (launchStatisticsLoading || backtestedStatisticsLoading) return <HomeLoader />
 
-    return (
-      <Query query={GET_ENTRY_AND_MARKET_DATA}>
-        {({ loading, error, data }) => {
-          if (loading) return <HomeLoader />
-          if (!data || !data.Plan || (error && !usingMocks)) return <LoadingError error={error} />
+  console.log('backtestedStatisticsData', backtestedStatisticsData)
 
-          const { Plan } = data
+  const toggleSignupVisible = () => setSignupVisible(!signupVisible)
+  const toggleLoginVisible = () => setLoginVisible(!loginVisible)
+  const toggleTermsVisible = () => setTermsVisible(!termsVisible)
+  const togglePrivacyVisible = () => setPrivacyVisible(!privacyVisible)
+  const toggleFAQVisible = () => setFAQVisible(!FAQVisible)
 
-          const planName = get(Plan, 'name')
-          const portfolioYields = get(Plan, 'portfolioYields')
-          const latestSells = get(Plan, 'latestSells')
-          const winRatio = get(Plan, 'statistics.winRatio')
-          const CAGR = get(Plan, 'statistics.CAGR')
-          const avgGain = get(Plan, 'info.avgGainPerPosition')
-          const avgLoss = get(Plan, 'info.avgLossPerPosition')
-          const sortinoRatio = get(Plan, 'info.sortinoRatio')
+  const portfolioReturn = get(launchStatisticsData, 'plan.statisticsSinceLaunch.totalReturn')
+  const winRatio = get(backtestedStatisticsData, 'plan.statistics.winLossRatio')
+  const CAGR = get(backtestedStatisticsData, 'plan.statistics.cAGR')
+  const avgGain = get(backtestedStatisticsData, 'plan.statistics.averageGainPerPosition')
+  const avgLoss = get(backtestedStatisticsData, 'plan.statistics.averageLossPerPosition')
+  const sortinoRatio = get(backtestedStatisticsData, 'plan.statistics.sortinoRatio')
 
-          const firstBalance = portfolioYields[0].balance
-          const lastBalance = portfolioYields[portfolioYields.length - 1].balance
-          const increase = lastBalance - firstBalance
-          const portfolioReturn = (increase / firstBalance) * 100
-
-          return (
-            <div className="retail-page">
-              <Navbar
-                toggleSignUpModal={this.toggleSignUpModal}
-                toggleLoginModal={this.toggleLoginModal}
-                toggleFAQModal={this.toggleFAQModal}
-              />
-              <Hero portfolioReturn={portfolioReturn} winRatio={winRatio} />
-              <Introduction
-                portfolioReturn={portfolioReturn}
-                portfolioYields={portfolioYields}
-                winRatio={winRatio}
-                planName={planName}
-              />
-              <WhatIsIt />
-              <Performance portfolioYields={portfolioYields} planName={planName} amCharts4Loaded={amCharts4Loaded} />
-              <PercentMatters portfolioReturn={portfolioReturn} CAGR={CAGR} />
-              <FirstMonthOnUs toggleSignUpModal={this.toggleSignUpModal} price={Plan.price} />
-              <WhatToExpect latestSells={latestSells} winRatio={winRatio} />
-              <PilotProgram />
-              <LongTermPerformance planName={planName} amCharts4Loaded={amCharts4Loaded} />
-              <Statistics
-                winRatio={winRatio}
-                planName={planName}
-                avgGain={avgGain}
-                avgLoss={avgLoss}
-                sortinoRatio={sortinoRatio}
-              />
-              <AIScore amCharts4Loaded={amCharts4Loaded} />
-              <HowWeBeatTheMarket />
-              <RiskManagement winRatio={winRatio} sortinoRatio={sortinoRatio} avgGain={avgGain} avgLoss={avgLoss} />
-              <CorporateProfile />
-              <ScrolledToBottom toggleSignUpModal={this.toggleSignUpModal} />
-              <Footer />
-              <Script url="https://js.stripe.com/v3/" />
-              {signUpVisible && (
-                <Signup onRequestClose={this.toggleSignUpModal} planPrice={Plan.price} apolloClient={apolloClient} />
-              )}
-              {loginVisible && <Login onRequestClose={this.toggleLoginModal} apolloClient={apolloClient} />}
-              {FAQVisible && <FAQ hide={this.toggleFAQModal} />}
-            </div>
-          )
-        }}
-      </Query>
-    )
-  }
+  return (
+    <div className="retail-page">
+      <Navbar
+        toggleSignUpModal={toggleSignupVisible}
+        toggleLoginModal={toggleLoginVisible}
+        toggleFAQModal={toggleFAQVisible}
+      />
+      <Hero portfolioReturn={portfolioReturn} winRatio={winRatio} />
+      <Introduction portfolioReturn={portfolioReturn} winRatio={winRatio} planName={planName} />
+      <WhatIsIt />
+      <Performance planName={planName} amCharts4Loaded={amCharts4Loaded} />
+      <PercentMatters portfolioReturn={portfolioReturn} CAGR={CAGR} />
+      <FirstMonthOnUs toggleSignUpModal={toggleSignupVisible} price={price} />
+      <WhatToExpect planName={planName} winRatio={winRatio} />
+      <PilotProgram />
+      <LongTermPerformance planName={planName} amCharts4Loaded={amCharts4Loaded} />
+      <Statistics
+        winRatio={winRatio}
+        planName={planName}
+        avgGain={avgGain}
+        avgLoss={avgLoss}
+        sortinoRatio={sortinoRatio}
+      />
+      <AIScore amCharts4Loaded={amCharts4Loaded} />
+      <HowWeBeatTheMarket />
+      <RiskManagement winRatio={winRatio} sortinoRatio={sortinoRatio} avgGain={avgGain} avgLoss={avgLoss} />
+      <CorporateProfile />
+      <ScrolledToBottom toggleSignUpModal={toggleSignupVisible} />
+      <Footer />
+      <Script url="https://js.stripe.com/v3/" />
+      {signupVisible && <Signup onRequestClose={toggleSignupVisible} planPrice={price} apolloClient={apolloClient} />}
+      {loginVisible && <Login onRequestClose={toggleLoginVisible} apolloClient={apolloClient} />}
+      {FAQVisible && <FAQ hide={toggleFAQVisible} />}
+    </div>
+  )
 }
 
 export default withCharts(Retail, { version: 4 })

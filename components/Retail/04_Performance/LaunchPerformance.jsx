@@ -10,15 +10,17 @@ import { formatPrice } from 'common/utils/helpers'
 import theme from 'common/theme'
 import { GraphContainer, ChartLoaderContainer } from './styles'
 
-const createChartData = (portfolioYields, marketPrices) => {
+const createChartData = (portfolioYields, marketHistory) => {
   const startValue = portfolioYields[0].balance
-  const marketStartValue = marketPrices.length ? Number(marketPrices[0].price) : 0
+  const marketStartValue = marketHistory.length ? Number(marketHistory[0].price) : 0
 
   return portfolioYields.map((point, i) => {
     const balance = (((portfolioYields[i].balance - startValue) / startValue) * 100).toFixed(2)
-    const marketBalance = marketPrices[i]
-      ? (((Number(marketPrices[i].price) - marketStartValue) / marketStartValue) * 100).toFixed(2)
-      : (((Number(marketPrices[marketPrices.length - 1].price) - marketStartValue) / marketStartValue) * 100).toFixed(2)
+    const marketBalance = marketHistory[i]
+      ? (((Number(marketHistory[i].price) - marketStartValue) / marketStartValue) * 100).toFixed(2)
+      : (((Number(marketHistory[marketHistory.length - 1].price) - marketStartValue) / marketStartValue) * 100).toFixed(
+          2
+        )
 
     const month = Number(point.date.month) > 9 ? point.date.month : `0${point.date.month}`
 
@@ -27,20 +29,20 @@ const createChartData = (portfolioYields, marketPrices) => {
       fs: Number(balance),
       fsBalloon: formatPrice(balance, true, true),
       marketBalloon: formatPrice(marketBalance, true, true),
-      date: `${point.date.year}-${month}-${point.date.day}`,
+      date: point.date,
     }
   })
 }
 
-const LaunchPerformance = ({ portfolioYields, marketPrices, planName, amCharts4Loaded }) => {
-  if (!portfolioYields || !marketPrices.length || !portfolioYields.length || !amCharts4Loaded) {
+const LaunchPerformance = ({ portfolioYields, marketHistory, planName, amCharts4Loaded }) => {
+  if (!portfolioYields || !marketHistory.length || !portfolioYields.length || !amCharts4Loaded) {
     return (
       <ChartLoaderContainer>
         <FontAwesomeIcon icon="spinner-third" spin size="4x" />
       </ChartLoaderContainer>
     )
   }
-  const chartData = createChartData(portfolioYields, marketPrices)
+  const chartData = createChartData(portfolioYields, marketHistory)
 
   const fsMin = minBy(chartData, point => point.fs).fs
   const marMin = chartData[0].market ? minBy(chartData, point => point.market).market : 0
@@ -58,7 +60,7 @@ const LaunchPerformance = ({ portfolioYields, marketPrices, planName, amCharts4L
       tooltipText: `${CapitalizedPlanNAme} \n[bold]{fsBalloon}[/]`,
     },
   ]
-  if (marketPrices.length) {
+  if (marketHistory.length) {
     series.push({
       valueY: 'market',
       color: theme.colors.black,
@@ -107,7 +109,7 @@ LaunchPerformance.defaultProps = {
 
 LaunchPerformance.propTypes = {
   portfolioYields: PropTypes.array,
-  marketPrices: PropTypes.array,
+  marketHistory: PropTypes.array,
   planName: PropTypes.string,
 }
 

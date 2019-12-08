@@ -38,6 +38,7 @@ export const Bold = styled.span`
 /* eslint-disable */
 export const Overlay = styled.div`
   position: absolute;
+  top: 0;
   height: 100%;
   width: 100%;
   z-index: 4;

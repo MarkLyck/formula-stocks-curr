@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import LazyLoad from 'react-lazyload'
 import PropTypes from 'prop-types'
 import { css } from '@emotion/core'
-
 import Typed from 'typed.js'
 import { Element } from 'react-scroll'
 import { HeroContainer, Content, Title, SliderImage, Overlay, Bold } from './styles'

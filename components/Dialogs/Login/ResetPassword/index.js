@@ -6,7 +6,7 @@ import Button from 'ui-components/Button'
 import ModalHeader from 'components/Dialogs/ModalHeader'
 import Success from 'ui-components/Success'
 
-class ResetPassord extends Component {
+class ResetPassword extends Component {
   validate = values => {
     let errors = {}
     if (!values.email) {
