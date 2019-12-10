@@ -6,7 +6,7 @@ import { isBrowser, hasStorage } from 'common/utils/featureTests'
 import { IP_API_KEY } from 'common/constants'
 
 const CREATE_VISITOR = gql`
-  mutation createVisitor($device: Json!, $location: Json!, $referrer: String!) {
+  mutation createVisitor($device: JSON!, $location: JSON!, $referrer: String!) {
     createVisitor(device: $device, location: $location, referrer: $referrer) {
       id
     }

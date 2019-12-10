@@ -33,7 +33,7 @@ class ResetPassword extends Component {
       body: JSON.stringify({
         client_id: 'cNzi57DVxYCnIWUrRiNEHHhhzTEKCaF6',
         email,
-        connection: '', //DB connection name (ask 8base support for this.)
+        connection: 'auth0DB-5dd309bb8aecc16819d3bfd1', //DB connection name (ask 8base support for this.)
       }),
       headers: {
         'Content-Type': 'application/json',

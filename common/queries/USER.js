@@ -8,10 +8,9 @@ export const USER_SIGNUP = gql`
     $firstName: String!
     $lastName: String!
     $stripeToken: JSON!
-    # TODO
     $plan: String! 
-    $address: Json
-    $device: Json
+    $address: JSON
+    $device: JSON
     $taxPercent: Float!
     $billingPeriod: String
   ) {

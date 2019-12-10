@@ -20,7 +20,7 @@ import {
 } from './styles'
 
 export const UPDATE_USER = gql`
-  mutation updateUser($id: ID!, $intros: Json) {
+  mutation updateUser($id: ID!, $intros: JSON) {
     updateUser(id: $id, intros: $intros) {
       id
       intros

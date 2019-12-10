@@ -90,7 +90,17 @@ class CheckoutForm extends Component {
       if (payload.error) {
         this.setState({ isSubmitting: false, error: payload.error })
       } else {
-        handleSignup(this.name, taxPercent, this.showSuccess, payload)
+        console.log('stripe payload', payload)
+        handleSignup({
+          firstName: this.name.split(' ')[0],
+          lastName: this.name
+            .split(' ')
+            .slice(1)
+            .join(' '),
+          taxPercent,
+          showSuccess: this.showSuccess,
+          stripeToken: payload.token,
+        })
       }
     })
     return e

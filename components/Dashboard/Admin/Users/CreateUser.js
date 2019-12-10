@@ -11,8 +11,8 @@ const CREATE_USER = gql`
     $type: String!
     $stripeToken: String
     $stripeCustomer: String
-    $address: Json
-    $device: Json!
+    $address: JSON
+    $device: JSON!
     $taxPercent: Float!
   ) {
     createUser(

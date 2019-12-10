@@ -61,12 +61,7 @@ const Retail = ({ apolloClient, amCharts4Loaded }) => {
     newVisitor(apolloClient)
   })
 
-  console.log('launchStatisticsLoading', launchStatisticsLoading)
-  console.log('backtestedStatisticsLoading', backtestedStatisticsLoading)
-
   if (launchStatisticsLoading || backtestedStatisticsLoading) return <HomeLoader />
-
-  console.log('backtestedStatisticsData', backtestedStatisticsData)
 
   const toggleSignupVisible = () => setSignupVisible(!signupVisible)
   const toggleLoginVisible = () => setLoginVisible(!loginVisible)

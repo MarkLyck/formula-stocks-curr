@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import platform from 'platform'
 import Router from 'next/router'
 import { useMutation } from '@apollo/react-hooks'
@@ -28,6 +28,7 @@ const SignUp = ({ onRequestClose, planPrice }) => {
     const plan = hasStorage && localStorage.getItem('selectedPlan') ? localStorage.getItem('selectedPlan') : 'entry'
     const type = plan === 'entry' ? 'trial' : 'subscriber'
     try {
+      console.log('before userSignup')
       const signupData = await userSignup({
         variables: {
           email: accountInfo.email,
@@ -35,10 +36,10 @@ const SignUp = ({ onRequestClose, planPrice }) => {
           stripeToken,
           firstName,
           lastName,
-          planName,
+          plan: plan.toLowerCase(),
           type,
           taxPercent,
-          billingPeriod: 'MONTHLY',
+          billingPeriod: 'monthly',
           address: {
             country: accountInfo.country,
             city: accountInfo.city,
@@ -102,11 +103,11 @@ const SignUp = ({ onRequestClose, planPrice }) => {
     <ReactModal isOpen onRequestClose={onRequestClose} overlayClassName="modal-overlay" style={smallModalContentStyles}>
       <ModalContainer>
         <ModalHeader title="Sign up" toggleModal={onRequestClose} />
-        {page === 1 && <AccountInfo nextPage={this.nextPage} />}
+        {page === 1 && <AccountInfo nextPage={nextPage} />}
         {page === 2 && (
           <BillingInfo
             taxPercent={accountInfo.taxPercent}
-            handleSignup={this.handleSignup}
+            handleSignup={handleSignup}
             signupError={signupError}
             planPrice={planPrice}
           />
