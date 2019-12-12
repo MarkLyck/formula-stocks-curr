@@ -51,10 +51,11 @@ const Portfolio = ({ amCharts4Loaded, user, activePlan, history }) => {
   // TODO fetch plan performance
 
   const hasPlanPerms = hasPermissions(activePlan, user)
+  const portfolioHoldings = []
 
   let totalBalance = 0
   // TODO use holdingsData
-  const balanceMap = Plan.portfolio.reduce((acc, curr) => {
+  const balanceMap = portfolioHoldings.reduce((acc, curr) => {
     if (curr.ticker !== 'CASH') {
       acc[curr.ticker] = curr.number_held * curr.latest_price
     } else {
@@ -138,24 +139,24 @@ const Portfolio = ({ amCharts4Loaded, user, activePlan, history }) => {
   )
 }
 
-class Portfolio extends Component {
-  render() {
-    const { amCharts4Loaded, user, history } = this.props
+// class Portfolio extends Component {
+//   render() {
+//     const { amCharts4Loaded, user, history } = this.props
 
-    return (
-      <PlanContext.Consumer>
-        {({ planName }) => (
-          <Query query={PORTFOLIO_QUERY} variables={{ id: planIds[planName] }}>
-            {({ loading, error, data }) => {
-              const hasPlanPerms = hasPermissions(planName, user)
+//     return (
+//       <PlanContext.Consumer>
+//         {({ planName }) => (
+//           <Query query={PORTFOLIO_QUERY} variables={{ id: planIds[planName] }}>
+//             {({ loading, error, data }) => {
+//               const hasPlanPerms = hasPermissions(planName, user)
 
-              const { Plan, DJIA } = data
-            }}
-          </Query>
-        )}
-      </PlanContext.Consumer>
-    )
-  }
-}
+//               const { Plan, DJIA } = data
+//             }}
+//           </Query>
+//         )}
+//       </PlanContext.Consumer>
+//     )
+//   }
+// }
 
 export default withCharts(Portfolio, { version: 4, loadPieChart: true })

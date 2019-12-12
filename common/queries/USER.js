@@ -90,6 +90,15 @@ export const USER_UPDATE = gql`
   }
 `
 
+export const SET_INTROS = gql`
+  mutation userUpdate($id: ID!, $intros: JSON) {
+    updateUser(data: { id: $id, intros: $intros }) {
+      id
+      intros
+    }
+  }
+`
+
 export const USERS_QUERY = gql`
   query {
     usersList {
