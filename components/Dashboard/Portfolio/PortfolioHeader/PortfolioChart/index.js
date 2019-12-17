@@ -12,7 +12,7 @@ import { GraphContainer } from './styles'
 
 const createChartData = (portfolioYields, marketPrices, totalBalance, updatedAt) => {
   const startValue = portfolioYields[0].balance
-  const marketStartValue = Number(marketPrices[0].price) || 0
+  const marketStartValue = marketPrices[0] ? Number(marketPrices[0].price) : 0
   let lastMarketBalance = 0
 
   const chartData = portfolioYields.map((point, i) => {
@@ -33,9 +33,10 @@ const createChartData = (portfolioYields, marketPrices, totalBalance, updatedAt)
       fs: Number(balance),
       fsBalloon: formatPrice(balance, true, true),
       marketBalloon: formatPrice(marketBalance, true, true),
-      date: new Date(point.date.year, point.date.month - 1, point.date.day),
+      date: new Date(point.date),
     }
   })
+
   // figure out what the last date from the JSON is.
   const endDate = portfolioYields[portfolioYields.length - 1].date
   const lastDayFromDatabase = new Date(endDate.year, endDate.month - 1, endDate.day)

@@ -8,8 +8,8 @@ import { GraphContainer, LoadingContainer, FailedContainer } from './styles'
 
 const createChartData = historicPrices =>
   historicPrices.map(point => ({
-    price: point[1],
-    date: new Date(point[0]),
+    price: point.close,
+    date: new Date(point.date),
   }))
 
 const StockChart = ({ historicPrices, ticker, costBasisPrice, action, amCharts4Loaded, daysOwned, loading, error }) => {
@@ -28,6 +28,7 @@ const StockChart = ({ historicPrices, ticker, costBasisPrice, action, amCharts4L
       </FailedContainer>
     )
   }
+  console.log('historicPrices', historicPrices)
   const chartData = createChartData(historicPrices)
 
   let guideColor = theme.colors.primary
@@ -58,6 +59,8 @@ const StockChart = ({ historicPrices, ticker, costBasisPrice, action, amCharts4L
       text: 'Cost Basis',
     },
   ]
+
+  console.log('chartData', chartData)
 
   return (
     <GraphContainer>

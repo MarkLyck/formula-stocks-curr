@@ -12,6 +12,9 @@ const PortfolioHeader = ({
   marketPrices,
   planName,
   portfolio,
+  portfolioHoldingsLoading,
+  launchHistoryLoading,
+  marketLoading,
   allocationMap,
   totalBalance,
   updatedAt,
@@ -37,7 +40,9 @@ const PortfolioHeader = ({
       <div className="plan-results results">
         <h3 className="plan-name">{planName} Formula</h3>
         <p>
-          <span>+{getIncrease(portfolioYields[0].balance, totalBalance)}% </span>
+          <span>
+            +{portfolioYields && portfolioYields.length ? getIncrease(portfolioYields[0].balance, totalBalance) : ''}%{' '}
+          </span>
           since 2009
         </p>
       </div>
@@ -47,7 +52,11 @@ const PortfolioHeader = ({
           <Tooltip tip={'Dow Jones Industrial Average'} position="left" width="242" />
         </div>
         <p>
-          <span>+{getIncrease(marketPrices[0].price, marketPrices[marketPrices.length - 1].price)}% </span>
+          <span>
+            +
+            {marketPrices.length ? getIncrease(marketPrices[0].price, marketPrices[marketPrices.length - 1].price) : ''}
+            %{' '}
+          </span>
           since 2009
         </p>
       </div>

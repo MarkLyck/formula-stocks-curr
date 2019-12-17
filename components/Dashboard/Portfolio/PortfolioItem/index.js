@@ -31,24 +31,26 @@ const PortfolioItem = ({ stock, allocation, amCharts4Loaded }) => {
   const [expanded, setExpanded] = useState(false)
   const [executeStockHistoryQuery, { called, loading, error, data }] = useLazyQuery(STOCK_HISTORY)
 
-  toggleExpanded = () => setExpanded(!expanded)
+  const toggleExpanded = () => setExpanded(!expanded)
 
-  const costBasisPrice = stock.purchase_price - stock.dividends
+  const { ticker } = stock
+
+  const costBasisPrice = stock.purchasePrice - stock.dividends
   const stockAllocation = numberToFirstDecimal(allocation)
-  const updatedDate = new Date(stock.date.year, stock.date.month - 1, stock.date.day)
+  const updatedDate = new Date(stock.date)
   const today = new Date()
   const daysSinceUpdated = differenceInDays(today, updatedDate)
 
-  const latestPrice = stock.latest_price
+  const latestPrice = stock.stock && stock.stock.latestPrice ? stock.stock.latestPrice : stock.price
   const percentIncrease = (((latestPrice - costBasisPrice) * 100) / costBasisPrice).toFixed(2)
   const increasePrefix = percentIncrease > 0 ? '+' : ''
-  const latestPriceFormatted = latestPrice && stock.ticker !== 'CASH' ? `$${latestPrice.toFixed(2)}` : ''
+  const latestPriceFormatted = latestPrice && ticker !== 'CASH' ? `$${latestPrice.toFixed(2)}` : ''
 
   let historicPrices = []
 
   if (ticker !== 'CASH') {
     if (!called && expanded) {
-      executeStocktipQuery({ variables: { ticker: stock.ticker } })
+      executeStockHistoryQuery({ variables: { ticker: ticker } })
     } else if (data) {
       historicPrices = data.stock.historicPrices
     }
@@ -56,10 +58,10 @@ const PortfolioItem = ({ stock, allocation, amCharts4Loaded }) => {
 
   return (
     <React.Fragment>
-      <ItemRow hover onClick={this.toggleExpanded}>
+      <ItemRow hover onClick={toggleExpanded}>
         <TableCell className="name">
           <h4 className="stock-name">{stock.name}</h4>
-          {stock.ticker !== 'CASH' && <p className="ticker">{stock.ticker}</p>}
+          {ticker !== 'CASH' && <p className="ticker">{ticker}</p>}
         </TableCell>
         <TableCell className="allocation">{stockAllocation}%</TableCell>
         <TableCell className={`return ${percentIncrease >= 0 ? 'positive' : 'negative'}`}>
@@ -67,9 +69,9 @@ const PortfolioItem = ({ stock, allocation, amCharts4Loaded }) => {
         </TableCell>
         <TableCell className="cost-basis">{costBasisPrice ? `$${costBasisPrice.toFixed(2)}` : ''}</TableCell>
         <TableCell className="last-price">{latestPriceFormatted}</TableCell>
-        {stock.ticker !== 'CASH' && <TableCell className="days-owned">{stock.days_owned + daysSinceUpdated}</TableCell>}
+        {ticker !== 'CASH' && <TableCell className="days-owned">{stock.daysOwned + daysSinceUpdated}</TableCell>}
       </ItemRow>
-      {stock.ticker !== 'CASH' && expanded && (
+      {ticker !== 'CASH' && expanded && (
         <ItemRow>
           <td className="stock-graph-cell" colSpan="6">
             <PortfolioItemGraph
@@ -77,9 +79,9 @@ const PortfolioItem = ({ stock, allocation, amCharts4Loaded }) => {
               amCharts4Loaded={amCharts4Loaded}
               loading={loading}
               error={error}
-              ticker={stock.ticker}
+              ticker={ticker}
               costBasisPrice={costBasisPrice}
-              daysOwned={stock.days_owned}
+              daysOwned={stock.daysOwned}
             />
           </td>
         </ItemRow>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { useQuery } from '@apollo/react-hooks'
+import get from 'lodash.get'
 import { format } from 'date-fns'
 import { planIds, marketIds } from 'common/constants'
 import hasPermissions from 'common/utils/hasPermissions'
@@ -15,7 +16,7 @@ import StatisticsBox from 'ui-components/statisticsContainer/StatisticsBox'
 import PortfolioLoader from 'components/Dashboard/Portfolio/Loader'
 import LoadingError from 'ui-components/Error/LoadingError'
 import PermissionError from 'ui-components/Error/PermissionError'
-import { PORTFOLIO_HOLDINGS } from 'common/queries'
+import { PORTFOLIO_HOLDINGS, LAUNCH_HISTORY, MARKET_PRICE_HISTORY, LAUNCH_STATISTICS } from 'common/queries'
 import {
   PortfolioTable,
   PortfolioTableHead,
@@ -24,43 +25,37 @@ import {
   LoadingBox,
 } from 'components/Dashboard/Portfolio/styles'
 
-// const PORTFOLIO_QUERY = gql`
-//     query plan($id: ID!) {
-//         Plan(id: $id) {
-//             name
-//             portfolio
-//             info
-//             launchStatistics
-//             statistics
-//             portfolioYields
-//             updatedAt
-//         },
-//         DJIA: Market(id: "${marketIds.DJIA}") {
-//             name
-//             pricesSince2009
-//         }
-//     }
-// `
-
 const Portfolio = ({ amCharts4Loaded, user, activePlan, history }) => {
   const { loading: holdingsLoading, error: holdingsError, data: holdingsData } = useQuery(PORTFOLIO_HOLDINGS, {
     variables: { planName: activePlan },
   })
-  // TODO fetch DJIA performance
-  // TODO fetch launch statistics
-  // TODO fetch plan performance
+  const { loading: launchHistoryLoading, data: launchHistoryData } = useQuery(LAUNCH_HISTORY, {
+    variables: { planName: activePlan },
+  })
+  const { loading: marketLoading, error: marketError, data: marketData } = useQuery(MARKET_PRICE_HISTORY, {
+    variables: {
+      marketType: 'DJIA',
+      fromDate: '2009-01-30',
+    },
+  })
+  const { loading: launchStatisticsLoading, data: launchStatisticsData } = useQuery(LAUNCH_STATISTICS, {
+    variables: { planName: activePlan },
+  })
 
-  const hasPlanPerms = hasPermissions(activePlan, user)
-  const portfolioHoldings = []
+  const hasPlanPerms = hasPermissions(activePlan.toLowerCase(), user)
+  const portfolioHoldings = holdingsData ? holdingsData.portfolioHoldingsList.items : []
+  const marketHistory = marketData ? marketData.marketPricingHistoriesList.items : []
+  const launchHistory = launchHistoryData ? launchHistoryData.plan.launchHistory : []
 
   let totalBalance = 0
-  // TODO use holdingsData
   const balanceMap = portfolioHoldings.reduce((acc, curr) => {
     if (curr.ticker !== 'CASH') {
-      acc[curr.ticker] = curr.number_held * curr.latest_price
+      const latestPrice = curr.stock && curr.stock.latestPrice ? curr.stock.latestPrice : curr.price
+      acc[curr.ticker] = curr.numberHeld * latestPrice
     } else {
-      acc[curr.ticker] = curr.number_held
+      acc[curr.ticker] = curr.numberHeld
     }
+
     totalBalance += acc[curr.ticker]
 
     return acc
@@ -71,23 +66,29 @@ const Portfolio = ({ amCharts4Loaded, user, activePlan, history }) => {
     return acc
   }, {})
 
-  const lastRebalanceDate = Plan.portfolioYields[Plan.portfolioYields.length - 1].date
+  const lastRebalanceDate = launchHistory && launchHistory.length ? launchHistory[launchHistory.length - 1].date : ''
+  const portfolioReturn = get(launchStatisticsData, 'plan.statisticsSinceLaunch.totalReturn')
+  const winRatio = get(launchStatisticsData, 'plan.statisticsSinceLaunch.winLossRatio')
+  const CAGR = get(launchStatisticsData, 'plan.statisticsSinceLaunch.cAGR')
 
   return (
     <React.Fragment>
       <PortfolioHeader
-        portfolioYields={Plan.portfolioYields}
-        marketPrices={DJIA.pricesSince2009}
-        portfolio={Plan.portfolio}
-        planName={Plan.name}
+        portfolioYields={launchHistory}
+        marketPrices={marketHistory}
+        portfolio={portfolioHoldings}
+        portfolioHoldingsLoading={holdingsLoading}
+        marketLoading={marketLoading}
+        launchHistoryLoading={launchHistoryLoading}
+        planName={activePlan}
         allocationMap={allocationMap}
         totalBalance={totalBalance}
-        updatedAt={Plan.updatedAt}
+        updatedAt={undefined}
         amCharts4Loaded={amCharts4Loaded}
         hasPlanPerms={hasPlanPerms}
       />
-      <AnnualReturns portfolioYields={Plan.portfolioYields} totalBalance={totalBalance} />
-      {hasPlanPerms === false && <PermissionError planName={planName} history={history} user={user} />}
+      <AnnualReturns portfolioYields={launchHistory} totalBalance={totalBalance} />
+      {hasPlanPerms === false && <PermissionError planName={activePlan} history={history} user={user} />}
       {hasPlanPerms === 'WAITING' && (
         <LoadingBox>
           <Loader text="Loading Holdings..." />
@@ -112,7 +113,7 @@ const Portfolio = ({ amCharts4Loaded, user, activePlan, history }) => {
             </TableRow>
           </PortfolioTableHead>
           <TableBody>
-            {Plan.portfolio.map(stock => (
+            {portfolioHoldings.map(stock => (
               <PortfolioItem
                 stock={stock}
                 key={stock.ticker}
@@ -124,39 +125,20 @@ const Portfolio = ({ amCharts4Loaded, user, activePlan, history }) => {
         </PortfolioTable>
       )}
       <StatisticsContainer>
-        <StatisticsBox title="Annual growth" value={`${Plan.statistics.CAGR}%`} icon="chart-line" />
-        <StatisticsBox title="Sold with profit" value={`${Plan.statistics.winRatio.toFixed(2)}%`} icon="chart-pie" />
-        <StatisticsBox title="Holdings" value={Plan.portfolio.length} icon="list-ul" />
-        <StatisticsBox title="Percent in cash" value={`${allocationMap.CASH.toFixed(2)}%`} icon="dollar-sign" />
+        <StatisticsBox title="Annual growth" value={`${CAGR ? CAGR : ''}%`} icon="chart-line" />
+        <StatisticsBox title="Sold with profit" value={winRatio ? `${winRatio.toFixed(2)}%` : ''} icon="chart-pie" />
+        <StatisticsBox title="Holdings" value={portfolioHoldings.length} icon="list-ul" />
+        <StatisticsBox
+          title="Percent in cash"
+          value={allocationMap['CASH'] ? `${allocationMap.CASH.toFixed(2)}%` : 0}
+          icon="dollar-sign"
+        />
       </StatisticsContainer>
       <LastUpdated>
-        Last rebalanced:{' '}
-        <DateLabel>
-          {format(new Date(lastRebalanceDate.year, lastRebalanceDate.month - 1, lastRebalanceDate.day), 'MMM D, YYYY')}
-        </DateLabel>
+        Last rebalanced: <DateLabel>{format(new Date(lastRebalanceDate), 'MMM D, YYYY')}</DateLabel>
       </LastUpdated>
     </React.Fragment>
   )
 }
-
-// class Portfolio extends Component {
-//   render() {
-//     const { amCharts4Loaded, user, history } = this.props
-
-//     return (
-//       <PlanContext.Consumer>
-//         {({ planName }) => (
-//           <Query query={PORTFOLIO_QUERY} variables={{ id: planIds[planName] }}>
-//             {({ loading, error, data }) => {
-//               const hasPlanPerms = hasPermissions(planName, user)
-
-//               const { Plan, DJIA } = data
-//             }}
-//           </Query>
-//         )}
-//       </PlanContext.Consumer>
-//     )
-//   }
-// }
 
 export default withCharts(Portfolio, { version: 4, loadPieChart: true })

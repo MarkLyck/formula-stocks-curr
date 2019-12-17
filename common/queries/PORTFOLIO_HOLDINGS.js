@@ -1,8 +1,8 @@
 import { gql } from 'apollo-boost'
 
 export const PORTFOLIO_HOLDINGS = gql`
-  query PORTFOLIO_HOLDINGS($planID: String) {
-    portfolioHoldingsList(filter: { plan: { planID: { equals: $planID } } }) {
+  query PORTFOLIO_HOLDINGS($planName: String) {
+    portfolioHoldingsList(filter: { plan: { planID: { equals: $planName } } }) {
       items {
         daysOwned
         dividends
@@ -12,6 +12,7 @@ export const PORTFOLIO_HOLDINGS = gql`
         purchasePrice
         ticker
         name
+        date
         stock {
           date
           latestPrice

@@ -71,6 +71,8 @@ export const CURRENT_USER_QUERY = gql`
       email
       lastName
       firstName
+      plan
+      type
       stripe {
         subscription
         customer
@@ -108,6 +110,7 @@ export const USERS_QUERY = gql`
         lastSeen
         name
         email
+        plan
         type
       }
     }
