@@ -29,18 +29,31 @@ const Portfolio = ({ amCharts4Loaded, user, activePlan, history }) => {
   const { loading: holdingsLoading, error: holdingsError, data: holdingsData } = useQuery(PORTFOLIO_HOLDINGS, {
     variables: { planName: activePlan },
   })
-  const { loading: launchHistoryLoading, data: launchHistoryData } = useQuery(LAUNCH_HISTORY, {
-    variables: { planName: activePlan },
-  })
+  const { loading: launchHistoryLoading, error: launchHistoryError, data: launchHistoryData } = useQuery(
+    LAUNCH_HISTORY,
+    {
+      variables: { planName: activePlan },
+    }
+  )
   const { loading: marketLoading, error: marketError, data: marketData } = useQuery(MARKET_PRICE_HISTORY, {
     variables: {
       marketType: 'DJIA',
       fromDate: '2009-01-30',
     },
   })
-  const { loading: launchStatisticsLoading, data: launchStatisticsData } = useQuery(LAUNCH_STATISTICS, {
-    variables: { planName: activePlan },
-  })
+  const { loading: launchStatisticsLoading, error: launchStatisticsError, data: launchStatisticsData } = useQuery(
+    LAUNCH_STATISTICS,
+    {
+      variables: { planName: activePlan },
+    }
+  )
+
+  console.log('activePlan', activePlan)
+  console.log('launchHistoryData', launchHistoryData)
+
+  if (holdingsError || launchHistoryError || launchStatisticsError) {
+    return <LoadingError error={holdingsError || launchHistoryError || launchStatisticsError} />
+  }
 
   const hasPlanPerms = hasPermissions(activePlan.toLowerCase(), user)
   const portfolioHoldings = holdingsData ? holdingsData.portfolioHoldingsList.items : []

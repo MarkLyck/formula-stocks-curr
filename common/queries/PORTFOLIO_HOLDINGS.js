@@ -21,3 +21,13 @@ export const PORTFOLIO_HOLDINGS = gql`
     }
   }
 `
+
+export const CASH_PERCENT = gql`
+  query CASH_PERCENT($planName: String) {
+    portfolioHoldingsList(filter: { ticker: { equals: "CASH" }, plan: { planID: { equals: $planName } } }) {
+      items {
+        percentageWeight
+      }
+    }
+  }
+`

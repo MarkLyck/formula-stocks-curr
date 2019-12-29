@@ -33,6 +33,17 @@ export const BACKTESTED_STATISTICS = gql`
   }
 `
 
+export const SIMPLE_BACKTESTED_STATISTICS = gql`
+  query SIMPLE_BACKTESTED_STATISTICS($planName: String) {
+    plan(planID: $planName) {
+      statistics {
+        cAGR
+        winLossRatio
+      }
+    }
+  }
+`
+
 export const LAUNCH_STATISTICS = gql`
   query LAUNCH_STATISTICS($planName: String) {
     plan(planID: $planName) {
