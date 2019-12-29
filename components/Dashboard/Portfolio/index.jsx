@@ -48,9 +48,6 @@ const Portfolio = ({ amCharts4Loaded, user, activePlan, history }) => {
     }
   )
 
-  console.log('activePlan', activePlan)
-  console.log('launchHistoryData', launchHistoryData)
-
   if (holdingsError || launchHistoryError || launchStatisticsError) {
     return <LoadingError error={holdingsError || launchHistoryError || launchStatisticsError} />
   }

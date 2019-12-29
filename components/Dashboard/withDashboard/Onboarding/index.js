@@ -13,7 +13,7 @@ import { SET_INTROS } from 'common/queries'
 
 const pagePositions = ['center', 'center', 'portfolio', 'suggestions', 'AIReports', 'plans']
 
-const Onboarding = ({ onboardingVisible, setOnboardingVisible, user }) => {
+const Onboarding = ({ onboardingVisible, closeOnboarding, user }) => {
   const [setIntros, { data }] = useMutation(SET_INTROS)
   const [pageIndex, setPageIndex] = useState(0)
   const [position, setPosition] = useState(pagePositions[0])
@@ -33,7 +33,7 @@ const Onboarding = ({ onboardingVisible, setOnboardingVisible, user }) => {
         },
       })
     }
-    setOnboardingVisible(false)
+    closeOnboarding()
   }
 
   return (

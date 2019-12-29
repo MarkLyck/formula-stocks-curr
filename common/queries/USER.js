@@ -73,6 +73,7 @@ export const CURRENT_USER_QUERY = gql`
       firstName
       plan
       type
+      intros
       stripe {
         subscription
         customer
@@ -94,7 +95,7 @@ export const USER_UPDATE = gql`
 
 export const SET_INTROS = gql`
   mutation userUpdate($id: ID!, $intros: JSON) {
-    updateUser(data: { id: $id, intros: $intros }) {
+    userUpdate(data: { id: $id, intros: $intros }) {
       id
       intros
     }

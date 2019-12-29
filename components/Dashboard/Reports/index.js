@@ -1,33 +1,15 @@
 import React, { Component, useState } from 'react'
-import gql from 'graphql-tag'
-import { Query } from 'react-apollo'
+import { useQuery } from '@apollo/react-hooks'
 import searchIcon from 'static/icons/reports/ai_report_search.svg'
 import errorIcon from 'static/icons/reports/ai_report_error.svg'
 import LoadingError from 'ui-components/Error/LoadingError'
 import Loader from 'ui-components/Loader'
 import Report from 'components/Dashboard/Reports/Report'
+import { SEARCH_REPORTS_QUERY } from 'common/queries'
 import SearchBar from './SearchBar'
 import ReportItem from './ReportItem'
 import { ReportContainer, SectionHeader, IconContainer, ReportIcon, IconTitle, IconSubtitle } from './styles'
 import ReportsOnboarding from './Onboarding'
-
-const SEARCH_REPORTS_QUERY = gql`
-  query report($searchTerm: String, $marketCap: Float) {
-    allStockReports(
-      filter: {
-        OR: [{ ticker_starts_with: $searchTerm }, { name_starts_with: $searchTerm }]
-        AND: [{ marketCap_gte: $marketCap }]
-      }
-    ) {
-      date
-      name
-      stockPrice
-      scores
-      aiScore
-      ticker
-    }
-  }
-`
 
 const marketCaps = {
   ENTRY: 5000,
@@ -42,11 +24,17 @@ const getMarketCap = user => {
 }
 
 const Reports = ({ user }) => {
-  if (!user || !user.plan) return <Loader />
-  const hasSeenReportIntro = user.intros.reports
+  const hasSeenReportIntro = user && user.intros && user.intros.reports
   const [searchTerm, setSearchTerm] = useState('')
   const [onboardingVisible, setOnboardingVisible] = useState(!hasSeenReportIntro)
   const [selectedReport, setSelectedReport] = useState(null)
+  const { loading, error, data } = useQuery(SEARCH_REPORTS_QUERY, {
+    variables: { searchTerm, marketCap: getMarketCap(user) },
+  })
+
+  if (!user || !user.plan) return <Loader />
+  if (error || !data) return <LoadingError error={error} />
+
   const handleSearchTermChange = e => {
     setSearchTerm(e.target.value)
     setSelectedReport(null)
@@ -112,19 +100,12 @@ const Reports = ({ user }) => {
   }
 
   return (
-    <Query query={SEARCH_REPORTS_QUERY} variables={{ searchTerm, marketCap: getMarketCap(user) }}>
-      {({ loading, error, data }) => {
-        if (error || !data) return <LoadingError error={error} />
-        return (
-          <ReportContainer>
-            {renderOnboarding()}
-            <SectionHeader>Search</SectionHeader>
-            <SearchBar searchTerm={searchTerm} handleSearchTermChange={handleSearchTermChange} loading={loading} />
-            {!loading && renderReports(data)}
-          </ReportContainer>
-        )
-      }}
-    </Query>
+    <ReportContainer>
+      {renderOnboarding()}
+      <SectionHeader>Search</SectionHeader>
+      <SearchBar searchTerm={searchTerm} handleSearchTermChange={handleSearchTermChange} loading={loading} />
+      {!loading && renderReports(data)}
+    </ReportContainer>
   )
 }
 

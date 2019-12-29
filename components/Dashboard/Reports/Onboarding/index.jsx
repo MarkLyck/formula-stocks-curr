@@ -1,6 +1,5 @@
 import { useState } from 'react'
-import gql from 'graphql-tag'
-import { Mutation } from 'react-apollo'
+import { useMutation } from '@apollo/react-hooks'
 import Link from 'next/link'
 import searchIcon from 'static/icons/reports/ai_report_search.svg'
 import OnboardingModal from 'ui-components/Modal/Onboarding'
@@ -9,6 +8,7 @@ import Tooltip from 'ui-components/Tooltip'
 import AIScoreChart from './AIScoreChart'
 import withCharts from 'ui-components/Charts/withCharts'
 import useWindowWidth from 'common/hooks/useWindowWidth'
+import { SET_INTROS } from 'common/queries'
 import { ReportIcon } from '../styles'
 import {
   AIReportsWrapper,
@@ -19,23 +19,16 @@ import {
   Bold,
 } from './styles'
 
-export const UPDATE_USER = gql`
-  mutation updateUser($id: ID!, $intros: JSON) {
-    updateUser(id: $id, intros: $intros) {
-      id
-      intros
-    }
-  }
-`
-
 const ReportsOnboarding = ({ amCharts4Loaded, onboardingVisible, setOnboardingVisible, user }) => {
-  if (!amCharts4Loaded) return null
+  const [setIntros, { data }] = useMutation(SET_INTROS)
   const [pageIndex, setPageIndex] = useState(0)
+  const windowWidth = useWindowWidth()
+  if (!amCharts4Loaded || !user) return null
 
-  const onRequestClose = updateUser => {
+  const onRequestClose = () => {
     if (user.intros.reports !== true) {
       user.intros.reports = true
-      updateUser({
+      setIntros({
         variables: {
           id: user.id,
           intros: user.intros,
@@ -44,7 +37,6 @@ const ReportsOnboarding = ({ amCharts4Loaded, onboardingVisible, setOnboardingVi
     }
     setOnboardingVisible(false)
   }
-  const windowWidth = useWindowWidth()
 
   const plansContent = {
     ENTRY: 'has access to large and mega cap stocks.',
@@ -117,18 +109,14 @@ const ReportsOnboarding = ({ amCharts4Loaded, onboardingVisible, setOnboardingVi
   )
 
   return (
-    <Mutation mutation={UPDATE_USER}>
-      {(updateUser, { data }) => (
-        <OnboardingModal
-          isOpen={onboardingVisible}
-          onRequestClose={onRequestClose.bind(null, updateUser)}
-          activePageIndex={pageIndex}
-          setPageIndex={setPageIndex}
-          pages={[Intro, AIScoreIntro]}
-          position="AIReports"
-        />
-      )}
-    </Mutation>
+    <OnboardingModal
+      isOpen={onboardingVisible}
+      onRequestClose={onRequestClose}
+      activePageIndex={pageIndex}
+      setPageIndex={setPageIndex}
+      pages={[Intro, AIScoreIntro]}
+      position="AIReports"
+    />
   )
 }
 

@@ -14,6 +14,7 @@ const withDashboard = Component => ({ location, ...extraProps }) => {
   if (!isBrowser) return null
   const { loading, error, data } = useQuery(CURRENT_USER_QUERY, { fetchPolicy: 'cache-and-network' })
   const [onboardingVisible, setOnboardingVisible] = useState(false)
+  const [onboardingSeenBefore, setOnboardingSeenBefore] = useState(null)
   const [statePlan, setStatePlan] = useState(
     hasStorage && localStorage.getItem('selectedPlan') ? localStorage.getItem('selectedPlan').toLowerCase() : 'entry'
   )
@@ -31,7 +32,7 @@ const withDashboard = Component => ({ location, ...extraProps }) => {
 
   if (data && data.user && data.user.id === null) {
     // if the token they have is incorrect or expired. Push them to the front page.
-    console.warn('!!! loggedInUser.id === null')
+    console.warn('loggedInUser.id === null')
     if (hasStorage) localStorage.removeItem('authToken')
     Router.push('/dashboard/login')
   }
@@ -47,16 +48,22 @@ const withDashboard = Component => ({ location, ...extraProps }) => {
   })
 
   const user = data && data.user ? data.user : {}
+  if (onboardingSeenBefore === null && user.intros && !user.intros.formulaStocks) {
+    setOnboardingSeenBefore(false)
+  }
 
-  const showIntroFirstTime = user.intros && !user.intros.formulaStocks
+  const handleCloseOnboarding = () => {
+    setOnboardingSeenBefore(true)
+    setOnboardingVisible(false)
+  }
 
   return (
     <SettingsProvider>
       <DashboardLayout>
         <Onboarding
-          onboardingVisible={showIntroFirstTime || onboardingVisible}
+          onboardingVisible={onboardingSeenBefore === false || onboardingVisible}
           user={user}
-          setOnboardingVisible={() => setOnboardingVisible(true)}
+          closeOnboarding={handleCloseOnboarding}
         />
         <SideMenu location={location} user={user} setOnboardingVisible={() => setOnboardingVisible(true)} />
         <PlanContext.Provider value={getContext()}>
