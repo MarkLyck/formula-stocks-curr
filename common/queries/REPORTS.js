@@ -4,8 +4,10 @@ export const SEARCH_REPORTS_QUERY = gql`
   query report($searchTerm: String, $marketCap: Float) {
     aIReportsList(
       filter: {
-        OR: { ticker: { contains: $searchTerm }, name: { contains: $searchTerm } }
-        AND: { marketCap: { gte: $marketCap } }
+        OR: [
+          { marketCap: { gte: $marketCap }, ticker: { contains: $searchTerm } }
+          { marketCap: { gte: $marketCap }, name: { contains: $searchTerm } }
+        ]
       }
     ) {
       items {
