@@ -24,10 +24,8 @@ const getMarketCap = user => {
 }
 
 const Reports = ({ user }) => {
-  console.log('user', user)
   if (!user || !user.intros) return null
   const hasSeenReportIntro = user && user.intros && user.intros.reports
-  console.log('hasSeenReportIntro', hasSeenReportIntro)
   const [searchTerm, setSearchTerm] = useState('')
   const [onboardingVisible, setOnboardingVisible] = useState(!hasSeenReportIntro)
   const [selectedReport, setSelectedReport] = useState(null)
