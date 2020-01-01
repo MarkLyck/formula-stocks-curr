@@ -28,7 +28,6 @@ const StockChart = ({ historicPrices, ticker, costBasisPrice, action, amCharts4L
       </FailedContainer>
     )
   }
-  console.log('historicPrices', historicPrices)
   const chartData = createChartData(historicPrices)
 
   let guideColor = theme.colors.primary
@@ -59,8 +58,6 @@ const StockChart = ({ historicPrices, ticker, costBasisPrice, action, amCharts4L
       text: 'Cost Basis',
     },
   ]
-
-  console.log('chartData', chartData)
 
   return (
     <GraphContainer>

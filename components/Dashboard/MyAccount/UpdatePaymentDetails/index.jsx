@@ -93,7 +93,6 @@ class UpdatePaymentDetailsForm extends Component {
       if (payload.error || !payload.token || !payload.token.id) {
         this.setState({ isSubmitting: false, error: payload.error })
       } else {
-        console.log('stripeCustomer', stripeCustomer)
         try {
           const { data } = await apolloClient.query({
             query: UPDATE_STRIPE_CUSTOMER,

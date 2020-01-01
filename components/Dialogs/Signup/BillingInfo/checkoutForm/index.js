@@ -90,7 +90,6 @@ class CheckoutForm extends Component {
       if (payload.error) {
         this.setState({ isSubmitting: false, error: payload.error })
       } else {
-        console.log('stripe payload', payload)
         handleSignup({
           firstName: this.name.split(' ')[0],
           lastName: this.name

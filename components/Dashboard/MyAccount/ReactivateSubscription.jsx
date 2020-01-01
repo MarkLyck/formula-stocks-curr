@@ -1,47 +1,49 @@
 import React, { Component } from 'react'
-import gql from 'graphql-tag'
+import { useLazyQuery } from '@apollo/react-hooks'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Button from 'ui-components/Button'
+import { CANCEL_SUBSCRIPTION } from 'common/queries'
 
-const REACTIVATE_SUBSCRIPTION = gql`
-  query reactivateSubscription($subID: String!) {
-    reactivateSubscription(subID: $subID) {
-      stripeSubscription
-    }
+const reactivateSubscription = async (subscription, executeReactivateSubscription, user) => {
+  await executeReactivateSubscription({
+    variables: { subscriptionID: subscription.id, cancel_at_period_end: false, email: user.email },
+  })
+}
+
+const ReactivateSubscription = ({ subscription, user }) => {
+  if (
+    !subscription ||
+    !subscription.canceled_at ||
+    (subscription.status !== 'active' && subscription.status !== 'trialing')
+  )
+    return null
+  const [executeReactivateSubscription, { called, data, loading, error }] = useLazyQuery(CANCEL_SUBSCRIPTION)
+
+  if (error && error.graphQLErrors.length) {
+    const stripeError = JSON.parse(error.graphQLErrors[0].message)
+    console.error(stripeError)
+    alert(stripeError.raw.message)
   }
-`
 
-class ReactivateSubscription extends Component {
-  reactivateSubscription = async (sub, updateUser, userID) => {
-    const { apolloClient } = this.props
-    const subID = sub.id
+  const success = called && data && !error
+  // if success force page refresh
+  if (success) setTimeout(() => location.reload(), 200)
 
-    const { data } = await apolloClient.query({
-      query: REACTIVATE_SUBSCRIPTION,
-      variables: { subID },
-    })
-
-    const stripeSubscription = data.reactivateSubscription.stripeSubscription
-    updateUser({ variables: { id: userID, stripeSubscription } })
-  }
-
-  render() {
-    const { stripeSubscription, updateUser, userID } = this.props
-    if (!stripeSubscription || !stripeSubscription.canceled_at) return null
-
-    return (
-      <Button
-        variant="raised"
-        type="light"
-        background="white"
-        style={{ margin: '16px auto' }}
-        onClick={() => this.reactivateSubscription(stripeSubscription, updateUser, userID)}
-      >
-        <FontAwesomeIcon icon="flask" />
-        Reactivate subscription
-      </Button>
-    )
-  }
+  return (
+    <Button
+      variant="raised"
+      type="light"
+      color={success ? 'secondary' : 'primary'}
+      background="white"
+      disabled={success || loading}
+      style={{ margin: '16px auto' }}
+      onClick={() => reactivateSubscription(subscription, executeReactivateSubscription, user)}
+    >
+      {loading && <FontAwesomeIcon icon="spinner-third" spin style={{ fontSize: '1.25rem' }} />}
+      {success && 'Succesfully reactivated subscription!'}
+      {!loading && !success && 'Reactivate subscription'}
+    </Button>
+  )
 }
 
 export default ReactivateSubscription

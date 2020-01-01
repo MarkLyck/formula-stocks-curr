@@ -28,7 +28,6 @@ const SignUp = ({ onRequestClose, planPrice }) => {
     const plan = hasStorage && localStorage.getItem('selectedPlan') ? localStorage.getItem('selectedPlan') : 'entry'
     const type = plan === 'entry' ? 'trial' : 'subscriber'
     try {
-      console.log('before userSignup')
       const signupData = await userSignup({
         variables: {
           email: accountInfo.email,
@@ -55,9 +54,7 @@ const SignUp = ({ onRequestClose, planPrice }) => {
         },
       })
 
-      console.log('signupData', signupData)
       const loginData = await userLogin({ variables: { email: accountInfo.email, password: accountInfo.password } })
-      console.log('loginData', loginData)
 
       // save authToken
       const authToken = loginData.data.userLogin.auth.idToken

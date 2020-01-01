@@ -53,7 +53,6 @@ The total allocation in % of this stock in the portfolio, after this and all pre
   render() {
     const { suggestion, amCharts4Loaded, suggestionsType, loading, error } = this.props
     if (!suggestion) return null
-    console.log('suggestion', suggestion)
     const { detailsIsVisible } = this.state
 
     const suggestedPriceName = suggestionsType === 'trade' ? 'Traded at' : 'Buy below'

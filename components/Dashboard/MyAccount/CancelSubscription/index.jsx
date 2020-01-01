@@ -1,103 +1,124 @@
 import React, { useState } from 'react'
 import ReactModal from 'react-modal'
-import gql from 'graphql-tag'
+import { useLazyQuery } from '@apollo/react-hooks'
 import { format } from 'date-fns'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Button from 'ui-components/Button'
 import ModalTitle from 'ui-components/Modal/Title'
 import TextArea from 'ui-components/Form/TextArea'
 import { StatusLine, modalContentStyles, ModalText } from './styles'
+import { CANCEL_SUBSCRIPTION } from 'common/queries'
 
-const CANCEL_SUBSCRIPTION = gql`
-  query cancelSubscription($subID: String!) {
-    cancelSubscription(subID: $subID) {
-      stripeSubscription
-    }
-  }
-`
-const cancelSubscription = async (sub, cancelReason, updateUser, userID, apolloClient, setConfirmationIsVisible) => {
-  const subID = sub.id
-
-  const { data } = await apolloClient.query({
-    query: CANCEL_SUBSCRIPTION,
-    variables: { subID },
+const handleCancelSubscription = async (
+  executeCancelSubscription,
+  subscription,
+  cancelReason,
+  updateUser,
+  user,
+  setConfirmationIsVisible
+) => {
+  await executeCancelSubscription({
+    variables: { subscriptionID: subscription.id, cancel_at_period_end: true, email: user.email },
   })
-  const stripeSubscription = data.cancelSubscription.stripeSubscription
-  updateUser({ variables: { id: userID, stripeSubscription, cancelReason } })
+  await updateUser({ variables: { id: user.id, cancelReason } })
   setConfirmationIsVisible(false)
 }
 
-const CancelSubscription = ({ stripeSubscription, updateUser, userID, apolloClient }) => {
+const CancelConfirmation = ({
+  isOpen,
+  setConfirmationIsVisible,
+  handleTextAreaChange,
+  executeCancelSubscription,
+  cancelReason,
+  subscription,
+  updateUser,
+  user,
+}) => (
+  <ReactModal
+    isOpen={isOpen}
+    onRequestClose={() => setConfirmationIsVisible(false)}
+    style={modalContentStyles}
+    overlayClassName="modal-overlay"
+  >
+    <ModalTitle>Cancel Subscription</ModalTitle>
+    <ModalText>We're really sorry to see you go! Please give us some feedback on what we could do better.</ModalText>
+    <TextArea onChange={handleTextAreaChange} placeholder="Feedback" value={cancelReason} />
+    <Button
+      background="error"
+      color="white"
+      style={{ margin: '0 auto 16px' }}
+      size="small"
+      variant="raised"
+      disabled={!cancelReason}
+      onClick={() =>
+        handleCancelSubscription(
+          executeCancelSubscription,
+          subscription,
+          cancelReason,
+          updateUser,
+          user,
+          setConfirmationIsVisible
+        )
+      }
+    >
+      <FontAwesomeIcon icon={['far', 'times']} />
+      Cancel subscription
+    </Button>
+  </ReactModal>
+)
+
+const CancelSubscription = ({ subscription, updateUser, user }) => {
   const [confirmationIsVisible, setConfirmationIsVisible] = useState(false)
   const [cancelReason, setCancelReason] = useState('')
+  const [executeCancelSubscription, { called, data, loading, error }] = useLazyQuery(CANCEL_SUBSCRIPTION)
   const handleOnClick = () => setConfirmationIsVisible(true)
   const handleTextAreaChange = event => setCancelReason(event.target.value)
 
-  const renderCancelConfirmation = () => (
-    <ReactModal
-      isOpen={confirmationIsVisible}
-      onRequestClose={() => setConfirmationIsVisible(false)}
-      style={modalContentStyles}
-      overlayClassName="modal-overlay"
-    >
-      <ModalTitle>Cancel Subscription</ModalTitle>
-      <ModalText>We're really sorry to see you go! Please give us some feedback on what we could do better.</ModalText>
-      <TextArea onChange={handleTextAreaChange} placeholder="Feedback" value={cancelReason} />
-      <Button
-        variant="raised"
-        type="light"
-        color="error"
-        background="white"
-        hoverColor="error"
-        style={{ margin: '0 auto 16px' }}
-        onClick={() =>
-          cancelSubscription(
-            stripeSubscription,
-            cancelReason,
-            updateUser,
-            userID,
-            apolloClient,
-            setConfirmationIsVisible
-          )
-        }
-      >
-        <FontAwesomeIcon icon={['far', 'times']} />
-        Cancel subscription
-      </Button>
-    </ReactModal>
-  )
-
-  if (!stripeSubscription || !stripeSubscription.id)
+  if (!subscription || !subscription.id)
     return <p style={{ textAlign: 'center' }}>Please contact support if you'd like to cancel your subscription</p>
   const nowInUnixSeconds = Date.now() / 1000
 
+  const success = called && data && !error
+  // if success force page refresh
+  if (success) setTimeout(() => location.reload(), 200)
+
   return (
     <React.Fragment>
-      {renderCancelConfirmation()}
-      {stripeSubscription.cancel_at_period_end && stripeSubscription.current_period_end > nowInUnixSeconds && (
+      <CancelConfirmation
+        isOpen={confirmationIsVisible}
+        setConfirmationIsVisible={setConfirmationIsVisible}
+        handleTextAreaChange={handleTextAreaChange}
+        cancelReason={cancelReason}
+        executeCancelSubscription={executeCancelSubscription}
+        subscription={subscription}
+        updateUser={updateUser}
+        user={user}
+      />
+      {subscription.cancel_at_period_end && subscription.current_period_end > nowInUnixSeconds && (
         <StatusLine>
-          Your subscription is ending on:{' '}
-          {format(new Date(stripeSubscription.current_period_end * 1000), 'MMMM Do YYYY')}
+          Your subscription is ending on: {format(new Date(subscription.current_period_end * 1000), 'MMMM do yyyy')}
         </StatusLine>
       )}
-      {stripeSubscription.ended_at && (
+      {subscription.ended_at && (
         <StatusLine>
-          Your subscription ended on: {format(new Date(stripeSubscription.ended_at * 1000), 'MMMM Do YYYY')}
+          Your subscription ended on: {format(new Date(subscription.ended_at * 1000), 'MMMM do yyyy')}
         </StatusLine>
       )}
 
-      {!stripeSubscription.cancel_at_period_end && (
+      {!subscription.cancel_at_period_end && (
         <Button
-          variant="raised"
-          type="light"
-          color="error"
-          background="white"
-          hoverColor="error"
+          size="small"
+          color={success ? 'secondary' : 'error'}
+          backgroundColor="white"
+          disabled={success || loading}
+          size="small"
           style={{ margin: '0 auto 32px' }}
           onClick={handleOnClick}
         >
-          <FontAwesomeIcon icon={['far', 'times']} />
-          Cancel subscription
+          {!loading && !success && <FontAwesomeIcon icon={['far', 'times']} />}
+          {!loading && !success && 'Cancel subscription'}
+          {loading && <FontAwesomeIcon icon="spinner-third" spin style={{ fontSize: '1.25rem' }} />}
+          {success && 'Succesfully canceled subscription!'}
         </Button>
       )}
     </React.Fragment>
