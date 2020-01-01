@@ -12,10 +12,10 @@ import { ReportContainer, SectionHeader, IconContainer, ReportIcon, IconTitle, I
 import ReportsOnboarding from './Onboarding'
 
 const marketCaps = {
-  ENTRY: 5000,
-  PREMIUM: 2000,
-  BUSINESS: 250,
-  FUND: 0,
+  entry: 5000,
+  premium: 2000,
+  business: 250,
+  fund: 0,
 }
 
 const getMarketCap = user => {
@@ -24,16 +24,21 @@ const getMarketCap = user => {
 }
 
 const Reports = ({ user }) => {
+  console.log('user', user)
+  if (!user || !user.intros) return null
   const hasSeenReportIntro = user && user.intros && user.intros.reports
+  console.log('hasSeenReportIntro', hasSeenReportIntro)
   const [searchTerm, setSearchTerm] = useState('')
   const [onboardingVisible, setOnboardingVisible] = useState(!hasSeenReportIntro)
   const [selectedReport, setSelectedReport] = useState(null)
-  const { loading, error, data } = useQuery(SEARCH_REPORTS_QUERY, {
+  const { loading: searchLoading, error, data } = useQuery(SEARCH_REPORTS_QUERY, {
     variables: { searchTerm, marketCap: getMarketCap(user) },
   })
 
-  if (!user || !user.plan) return <Loader />
+  if (!user || !user.plan || !data) return <Loader />
   if (error || !data) return <LoadingError error={error} />
+
+  const aiReports = data.aIReportsList.items || []
 
   const handleSearchTermChange = e => {
     setSearchTerm(e.target.value)
@@ -67,16 +72,16 @@ const Reports = ({ user }) => {
   )
 
   const renderReports = data => {
-    const isSingleReport = (data.allStockReports && data.allStockReports.length === 1) || selectedReport
+    const isSingleReport = (aiReports && aiReports.length === 1) || selectedReport
 
     if (isSingleReport) {
-      const report = selectedReport ? selectedReport : data.allStockReports[0]
+      const report = selectedReport ? selectedReport : aiReports[0]
       return (
         <React.Fragment>
           <Report report={report} setOnboardingVisible={setOnboardingVisible} />
         </React.Fragment>
       )
-    } else if (data.allStockReports.length === 0) {
+    } else if (aiReports.length === 0) {
       return (
         <IconContainer>
           <ReportIcon
@@ -90,7 +95,7 @@ const Reports = ({ user }) => {
       )
     }
 
-    return data.allStockReports.map(report => (
+    return aiReports.map(report => (
       <ReportItem key={report.ticker} report={report} setSelectedReport={setSelectedReport} />
     ))
   }
@@ -103,8 +108,8 @@ const Reports = ({ user }) => {
     <ReportContainer>
       {renderOnboarding()}
       <SectionHeader>Search</SectionHeader>
-      <SearchBar searchTerm={searchTerm} handleSearchTermChange={handleSearchTermChange} loading={loading} />
-      {!loading && renderReports(data)}
+      <SearchBar searchTerm={searchTerm} handleSearchTermChange={handleSearchTermChange} loading={searchLoading} />
+      {!searchLoading && renderReports(data)}
     </ReportContainer>
   )
 }

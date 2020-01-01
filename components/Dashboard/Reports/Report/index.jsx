@@ -6,13 +6,9 @@ import { ScoreList, BesideSection, BoldValue, FadedValue, HowToUseThisButton } f
 import { SectionHeader } from '../styles'
 
 const Report = ({ report, setOnboardingVisible }) => {
-  let { date, name, ticker, stockPrice, scores } = report
+  let { date, name, ticker, price, scores } = report
 
-  // reports JSON is saved as strings with singleQuotes.
-  date = JSON.parse(date.split("'").join('"'))
-  scores = JSON.parse(scores.split("'").join('"'))
-
-  const dateGenerated = format(new Date(date.year, date.month - 1, date.day), 'MM/DD/YYYY')
+  const dateGenerated = format(new Date(date), 'MM/DD/YYYY')
   return (
     <React.Fragment>
       <SectionHeader>AI Investment Report</SectionHeader>
@@ -20,7 +16,7 @@ const Report = ({ report, setOnboardingVisible }) => {
         <BoldValue>
           {ticker} - {name}
         </BoldValue>
-        <FadedValue>${stockPrice}</FadedValue>
+        <FadedValue>${price}</FadedValue>
       </BesideSection>
       <AIScore value={scores.ai_score} name="AI Score" />
 

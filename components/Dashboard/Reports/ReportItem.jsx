@@ -32,9 +32,9 @@ const Score = styled.h3`
 `
 
 const ReportItem = ({ report, setSelectedReport }) => {
-  const { name, ticker, aiScore } = report
+  const { name, ticker, aIScore } = report
 
-  let outputValue = (aiScore * 100).toFixed(0)
+  let outputValue = (aIScore * 100).toFixed(0)
   let valueColor = 'black'
   if (outputValue > 0) {
     valueColor = 'green'
