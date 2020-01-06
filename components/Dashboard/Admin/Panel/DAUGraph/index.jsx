@@ -9,17 +9,17 @@ import { GraphContainer, Container } from './styles'
 
 const createChartData = (visitors, users) => {
   // gets signup dates from all users
-  const signUpDays = countBy(users, user => format(user.createdAt, 'YYYY-MM-DD'))
+  const signUpDays = countBy(users, user => format(user.createdAt, 'yyyy-MM-dd'))
 
   const cancelDays = countBy(users, user =>
-    format(new Date(get(user, 'stripeSubscription.canceled_at') * 1000), 'YYYY-MM-DD')
+    format(new Date(get(user, 'stripeSubscription.canceled_at') * 1000), 'yyyy-MM-dd')
   )
 
-  const visitorData = countBy(visitors, visitor => format(visitor.createdAt, 'YYYY-MM-DD'))
+  const visitorData = countBy(visitors, visitor => format(visitor.createdAt, 'yyyy-MM-dd'))
 
   const days = []
   for (let i = 0; i <= 30; i++) {
-    days.push(format(subDays(new Date(), 30 - i), 'YYYY-MM-DD'))
+    days.push(format(subDays(new Date(), 30 - i), 'yyyy-MM-dd'))
   }
 
   return days.map(date => ({

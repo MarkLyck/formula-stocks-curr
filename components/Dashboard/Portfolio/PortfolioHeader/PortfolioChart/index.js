@@ -4,6 +4,7 @@ import min from 'lodash.min'
 import minBy from 'lodash.minby'
 import maxBy from 'lodash.maxby'
 import { format, differenceInDays } from 'date-fns'
+
 import LineGraph from 'ui-components/Charts/LineGraph'
 import { Legends, Legend } from 'ui-components/Charts/Legends'
 import theme from 'common/theme'

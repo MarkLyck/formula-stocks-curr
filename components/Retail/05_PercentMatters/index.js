@@ -3,7 +3,7 @@ import Section from 'ui-components/Section'
 import SectionTitle from 'ui-components/Section/SectionTitle'
 import Comparison from './Comparison'
 
-const PercentMatters = ({ portfolioReturn, CAGR }) => (
+const PercentMatters = ({ portfolioReturn = 0, CAGR }) => (
   <Section data-offwhite>
     <SectionTitle>Every percent matters</SectionTitle>
     <p>

@@ -109,7 +109,8 @@ export const USERS_QUERY = gql`
         id
         createdAt
         lastSeen
-        name
+        firstName
+        lastName
         email
         plan
         type

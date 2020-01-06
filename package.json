@@ -64,7 +64,7 @@
   },
   "devDependencies": {
     "@zeit/next-bundle-analyzer": "^0.1.2",
-    "babel-plugin-date-fns": "^0.2.1",
+    "babel-plugin-date-fns": "^2.0.0",
     "babel-plugin-emotion": "^10.0.23",
     "babel-plugin-inline-svg": "^1.0.1",
     "babel-plugin-module-resolver": "^3.2.0",

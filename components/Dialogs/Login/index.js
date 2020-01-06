@@ -131,7 +131,8 @@ const Login = ({ onRequestClose, apolloClient }) => {
                     </Row>
                     <Button
                       type="submit"
-                      backgroundColor={buttonColor}
+                      background={buttonColor}
+                      variant="raised"
                       color="white"
                       disabled={isSubmitting || loginSuccess}
                     >

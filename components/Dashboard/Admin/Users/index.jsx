@@ -14,6 +14,8 @@ const UserList = ({ allUsers }) => {
   if (loading) return <GenericLoader />
   if (error) return <LoadingError error={error} />
 
+  console.log('users', data)
+
   return (
     <UsersContainer>
       <TableHead>
@@ -34,4 +36,4 @@ const UserList = ({ allUsers }) => {
   )
 }
 
-export default withDashboard(UserList)
+export default UserList

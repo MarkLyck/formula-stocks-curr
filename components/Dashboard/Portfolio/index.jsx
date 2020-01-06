@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import get from 'lodash.get'
 import { format } from 'date-fns'
+
 import { planIds, marketIds } from 'common/constants'
 import hasPermissions from 'common/utils/hasPermissions'
 import PlanContext from 'common/Contexts/PlanContext'
@@ -76,7 +77,7 @@ const Portfolio = ({ amCharts4Loaded, user, activePlan, history }) => {
     return acc
   }, {})
 
-  const lastRebalanceDate = launchHistory && launchHistory.length ? launchHistory[launchHistory.length - 1].date : ''
+  const lastRebalanceDate = launchHistory && launchHistory.length ? launchHistory[launchHistory.length - 1].date : null
   const portfolioReturn = get(launchStatisticsData, 'plan.statisticsSinceLaunch.totalReturn')
   const winRatio = get(launchStatisticsData, 'plan.statisticsSinceLaunch.winLossRatio')
   const CAGR = get(launchStatisticsData, 'plan.statisticsSinceLaunch.cAGR')
@@ -144,9 +145,13 @@ const Portfolio = ({ amCharts4Loaded, user, activePlan, history }) => {
           icon="dollar-sign"
         />
       </StatisticsContainer>
-      <LastUpdated>
-        Last rebalanced: <DateLabel>{format(new Date(lastRebalanceDate), 'MMM D, YYYY')}</DateLabel>
-      </LastUpdated>
+      {lastRebalanceDate ? (
+        <LastUpdated>
+          Last rebalanced: <DateLabel>{format(new Date(lastRebalanceDate), 'MMM d, yyyy')}</DateLabel>
+        </LastUpdated>
+      ) : (
+        ''
+      )}
     </React.Fragment>
   )
 }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useLazyQuery } from '@apollo/react-hooks'
 import { differenceInDays } from 'date-fns'
+
 import { TableCell } from 'ui-components/Table'
 import PortfolioItemGraph from './PortfolioItemGraph'
 import { ItemRow } from './styles'

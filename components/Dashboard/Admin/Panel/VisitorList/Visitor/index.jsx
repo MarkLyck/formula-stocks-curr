@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { distanceInWordsStrict } from 'date-fns'
+import { formatDistanceStrict } from 'date-fns'
 import { TableCell, TableRow } from 'ui-components/Table'
 import { Icon, DeviceTableCell, countryStyle, CountryName } from './styles'
 
@@ -55,7 +55,7 @@ const Visitor = ({ visitor }) => (
         }
       </p>
     </TableCell>
-    <TableCell style={{ height: '48px' }}>{distanceInWordsStrict(new Date(), visitor.createdAt)} ago</TableCell>
+    <TableCell style={{ height: '48px' }}>{formatDistanceStrict(new Date(), visitor.createdAt)} ago</TableCell>
     <DeviceTableCell>
       {visitor.device.os && <Icon src={`/static/icons/devices/${getOSIcon(visitor.device.os)}`} alt="os" />}
       {visitor.device.browser && (
