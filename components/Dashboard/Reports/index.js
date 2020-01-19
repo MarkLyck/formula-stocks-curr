@@ -19,19 +19,23 @@ const marketCaps = {
 }
 
 const getMarketCap = user => {
-  if (user.type === 'admin') return 0
+  // if (user.type === 'admin') return 0
   return marketCaps[user.plan]
 }
 
 const Reports = ({ user }) => {
   if (!user || !user.intros) return null
+
   const hasSeenReportIntro = user && user.intros && user.intros.reports
   const [searchTerm, setSearchTerm] = useState('')
   const [onboardingVisible, setOnboardingVisible] = useState(!hasSeenReportIntro)
   const [selectedReport, setSelectedReport] = useState(null)
+
   const { loading: searchLoading, error, data } = useQuery(SEARCH_REPORTS_QUERY, {
-    variables: { searchTerm, marketCap: getMarketCap(user) },
+    variables: { searchTerm },
   })
+
+  const userMarketCap = getMarketCap(user)
 
   if (!user || !user.plan || !data) return <Loader />
   if (error || !data) return <LoadingError error={error} />
@@ -51,23 +55,6 @@ const Reports = ({ user }) => {
         user={user}
       />
     )
-
-  const renderInitial = () => (
-    <ReportContainer>
-      {renderOnboarding()}
-      <SectionHeader>Search</SectionHeader>
-      <SearchBar searchTerm={searchTerm} handleSearchTermChange={handleSearchTermChange} />
-      <IconContainer>
-        <ReportIcon
-          dangerouslySetInnerHTML={{
-            __html: searchIcon,
-          }}
-        />
-        <IconTitle>AI Investment reports</IconTitle>
-        <IconSubtitle>Entry has access to stocks with a market cap over $5 billion.</IconSubtitle>
-      </IconContainer>
-    </ReportContainer>
-  )
 
   const renderReports = data => {
     const isSingleReport = (aiReports && aiReports.length === 1) || selectedReport
@@ -94,12 +81,13 @@ const Reports = ({ user }) => {
     }
 
     return aiReports.map(report => (
-      <ReportItem key={report.ticker} report={report} setSelectedReport={setSelectedReport} />
+      <ReportItem
+        key={report.ticker}
+        report={report}
+        setSelectedReport={setSelectedReport}
+        userMarketCap={userMarketCap}
+      />
     ))
-  }
-
-  if (!searchTerm.length) {
-    return renderInitial()
   }
 
   return (

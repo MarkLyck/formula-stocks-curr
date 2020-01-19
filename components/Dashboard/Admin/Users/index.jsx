@@ -14,8 +14,6 @@ const UserList = ({ allUsers }) => {
   if (loading) return <GenericLoader />
   if (error) return <LoadingError error={error} />
 
-  console.log('users', data)
-
   return (
     <UsersContainer>
       <TableHead>

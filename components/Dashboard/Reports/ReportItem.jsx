@@ -24,6 +24,14 @@ const Name = styled.h3`
   width: calc(100% - 64px);
 `
 
+const BlurredName = styled.h3`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: calc(100% - 64px);
+  filter: blur(3px);
+`
+
 const Score = styled.h3`
   color: ${props => props.theme.colors[props.valueColor]};
   width: 64px;
@@ -31,8 +39,8 @@ const Score = styled.h3`
   font-weight: 500;
 `
 
-const ReportItem = ({ report, setSelectedReport }) => {
-  const { name, ticker, aIScore } = report
+const ReportItem = ({ report, setSelectedReport, userMarketCap }) => {
+  const { name, ticker, aIScore, marketCap } = report
 
   let outputValue = (aIScore * 100).toFixed(0)
   let valueColor = 'black'
@@ -48,6 +56,7 @@ const ReportItem = ({ report, setSelectedReport }) => {
       <Name>
         {ticker} - {name}
       </Name>
+
       <Score valueColor={valueColor}>{outputValue}</Score>
     </ItemContainer>
   )

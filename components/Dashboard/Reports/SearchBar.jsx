@@ -6,6 +6,7 @@ import { SectionHeader } from './Report/styles'
 const SearchContainer = styled(Box)`
   position: relative;
   height: 40px;
+  margin-bottom: 24px;
 `
 
 const Icon = styled(FontAwesomeIcon)`

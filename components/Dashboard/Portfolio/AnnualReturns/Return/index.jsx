@@ -24,10 +24,14 @@ const ReturnValue = styled.p`
 const Return = ({ title, returnSince, className }) => (
   <ReturnContainer className={className}>
     <Title>{title}</Title>
-    <ReturnValue returnSince={returnSince}>
-      {returnSince >= 0 ? '+' : ''}
-      {returnSince}%
-    </ReturnValue>
+    {Number(returnSince) > -100 ? (
+      <ReturnValue returnSince={returnSince}>
+        {returnSince >= 0 ? '+' : ''}
+        {returnSince}%
+      </ReturnValue>
+    ) : (
+      ''
+    )}
   </ReturnContainer>
 )
 

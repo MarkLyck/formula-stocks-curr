@@ -1,14 +1,10 @@
 import { gql } from 'apollo-boost'
 
 export const SEARCH_REPORTS_QUERY = gql`
-  query report($searchTerm: String, $marketCap: Float) {
+  query report($searchTerm: String) {
     aIReportsList(
-      filter: {
-        OR: [
-          { marketCap: { gte: $marketCap }, ticker: { contains: $searchTerm } }
-          { marketCap: { gte: $marketCap }, name: { contains: $searchTerm } }
-        ]
-      }
+      filter: { OR: [{ ticker: { contains: $searchTerm } }, { name: { contains: $searchTerm } }] }
+      sort: { aIScore: DESC }
     ) {
       items {
         aIScore
@@ -16,24 +12,9 @@ export const SEARCH_REPORTS_QUERY = gql`
         price
         scores
         ticker
+        marketCap
         date
       }
     }
   }
 `
-
-//   query report($searchTerm: String, $marketCap: Float) {
-//     allStockReports(
-//       filter: {
-//         OR: [{ ticker_starts_with: $searchTerm }, { name_starts_with: $searchTerm }]
-//         AND: [{ marketCap_gte: $marketCap }]
-//       }
-//     ) {
-//       date
-//       name
-//       stockPrice
-//       scores
-//       aiScore
-//       ticker
-//     }
-//   }

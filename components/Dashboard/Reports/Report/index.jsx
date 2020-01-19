@@ -8,7 +8,7 @@ import { SectionHeader } from '../styles'
 const Report = ({ report, setOnboardingVisible }) => {
   let { date, name, ticker, price, scores } = report
 
-  const dateGenerated = format(new Date(date), 'MM/DD/YYYY')
+  const dateGenerated = format(new Date(date), 'MM/dd/yyyy')
   return (
     <React.Fragment>
       <SectionHeader>AI Investment Report</SectionHeader>
