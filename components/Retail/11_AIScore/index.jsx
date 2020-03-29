@@ -22,7 +22,7 @@ const AIScoreSection = ({ amCharts4Loaded }) => (
               business and statistical analysis into a single score.
               <br />
               <br />
-              The AI score indicates whether to purchase or avoid a stock. It is colorcoded for simplicity. Red? Avoid!
+              The AI score indicates whether to purchase or avoid a stock. It is color-coded for simplicity. Red? Avoid!
               Green? Consider buying.
             </div>
           </Left>
@@ -37,14 +37,13 @@ const AIScoreSection = ({ amCharts4Loaded }) => (
       <BesideContainer reverse>
         <Beside>
           <Left>
-            {amCharts4Loaded && (
-              <AIScoreChart
-                id="aiScoreBarChart"
-                style={{ width: '100%', height: '280px' }}
-                neutralColor="lightGray"
-                irrOposite
-              />
-            )}
+            <AIScoreChart
+              amCharts4Loaded={amCharts4Loaded}
+              id="aiScoreBarChart"
+              style={{ width: '100%', height: '280px' }}
+              neutralColor="lightGray"
+              irrOpposite
+            />
           </Left>
           <Right data-center>
             <div>
