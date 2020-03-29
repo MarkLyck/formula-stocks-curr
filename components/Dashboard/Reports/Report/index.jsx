@@ -1,6 +1,7 @@
 import React from 'react'
 import { format } from 'date-fns'
 import styled from '@emotion/styled'
+// import { Mixpanel } from 'common/analytics/mixpanel'
 import AIScore from './AIScore'
 import Score from './Score'
 import { ScoreList, BesideSection, BoldValue, FadedValue } from './styles'
@@ -38,13 +39,19 @@ const ReportPartContainer = styled.div`
 const Report = ({ report }) => {
   let { date, name, ticker, price, scores } = report
 
+  // useEffect(() => {
+  //   Mixpanel.track('Open Report', {
+  //     ticker,
+  //   })
+  // })
+
   const dateGenerated = format(new Date(date), 'MM/dd/yyyy')
   return (
     <>
       <ReportContainer>
         <ReportPartContainer>
           <SectionHeader>AI Investment Report</SectionHeader>
-          <AIScore value={scores.ai_score} name="AI Score" />
+          <AIScore value={scores.ai_score} id={`ai-score-${ticker}`} name="AI Score" />
 
           {/* <SectionHeader>Summary</SectionHeader> */}
           <ScoreList>

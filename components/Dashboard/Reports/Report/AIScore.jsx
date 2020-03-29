@@ -48,7 +48,7 @@ const NUM_SECTIONS = 21
 const MAX = 100
 const MIN = -100
 
-const AIScore = ({ value, name, amCharts4Loaded, css }) => {
+const AIScore = ({ id, value, name, amCharts4Loaded, css }) => {
   const outputValue = value * 100
   let valueColor = 'black'
   if (outputValue > (MAX * 2) / NUM_SECTIONS / 2) {
@@ -60,7 +60,9 @@ const AIScore = ({ value, name, amCharts4Loaded, css }) => {
   return (
     <AIScoreContainer css={css}>
       <BrainIcon icon="brain" />
-      {amCharts4Loaded && <MultiGaugeChart numberOfSections={NUM_SECTIONS} min={MIN} max={MAX} value={outputValue} />}
+      {amCharts4Loaded && (
+        <MultiGaugeChart id={id} numberOfSections={NUM_SECTIONS} min={MIN} max={MAX} value={outputValue} />
+      )}
       <AIScoreValue color={valueColor}>
         {outputValue > 0 ? `+${outputValue.toFixed(0)}` : outputValue.toFixed(0)}
       </AIScoreValue>

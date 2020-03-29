@@ -18,7 +18,11 @@ const AIScoreContainer = styled.div`
   flex-direction: column;
   margin: 0 auto;
   max-width: 2000px;
-  padding: 32px;
+  padding: 24px;
+
+  .ant-table-pagination.ant-pagination {
+    margin-right: 16px;
+  }
 
   @media (max-width: 600px) {
     padding: 16px;
@@ -36,10 +40,6 @@ const AIScoreBox = styled.div`
 
 const StyledTable = styled(Table)`
   width: 100%;
-
-  .ant-table-pagination {
-    margin-right: 16px;
-  }
 
   @media (max-width: 600px) {
     .ant-table-expand-icon-th {
@@ -72,7 +72,7 @@ var formatter = new Intl.NumberFormat('en-US', {
 })
 
 const Reports = ({ user }) => {
-  if (!user || !user.intros) return null
+  if (!user) return null
 
   const hasSeenReportIntro = user && user.intros && user.intros.reports
   const windowWidth = useWindowWidth()
@@ -138,17 +138,19 @@ const Reports = ({ user }) => {
         setTimeout(() => searchInput.select())
       }
     },
-    render: text =>
-      searchedColumn === dataIndex ? (
+    render: text => {
+      const displayText = dataIndex === 'ticker' ? text.replace('_', '.') : text
+      return searchedColumn === dataIndex ? (
         <Highlighter
           highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
           searchWords={[searchText]}
           autoEscape
-          textToHighlight={text.toString()}
+          textToHighlight={displayText.toString()}
         />
       ) : (
-        text
-      ),
+        displayText
+      )
+    },
   })
 
   const columns = [
@@ -217,7 +219,7 @@ const Reports = ({ user }) => {
         <StyledTable
           columns={columns}
           dataSource={reports}
-          loading={reportsLoading || !data || !user || !user.plan}
+          loading={reportsLoading || !data || !user}
           ellipsis={true}
           expandRowByClick={true}
           expandedRowRender={report => <Report report={report} />}

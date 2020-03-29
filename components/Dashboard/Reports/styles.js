@@ -29,13 +29,6 @@ export const IconContainer = styled.div`
   text-align: center;
 `
 
-export const ReportIcon = styled.span`
-  margin-top: 0 auto;
-  svg {
-    height: 100%;
-  }
-`
-
 export const IconTitle = styled.h2`
   font-weight: 500;
   color: ${props => props.theme.colors.purple};
