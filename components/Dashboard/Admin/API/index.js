@@ -1,4 +1,5 @@
-import { Upload, Icon, message } from 'antd'
+import { Upload, message } from 'antd'
+import { InboxOutlined } from '@ant-design/icons'
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import styled from '@emotion/styled'
 import { FILE_STACK_INFO, FILE_CREATE_MUTATION } from 'common/queries'
@@ -88,7 +89,7 @@ const Uploader = () => {
         customRequest={customRequest}
       >
         <p className="ant-upload-drag-icon">
-          <Icon type="inbox" />
+          <InboxOutlined />
         </p>
         <p className="ant-upload-text">Click to browse or drag .json file to upload</p>
         <p className="ant-upload-hint">Support for a single or bulk upload.</p>

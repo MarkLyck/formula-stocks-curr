@@ -19,3 +19,4 @@ bundles
 .DS_Store
 .env
 businessLogic
+.now

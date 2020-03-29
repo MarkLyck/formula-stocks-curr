@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import Highlighter from 'react-highlight-words'
-import { Table, Input, Button, Icon } from 'antd'
+import { Table, Input, Button } from 'antd'
+import { SearchOutlined } from '@ant-design/icons'
 import styled from '@emotion/styled'
 
 import LoadingError from 'ui-components/Error/LoadingError'
@@ -115,7 +116,7 @@ const Reports = ({ user }) => {
         <Button
           type="primary"
           onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
-          icon="search"
+          icon={<SearchOutlined />}
           size="small"
           style={{ width: 90, marginRight: 8 }}
         >
@@ -126,7 +127,7 @@ const Reports = ({ user }) => {
         </Button>
       </div>
     ),
-    filterIcon: filtered => <Icon type="search" style={{ color: filtered ? '#1890ff' : undefined }} />,
+    filterIcon: filtered => <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />,
     onFilter: (value, record) =>
       record[dataIndex]
         .toString()
