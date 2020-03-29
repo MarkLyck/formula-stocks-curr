@@ -27,7 +27,6 @@ const Onboarding = ({ onboardingVisible, closeOnboarding, user }) => {
     if (!user.intros) user.intros = {}
     if (user.intros.formulaStocks !== true) {
       user.intros.formulaStocks = true
-      console.log('setIntros', user.intros)
       setIntros({
         variables: {
           id: user.id,
