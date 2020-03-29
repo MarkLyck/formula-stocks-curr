@@ -6,7 +6,7 @@ const ReturnContainer = styled.div`
   display: flex;
   flex-direction: column;
   h3 {
-    font-weight: 100;
+    font-weight: 300;
     margin-bottom: 2px;
     font-size: 1.2rem;
   }

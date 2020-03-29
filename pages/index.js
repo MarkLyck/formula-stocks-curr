@@ -5,7 +5,6 @@ import Script from 'react-load-script'
 import Router from 'next/router'
 import { planIds } from 'common/constants'
 import { hasStorage, usingMocks } from 'common/utils/featureTests'
-import newVisitor from 'common/utils/newVisitor'
 import withCharts from 'ui-components/Charts/withCharts'
 
 import Signup from 'components/Dialogs/Signup'
@@ -58,7 +57,6 @@ const Retail = ({ apolloClient, amCharts4Loaded }) => {
       }
     }
     hasStorage && localStorage.setItem('selectedPlan', 'ENTRY')
-    newVisitor(apolloClient)
   })
 
   if (launchStatisticsLoading || backtestedStatisticsLoading) return <HomeLoader />

@@ -8,7 +8,7 @@ import { ExpandedScore, BoldValue, FadedValue, Beside } from './styles'
 export const AIScoreContainer = styled(ExpandedScore)`
   position: relative;
   padding-top: 24px;
-  height: 236px;
+  height: 228px;
   &:hover {
     cursor: default;
   }

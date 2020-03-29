@@ -10,8 +10,6 @@ const User = ({ user }) => {
   let dateClass = isAfter(user.lastSeen, date3MonthsAgo) ? 'old' : 'very-old'
   if (isAfter(user.lastSeen, dateLastMonth)) dateClass = 'new'
 
-  console.log('user', user)
-
   return (
     <TableRow key={user.id} onClick={() => console.log(user)}>
       <TableCell>

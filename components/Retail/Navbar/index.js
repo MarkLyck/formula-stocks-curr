@@ -4,9 +4,8 @@ import Router from 'next/router'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { scroller } from 'react-scroll'
 import { hasStorage, isBrowser } from 'common/utils/featureTests'
-// import useWindowSize from 'common/utils/useWindowSize'
-
-// UI
+import logoutUser from 'common/utils/logout'
+// import CreateUser from 'components/Dashboard/Admin/Users/CreateUser'
 import Button from 'ui-components/Button'
 
 import { NavLinks, ScrollLink, NavbarContainer, Logo } from './styles'
@@ -15,7 +14,6 @@ const Navbar = ({ toggleFAQModal, toggleLoginModal, toggleSignUpModal }) => {
   const [loggedIn, setLoggedIn] = useState(
     (hasStorage && localStorage.getItem('authToken')) || (isBrowser && window.authToken)
   )
-  // const windowSize = useWindowSize()
 
   const logout = () => {
     logoutUser()
@@ -52,6 +50,7 @@ const Navbar = ({ toggleFAQModal, toggleLoginModal, toggleSignUpModal }) => {
   return (
     <NavbarContainer position="fixed" color="default">
       <Logo onClick={() => scroller.scrollTo('hero', { smooth: true, offset: -100 })} />
+      {/* <CreateUser /> */}
       <ScrollLink className="performance" to="performance" smooth offset={-100}>
         Performance
       </ScrollLink>

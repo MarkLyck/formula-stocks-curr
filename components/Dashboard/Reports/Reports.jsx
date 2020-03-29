@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react'
+import React, { useState } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import Highlighter from 'react-highlight-words'
 import { Table, Input, Button, Icon } from 'antd'
@@ -8,8 +8,9 @@ import LoadingError from 'ui-components/Error/LoadingError'
 import Header from 'ui-components/Header'
 import Loader from 'ui-components/Loader'
 import Report from 'components/Dashboard/Reports/Report'
-
+import useWindowWidth from 'common/hooks/useWindowWidth'
 import { SEARCH_REPORTS_QUERY } from 'common/queries'
+import ReportsOnboarding from './Onboarding'
 
 const AIScoreContainer = styled.div`
   display: flex;
@@ -17,6 +18,10 @@ const AIScoreContainer = styled.div`
   margin: 0 auto;
   max-width: 2000px;
   padding: 32px;
+
+  @media (max-width: 600px) {
+    padding: 16px;
+  }
 `
 
 const AIScoreBox = styled.div`
@@ -34,6 +39,15 @@ const StyledTable = styled(Table)`
   .ant-table-pagination {
     margin-right: 16px;
   }
+
+  @media (max-width: 600px) {
+    .ant-table-expand-icon-th {
+      width: 0;
+    }
+    .ant-table-row-expand-icon-cell {
+      visibility: hidden;
+    }
+  }
 `
 
 const Score = styled.h3`
@@ -42,14 +56,25 @@ const Score = styled.h3`
   font-weight: 500;
 `
 
-function onChange(pagination, filters, sorter, extra) {
-  console.log('params', pagination, filters, sorter, extra)
-}
+export const HowToUseThisButton = styled(Button)`
+  color: ${props => props.theme.colors.primary};
+  margin: 24px auto 0;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`
+
+var formatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+})
 
 const Reports = ({ user }) => {
   if (!user || !user.intros) return null
 
   const hasSeenReportIntro = user && user.intros && user.intros.reports
+  const windowWidth = useWindowWidth()
   const [onboardingVisible, setOnboardingVisible] = useState(!hasSeenReportIntro)
   const [searchText, setSearchText] = useState('')
   const [searchedColumn, setSearchedColumn] = useState('')
@@ -129,7 +154,7 @@ const Reports = ({ user }) => {
     {
       title: 'Ticker',
       dataIndex: 'ticker',
-      width: 160,
+      width: windowWidth > 600 ? 160 : 120,
       sorter: (a, b) => (a.ticker < b.ticker ? 1 : -1),
       ...getColumnSearchProps('ticker'),
     },
@@ -144,7 +169,7 @@ const Reports = ({ user }) => {
       title: 'AI Score',
       dataIndex: 'aIScore',
       defaultSortOrder: 'descend',
-      width: 120,
+      width: windowWidth > 600 ? 120 : 110,
       sorter: (a, b) => a.aIScore - b.aIScore,
       render: aiScore => {
         const humanReadableAIScore = `${aiScore > 0 ? '+' : ''}${(aiScore * 100).toFixed(2)}`
@@ -160,6 +185,15 @@ const Reports = ({ user }) => {
     },
   ]
 
+  if (windowWidth > 720) {
+    columns.splice(2, 0, {
+      title: 'Price',
+      dataIndex: 'price',
+      sorter: (a, b) => a.price - b.price,
+      render: price => <p>{formatter.format(price)}</p>,
+    })
+  }
+
   const reports =
     data && data.aIReportsList
       ? data.aIReportsList.items.map(report => ({
@@ -170,18 +204,25 @@ const Reports = ({ user }) => {
 
   return (
     <AIScoreContainer>
+      {onboardingVisible && (
+        <ReportsOnboarding
+          onboardingVisible={onboardingVisible}
+          setOnboardingVisible={setOnboardingVisible}
+          user={user}
+        />
+      )}
       <Header>AI Reports</Header>
       <AIScoreBox>
         <StyledTable
           columns={columns}
           dataSource={reports}
-          onChange={onChange}
           loading={reportsLoading || !data || !user || !user.plan}
           ellipsis={true}
           expandRowByClick={true}
-          expandedRowRender={report => <Report report={report} setOnboardingVisible={setOnboardingVisible} />}
+          expandedRowRender={report => <Report report={report} />}
         />
       </AIScoreBox>
+      <HowToUseThisButton onClick={() => setOnboardingVisible(true)}>How do I use this?</HowToUseThisButton>
     </AIScoreContainer>
   )
 }

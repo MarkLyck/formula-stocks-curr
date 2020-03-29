@@ -61,12 +61,12 @@ const raised = props => css`
 
 const Button = styled.button`
   color: ${props => props.theme.colors[props.color || 'black']};
+  background: ${props => props.theme.colors[props.backgroundColor ? props.backgroundColor : 'primary']};
   transition: all 0.1s ease-in;
   font-weight: 600;
   font-size: 16px;
   border: none;
   padding: 8px 16px;
-  background: transparent;
   display: flex;
   align-items: center;
 

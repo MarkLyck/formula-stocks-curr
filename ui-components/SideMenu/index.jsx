@@ -10,7 +10,7 @@ const routes = [
   { name: 'portfolio', icon: 'chart-line', route: 'portfolio' },
   { name: 'suggestions', icon: 'tasks', route: 'suggestions' },
   { name: 'AI reports', icon: 'brain', route: 'reports', badge: 'new' },
-  { name: 'articles', icon: 'newspaper', route: 'articles' },
+  // { name: 'articles', icon: 'newspaper', route: 'articles' },
   { name: 'admin', icon: 'tachometer', route: 'admin' },
   { name: 'account', icon: 'user', route: 'account' },
   { name: 'logout', icon: 'sign-out-alt', route: 'logout' },

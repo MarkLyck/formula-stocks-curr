@@ -1,66 +1,41 @@
 import React from 'react'
-import gql from 'graphql-tag'
-import { Mutation } from 'react-apollo'
-
-const CREATE_USER = gql`
-  mutation createUser(
-    $email: String!
-    $password: String!
-    $name: String!
-    $plan: String!
-    $type: String!
-    $stripeToken: String
-    $stripeCustomer: String
-    $address: JSON
-    $device: JSON!
-    $taxPercent: Float!
-  ) {
-    createUser(
-      email: $email
-      password: $password
-      name: $name
-      plan: $plan
-      type: $type
-      stripeToken: $stripeToken
-      stripeCustomer: $stripeCustomer
-      address: $address
-      device: $device
-      taxPercent: $taxPercent
-    ) {
-      id
-    }
-  }
-`
+import { useMutation } from '@apollo/react-hooks'
+import { USER_SIGNUP } from 'common/queries'
 
 const CreateUser = () => {
-  return (
-    <Mutation mutation={CREATE_USER}>
-      {createUser => {
-        return (
-          <button
-            onClick={() =>
-              createUser({
-                variables: {
-                  address: { countryName: 'Denmark', countryCode: 'DK', city: '', zip: '', address: '' },
-                  email: 'hpu@kammeradvokaten.dk',
-                  password: 'temp',
-                  device: {},
-                  name: 'Henrik',
-                  plan: 'FUND',
-                  stripeToken: 'tok',
-                  stripeCustomer: 'cus_DVEOVxqtt2Br9x',
-                  taxPercent: 25,
-                  type: 'demo',
-                },
-              })
-            }
-          >
-            CREATE USER
-          </button>
-        )
-      }}
-    </Mutation>
-  )
+  const [userSignup] = useMutation(USER_SIGNUP)
+
+  const create = async () => {
+    const signupData = await userSignup({
+      variables: {
+        email: 'thomas@visionimages.dk',
+        password: 'temp1234!',
+        stripeToken: '',
+        firstName: 'Thomas',
+        lastName: 'Lyck',
+        plan: 'entry',
+        type: 'subscriber',
+        taxPercent: 0,
+        billingPeriod: 'monthly',
+        intros: {},
+        address: {
+          country: 'Denmark',
+          city: 'Haderslev',
+          postalCode: '8100',
+          address: 'Ribe Landevej 39',
+        },
+        device: {
+          os: '',
+          product: '',
+          browser: '',
+          type: '',
+        },
+      },
+    })
+    console.log('signupData: ', signupData)
+  }
+
+  return <button onClick={create}>CREATE USERr</button>
 }
 
 export default CreateUser

@@ -132,7 +132,7 @@ class ChangePlan extends Component {
             disabled={selectedPlan.id === currentPlan}
             onClick={this.toggleModal}
             color="secondary"
-            fontWeight="100"
+            fontWeight="300"
           >
             Next
           </LargeFlatButton>

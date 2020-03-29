@@ -16,7 +16,7 @@ export const PortfolioTable = styled(Table)`
       padding-left: 16px;
       box-sizing: border-box;
       margin-top: 4px;
-      font-weight: 100;
+      font-weight: 300;
       &::before {
         position: absolute;
         top: 50%;

@@ -48,7 +48,11 @@ const withDashboard = Component => ({ location, ...extraProps }) => {
   })
 
   const user = data && data.user ? data.user : {}
-  if (onboardingSeenBefore === null && user.intros && !user.intros.formulaStocks) {
+  console.log('user: ', user)
+  if (onboardingSeenBefore === null && (user.intros === null || (user.intros && !user.intros.formulaStocks))) {
+    console.log('user.intros: ', user.intros)
+    console.log('onboardingSeenBefore: ', onboardingSeenBefore)
+    console.log('setOnboardingSeenBefore: false')
     setOnboardingSeenBefore(false)
   }
 
@@ -56,6 +60,8 @@ const withDashboard = Component => ({ location, ...extraProps }) => {
     setOnboardingSeenBefore(true)
     setOnboardingVisible(false)
   }
+
+  console.log('onboardingVisible', onboardingVisible)
 
   return (
     <SettingsProvider>

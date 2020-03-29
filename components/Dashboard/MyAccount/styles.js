@@ -18,7 +18,7 @@ export const MyAccountContainer = styled(Box)`
 `
 
 export const Title = styled.h3`
-  font-weight: 100;
+  font-weight: 300;
   font-size: 1.2rem;
   margin-bottom: 16px;
   color: ${props => props.theme.colors.gray};

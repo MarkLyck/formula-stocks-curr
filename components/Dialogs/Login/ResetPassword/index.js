@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Formik } from 'formik'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Form, { Row, Field, ErrorMessage } from 'ui-components/Form'
-import Button from 'ui-components/Button'
+import { Button } from 'antd'
 import ModalHeader from 'components/Dialogs/ModalHeader'
 import Success from 'ui-components/Success'
 
@@ -87,7 +87,7 @@ class ResetPassword extends Component {
                     value={values.email}
                   />
                 </Row>
-                <Button type="submit" backgroundColor="primary" color="white" disabled={isSubmitting}>
+                <Button htmlType="submit" type="primary" disabled={isSubmitting}>
                   {isSubmitting ? (
                     <FontAwesomeIcon icon="spinner-third" spin style={{ fontSize: '1.25rem' }} />
                   ) : (

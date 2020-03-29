@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
+import styled from '@emotion/styled'
 import { useMutation } from '@apollo/react-hooks'
 import ReactModal from 'react-modal'
 import Router from 'next/router'
@@ -10,10 +11,28 @@ import { ForgotPassword } from './styles'
 import { Formik } from 'formik'
 import Form, { Row, Field, ErrorMessage } from 'ui-components/Form'
 import ModalHeader from 'components/Dialogs/ModalHeader'
-import Button from 'ui-components/Button'
+import { Button } from 'antd'
 import ScaleIn from 'ui-components/Animations/ScaleIn'
 import ResetPassword from './ResetPassword'
 import { USER_LOGIN } from 'common/queries'
+
+const StyledModal = styled(ReactModal)`
+  @media (max-width: 500px) {
+    width: 100% !important;
+    height: 100% !important;
+
+    > div {
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+  }
+`
+
+const StyledButton = styled(Button)`
+  ${props => (props.success ? `background: ${props.theme.colors.secondary};` : '')}
+  ${props => (props.success ? `pointer-events: none;` : '')}
+`
 
 const validate = values => {
   let errors = {}
@@ -79,7 +98,12 @@ const Login = ({ onRequestClose, apolloClient }) => {
   const buttonText = loginSuccess ? 'Success' : 'Login'
 
   return (
-    <ReactModal isOpen onRequestClose={onRequestClose} overlayClassName="modal-overlay" style={smallModalContentStyles}>
+    <StyledModal
+      isOpen
+      onRequestClose={onRequestClose}
+      overlayClassName="modal-overlay"
+      style={smallModalContentStyles}
+    >
       <ScaleIn>
         <ModalContainer>
           {!showResetPassword ? (
@@ -129,19 +153,15 @@ const Login = ({ onRequestClose, apolloClient }) => {
                         value={values.password}
                       />
                     </Row>
-                    <Button
-                      type="submit"
-                      background={buttonColor}
-                      variant="raised"
-                      color="white"
-                      disabled={isSubmitting || loginSuccess}
+                    <StyledButton
+                      htmlType="submit"
+                      type="primary"
+                      loading={isSubmitting}
+                      success={loginSuccess}
+                      size="large"
                     >
-                      {isSubmitting ? (
-                        <FontAwesomeIcon icon="spinner-third" spin style={{ fontSize: '1.25rem' }} />
-                      ) : (
-                        buttonText
-                      )}
-                    </Button>
+                      {buttonText}
+                    </StyledButton>
                     <ForgotPassword onClick={() => setShowResetPassword(true)}>Forgot your password?</ForgotPassword>
                   </Form>
                 )}
@@ -156,7 +176,7 @@ const Login = ({ onRequestClose, apolloClient }) => {
           )}
         </ModalContainer>
       </ScaleIn>
-    </ReactModal>
+    </StyledModal>
   )
 }
 export default Login

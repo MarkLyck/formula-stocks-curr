@@ -5,7 +5,6 @@ import { TableBody, TableCell, TableHead, TableRow } from 'ui-components/Table'
 import LoadingError from 'ui-components/Error/LoadingError'
 import GenericLoader from 'ui-components/Loader'
 import User from './User'
-// import CreateUser from './CreateUser'
 import { UsersContainer } from './styles'
 import { USERS_QUERY } from 'common/queries'
 
