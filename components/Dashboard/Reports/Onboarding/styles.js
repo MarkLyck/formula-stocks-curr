@@ -73,19 +73,27 @@ export const AIScoreTextWrapper = styled.div`
 `
 
 export const IconBackground = styled.div`
-  height: 280px;
+  height: 256px;
   width: 240px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: ${props => props.theme.colors.polar};
+  background: ${props => props.theme.colors.lightGray};
   border-radius: 4px;
+  border 1px solid ${props => props.theme.colors.border};
   @media (max-width: 850px) {
-    height: 240px;
     width: 100%;
   }
 `
 
 export const Bold = styled.span`
   font-weight: 500;
+`
+
+export const ReportIcon = styled.span`
+  margin: 16px 0 0 24px;
+
+  svg {
+    height: 100%;
+  }
 `

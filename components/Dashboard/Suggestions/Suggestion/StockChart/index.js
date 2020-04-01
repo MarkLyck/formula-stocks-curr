@@ -7,8 +7,8 @@ import { GraphContainer, LoadingContainer, FailedContainer, GraphOverlay } from 
 
 const createChartData = sixMonthsPrices =>
   sixMonthsPrices.map(point => ({
-    price: point[1].toFixed(2),
-    date: point[0],
+    price: point.close.toFixed(2),
+    date: point.date,
   }))
 
 const StockChart = ({
@@ -29,7 +29,7 @@ const StockChart = ({
         <h4>Loading</h4>
       </LoadingContainer>
     )
-  } else if (!loading && (!sixMonthsPrices || !sixMonthsPrices.length)) {
+  } else if (!loading && (!Array.isArray(sixMonthsPrices) || !sixMonthsPrices.length)) {
     return (
       <FailedContainer className="failed-container">
         <FontAwesomeIcon icon="chart-line" />
@@ -37,6 +37,7 @@ const StockChart = ({
       </FailedContainer>
     )
   }
+
   const chartData = createChartData(sixMonthsPrices)
 
   let guideColor = theme.colors.primary

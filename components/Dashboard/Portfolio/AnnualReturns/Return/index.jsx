@@ -6,7 +6,7 @@ const ReturnContainer = styled.div`
   display: flex;
   flex-direction: column;
   h3 {
-    font-weight: 100;
+    font-weight: 300;
     margin-bottom: 2px;
     font-size: 1.2rem;
   }
@@ -24,10 +24,14 @@ const ReturnValue = styled.p`
 const Return = ({ title, returnSince, className }) => (
   <ReturnContainer className={className}>
     <Title>{title}</Title>
-    <ReturnValue returnSince={returnSince}>
-      {returnSince >= 0 ? '+' : ''}
-      {returnSince}%
-    </ReturnValue>
+    {Number(returnSince) > -100 ? (
+      <ReturnValue returnSince={returnSince}>
+        {returnSince >= 0 ? '+' : ''}
+        {returnSince}%
+      </ReturnValue>
+    ) : (
+      ''
+    )}
   </ReturnContainer>
 )
 

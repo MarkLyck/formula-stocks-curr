@@ -2,13 +2,30 @@ import styled from '@emotion/styled'
 import { css } from '@emotion/core'
 
 export const ModalContainer = styled.div`
-  padding: 24px 16px;
+  padding: 16px 16px 24px;
+  background: white;
+  border-radius: 4px;
+  width: 100%;
+
+  @media (max-width: 500px) {
+    height: 100%;
+    width: 100%;
+    display: block;
+    flex-direction: column;
+    justify-content: center;
+    overflow-y: auto;
+  }
+
+  @media (max-width: 400px) {
+    padding: 24px 16px;
+  }
 `
 
 export const smallModalContentStyles = {
   content: {
     position: 'absolute',
-    width: '360px',
+    width: '100%',
+    maxWidth: '400px',
     height: 'auto',
     top: '50%',
     left: '50%',

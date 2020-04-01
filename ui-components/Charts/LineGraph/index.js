@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { isClient } from 'common/utils/featureTests'
+import { isBrowser } from 'common/utils/featureTests'
 import theme from 'common/theme'
 
 const createChart = settings => {

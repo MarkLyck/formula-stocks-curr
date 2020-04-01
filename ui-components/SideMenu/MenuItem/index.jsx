@@ -2,14 +2,14 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Router from 'next/router'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { hasStorage, isClient } from 'common/utils/featureTests'
+import { hasStorage, isBrowser } from 'common/utils/featureTests'
 import { Button, Badge } from './styles'
 
 class MenuItem extends Component {
   clickHandler = () => {
     const { route, setActiveRoute, closeMenu, user } = this.props
     if (route === 'logout') {
-      if (isClient) window.graphcoolToken = undefined
+      if (isBrowser) window.graphcoolToken = undefined
       if (hasStorage) localStorage.removeItem('graphcoolToken')
       Router.push('/')
       return

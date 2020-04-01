@@ -7,7 +7,8 @@ const Allocation = ({ portfolio, id, allocationMap, amCharts4Loaded }) => {
   if (!amCharts4Loaded) return null
   const colors = []
   const allocation = portfolio.map(stock => {
-    if (stock.latest_price > stock.purchase_price - stock.dividends) {
+    const latestPrice = stock.stock && stock.stock.latestPrice ? stock.stock.latestPrice : stock.price
+    if (latestPrice > stock.purchasePrice - stock.dividends) {
       const amount = Math.round(Math.random() * 80 - 40)
       colors.push(adjustBrightness('#27A5F9', amount))
     } else if (stock.ticker === 'CASH') {

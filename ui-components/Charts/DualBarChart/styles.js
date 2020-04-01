@@ -41,7 +41,7 @@ export const Statistic = styled.p`
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
   width: 100%;
-  font-weight: 100;
+  font-weight: 300;
   height: 48px;
   margin: 0;
 `

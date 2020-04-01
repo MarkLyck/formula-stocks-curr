@@ -3,6 +3,7 @@ import Return from './Return'
 import { ReturnsContainer, Divider } from './styles'
 
 const AnnualReturns = ({ portfolioYields, totalBalance }) => {
+  if (!portfolioYields || !portfolioYields.length) return <ReturnsContainer />
   // the date exactly e.g. 2 years ago, will return the balance of the last date of the month.
   // skip 1 additional month back to get the correct starting date.
   const additionalMonth = 1

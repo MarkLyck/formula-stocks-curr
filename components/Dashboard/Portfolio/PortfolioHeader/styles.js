@@ -46,7 +46,7 @@ export const Header = styled.div`
 export const RightSide = styled.div`
   display: flex;
   flex-direction: column;
-  width: 180px;
+  width: 240px;
   padding: 16px;
   .market-name {
     display: flex;

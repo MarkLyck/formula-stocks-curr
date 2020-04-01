@@ -23,25 +23,25 @@ const CANCEL_SUBSCRIPTION = gql`
 
 const plans = [
   {
-    id: 'ENTRY',
+    id: 'entry',
     name: 'Entry',
     price: 49.99,
     cycle: 'monthly',
   },
   {
-    id: 'PREMIUM',
+    id: 'premium',
     name: 'Premium',
     price: 99.99,
     cycle: 'monthly',
   },
   {
-    id: 'BUSINESS',
+    id: 'business',
     name: 'Business',
     price: 20000,
     cycle: 'annually',
   },
   {
-    id: 'FUND',
+    id: 'fund',
     name: 'Fund',
     price: 140000,
     cycle: 'annually',
@@ -132,7 +132,7 @@ class ChangePlan extends Component {
             disabled={selectedPlan.id === currentPlan}
             onClick={this.toggleModal}
             color="secondary"
-            fontWeight="100"
+            fontWeight="300"
           >
             Next
           </LargeFlatButton>

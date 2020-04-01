@@ -2,10 +2,9 @@ import React, { Component } from 'react'
 import LazyLoad from 'react-lazyload'
 import PropTypes from 'prop-types'
 import { css } from '@emotion/core'
-
 import Typed from 'typed.js'
 import { Element } from 'react-scroll'
-import { HeroContainer, Content, Title, SliderImage, Overlay, Bold } from './styles'
+import { HeroContainer, Content, Title, SliderImage, Overlay, Bold, Underline } from './styles'
 import Slider from 'react-slick'
 
 class Hero extends Component {
@@ -58,7 +57,7 @@ class Hero extends Component {
         <Content>
           <div className="text-content">
             <Title type="title">
-              A <Bold>better</Bold> way to <Bold>invest</Bold>
+              Gain an <Underline>unfair</Underline> investing advantage
             </Title>
             <div id="subtitles">
               <div className="type-wrap">

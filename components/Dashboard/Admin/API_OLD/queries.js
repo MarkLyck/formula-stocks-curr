@@ -21,13 +21,13 @@ export const ALL_PLANS = gql`
 export const UPDATE_PLAN = gql`
   mutation updatePlan(
     $id: ID!
-    $backtestedData: Json
-    $latestSells: Json
-    $portfolio: Json
-    $portfolioYields: Json
-    $statistics: Json
-    $launchStatistics: Json
-    $suggestions: Json
+    $backtestedData: JSON
+    $latestSells: JSON
+    $portfolio: JSON
+    $portfolioYields: JSON
+    $statistics: JSON
+    $launchStatistics: JSON
+    $suggestions: JSON
   ) {
     updatePlan(
       id: $id

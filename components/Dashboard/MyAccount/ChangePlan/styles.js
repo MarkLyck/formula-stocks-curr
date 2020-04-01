@@ -10,7 +10,7 @@ export const ChangePlanContainer = styled.div`
   .title {
     padding-left: 16px;
     font-size: 1.2rem;
-    font-weight: 100;
+    font-weight: 300;
   }
 `
 
@@ -64,7 +64,7 @@ export const ModalContainer = styled.div`
 
   .title {
     font-size: 1.3rem;
-    font-weight: 100;
+    font-weight: 300;
     margin: 28px;
   }
 

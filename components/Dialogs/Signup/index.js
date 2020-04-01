@@ -1,88 +1,44 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import platform from 'platform'
-import gql from 'graphql-tag'
 import Router from 'next/router'
-import { graphql, compose } from 'react-apollo'
+import { useMutation } from '@apollo/react-hooks'
 import ReactModal from 'react-modal'
-import { hasStorage, isClient } from 'common/utils/featureTests'
+import { hasStorage, isBrowser } from 'common/utils/featureTests'
 import { getDeviceType } from 'common/utils/helpers'
 import ModalHeader from 'components/Dialogs/ModalHeader'
 import AccountInfo from './AccountInfo'
 import BillingInfo from './BillingInfo'
 import { ModalContainer, smallModalContentStyles } from '../styles'
+import { USER_SIGNUP, USER_LOGIN } from 'common/queries'
 
-const SIGNUP_USER = gql`
-  query signupUser(
-    $email: String!
-    $password: String!
-    $name: String!
-    $plan: String!
-    $type: String!
-    $stripeToken: String!
-    $address: Json
-    $device: Json
-    $taxPercent: Float!
-    $billingPeriod: String
-  ) {
-    signupUser(
-      email: $email
-      password: $password
-      name: $name
-      plan: $plan
-      type: $type
-      stripeToken: $stripeToken
-      address: $address
-      device: $device
-      taxPercent: $taxPercent
-      billingPeriod: $billingPeriod
-    ) {
-      id
-      token
-    }
-  }
-`
+const SignUp = ({ onRequestClose, planPrice }) => {
+  const [userSignup] = useMutation(USER_SIGNUP)
+  const [userLogin] = useMutation(USER_LOGIN)
+  ReactModal.setAppElement('body')
+  const [accountInfo, setAccountInfo] = useState({})
+  const [signupError, setSignupError] = useState('')
+  const [page, setPage] = useState(1)
 
-const SIGNIN_USER_MUTATION = gql`
-  mutation SigninUserMutation($email: String!, $password: String!) {
-    signinUser(email: { email: $email, password: $password }) {
-      token
-    }
-  }
-`
-
-class SignUp extends Component {
-  static getDerivedStateFromProps(props, state) {
-    ReactModal.setAppElement('body')
-    return state
+  const nextPage = accountInfo => {
+    setPage(page + 1)
+    setAccountInfo(accountInfo)
   }
 
-  state = {
-    accountInfo: {},
-    page: 1,
-    signupError: '',
-  }
-
-  nextPage = accountInfo => this.setState({ page: this.state.page + 1, accountInfo })
-
-  handleSignup = async (name, taxPercent, showSuccess, { token }) => {
-    const { apolloClient } = this.props
-    const { accountInfo } = this.state
-
-    const plan = hasStorage && localStorage.getItem('selectedPlan') ? localStorage.getItem('selectedPlan') : 'ENTRY'
-    const type = plan === 'ENTRY' ? 'trial' : 'subscriber'
-
+  const handleSignup = async ({ firstName, lastName, taxPercent, showSuccess, stripeToken }) => {
+    const plan = hasStorage && localStorage.getItem('selectedPlan') ? localStorage.getItem('selectedPlan') : 'entry'
+    const type = plan === 'entry' ? 'trial' : 'subscriber'
     try {
-      const { data } = await apolloClient.query({
-        query: SIGNUP_USER,
+      const signupData = await userSignup({
         variables: {
           email: accountInfo.email,
           password: accountInfo.password,
-          stripeToken: token.id,
-          name,
-          plan,
+          stripeToken,
+          firstName,
+          lastName,
+          plan: plan.toLowerCase(),
           type,
           taxPercent,
-          billingPeriod: 'MONTHLY',
+          billingPeriod: 'monthly',
           address: {
             country: accountInfo.country,
             city: accountInfo.city,
@@ -97,47 +53,65 @@ class SignUp extends Component {
           },
         },
       })
-      if (isClient) {
-        window.graphcoolToken = data.signupUser.token
-      }
-      if (hasStorage) {
-        localStorage.setItem('graphcoolToken', data.signupUser.token)
-      }
+
+      const loginData = await userLogin({ variables: { email: accountInfo.email, password: accountInfo.password } })
+
+      // save authToken
+      const authToken = loginData.data.userLogin.auth.idToken
+      if (hasStorage) localStorage.authToken = authToken
+      if (isBrowser) window.authToken = authToken
+
       showSuccess()
-      // shortly show the signup success message before sending them to portfolio
+
+      // shortly show the signup success message before sending them to the dashboard
       setTimeout(() => Router.push('/dashboard/portfolio'), 200)
+
+      if (process.env.NODE_ENV === 'production' && window.fbq) {
+        // Facebook pixel tracking
+        window.fbq('track', 'Subscribe', {
+          value: PRICE,
+          currency: 'USD',
+        })
+      }
     } catch (error) {
+      let errorMessage = error.message
       console.error('signup error', error)
-      this.setState({ signupError: error.message })
+      if (error.errors && error.errors.length) {
+      } else if (error.graphQLErrors && error.graphQLErrors.length) {
+        const graphQLError = error.graphQLErrors[0]
+
+        if (graphQLError.details && graphQLError.details.password)
+          errorMessage = error.graphQLErrors[0].details.password
+        if (graphQLError.details && graphQLError.details.email) errorMessage = error.graphQLErrors[0].details.email
+        // handle stripe errors from GQL trigger.before
+        if (graphQLError.message.includes('stripe')) {
+          const rawError = JSON.parse(graphQLError.message)
+          if (rawError.raw && rawError.raw.message) errorMessage = rawError.raw.message
+          if (rawError.raw.code === 'card_declined') {
+            errorMessage = 'Your card was declined. Please check your card details.'
+          }
+        }
+      }
+      setSignupError(errorMessage)
     }
   }
 
-  render() {
-    const { page, accountInfo, signupError } = this.state
-    const { onRequestClose, planPrice } = this.props
-
-    return (
-      <ReactModal
-        isOpen
-        onRequestClose={onRequestClose}
-        overlayClassName="modal-overlay"
-        style={smallModalContentStyles}
-      >
-        <ModalContainer>
-          <ModalHeader title="Sign up" toggleModal={onRequestClose} />
-          {page === 1 && <AccountInfo nextPage={this.nextPage} />}
-          {page === 2 && (
-            <BillingInfo
-              taxPercent={accountInfo.taxPercent}
-              handleSignup={this.handleSignup}
-              signupError={signupError}
-              planPrice={planPrice}
-            />
-          )}
-        </ModalContainer>
-      </ReactModal>
-    )
-  }
+  return (
+    <ReactModal isOpen onRequestClose={onRequestClose} overlayClassName="modal-overlay" style={smallModalContentStyles}>
+      <ModalContainer>
+        <ModalHeader title="Sign up" toggleModal={onRequestClose} />
+        {page === 1 && <AccountInfo nextPage={nextPage} />}
+        {page === 2 && (
+          <BillingInfo
+            taxPercent={accountInfo.taxPercent}
+            handleSignup={handleSignup}
+            signupError={signupError}
+            planPrice={planPrice}
+          />
+        )}
+      </ModalContainer>
+    </ReactModal>
+  )
 }
 
-export default compose(graphql(SIGNIN_USER_MUTATION, { name: 'signinUser' }))(SignUp)
+export default SignUp

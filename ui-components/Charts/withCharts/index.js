@@ -1,6 +1,6 @@
 import React from 'react'
 import Script from 'react-load-script'
-import { isClient } from 'common/utils/featureTests'
+import { isBrowser } from 'common/utils/featureTests'
 import { getDeviceType } from 'common/utils/helpers'
 
 const loadAmCharts4 = async () =>
@@ -10,13 +10,13 @@ const withCharts = (Component, settings = {}) => {
   class WithCharts extends React.Component {
     state = {
       amChartsLoadingError: false,
-      amCharts4Loaded: isClient && !!window.am4core && !!window.am4charts,
+      amCharts4Loaded: isBrowser && !!window.am4core && !!window.am4charts,
     }
 
     loadingAm4Charts = false
 
     componentDidMount() {
-      if (isClient && !this.loadingAm4Charts && !window.am4core && !window.am4charts) {
+      if (isBrowser && !this.loadingAm4Charts && !window.am4core && !window.am4charts) {
         if (settings.version === 4) {
           this.loadingAm4Charts = true
           loadAmCharts4()

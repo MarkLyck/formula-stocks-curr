@@ -1,6 +1,5 @@
 import { useState } from 'react'
-import gql from 'graphql-tag'
-import { Mutation } from 'react-apollo'
+import { useMutation } from '@apollo/react-hooks'
 import Link from 'next/link'
 import searchIcon from 'static/icons/reports/ai_report_search.svg'
 import OnboardingModal from 'ui-components/Modal/Onboarding'
@@ -9,7 +8,7 @@ import Tooltip from 'ui-components/Tooltip'
 import AIScoreChart from './AIScoreChart'
 import withCharts from 'ui-components/Charts/withCharts'
 import useWindowWidth from 'common/hooks/useWindowWidth'
-import { ReportIcon } from '../styles'
+import { SET_INTROS } from 'common/queries'
 import {
   AIReportsWrapper,
   AIReportsTextWrapper,
@@ -17,25 +16,26 @@ import {
   AIScoreTextWrapper,
   IconBackground,
   Bold,
+  ReportIcon,
 } from './styles'
 
-export const UPDATE_USER = gql`
-  mutation updateUser($id: ID!, $intros: Json) {
-    updateUser(id: $id, intros: $intros) {
-      id
-      intros
-    }
-  }
-`
-
 const ReportsOnboarding = ({ amCharts4Loaded, onboardingVisible, setOnboardingVisible, user }) => {
-  if (!amCharts4Loaded) return null
+  const [setIntros, { data }] = useMutation(SET_INTROS)
   const [pageIndex, setPageIndex] = useState(0)
+  const windowWidth = useWindowWidth()
+  if (!amCharts4Loaded || !user) return null
 
-  const onRequestClose = updateUser => {
-    if (user.intros.reports !== true) {
+  const onRequestClose = () => {
+    if (!user.intros) {
+      setIntros({
+        variables: {
+          id: user.id,
+          intros: { reports: true },
+        },
+      })
+    } else if (user.intros.reports !== true) {
       user.intros.reports = true
-      updateUser({
+      setIntros({
         variables: {
           id: user.id,
           intros: user.intros,
@@ -44,7 +44,6 @@ const ReportsOnboarding = ({ amCharts4Loaded, onboardingVisible, setOnboardingVi
     }
     setOnboardingVisible(false)
   }
-  const windowWidth = useWindowWidth()
 
   const plansContent = {
     ENTRY: 'has access to large and mega cap stocks.',
@@ -65,12 +64,16 @@ const ReportsOnboarding = ({ amCharts4Loaded, onboardingVisible, setOnboardingVi
       <AIReportsTextWrapper>
         <OnboardingHeader>AI Reports</OnboardingHeader>
         <OnboardingText>
-          Introducing a revolutionary easy way to pick stocks. Artificial Intelligence produces a single measure, the AI
-          score, which indicates the overall attractiveness of a business from your viewpoint as an investor. AI Score
-          looks ahead into the probable future, which may be non-linear, cyclical and mean-reverting. Hence, a stock
-          that did well in the past, might well score low, or vice versa.
+          You can use AI Reports to check the scores of your existing portfolio or use it to analyze new stocks.
         </OnboardingText>
-        <OnboardingText>Try Business for access to more AI reports by market cap.</OnboardingText>
+        <OnboardingText>
+          The AI Score indicates how attractive a business is from a value/growth investment perspective, by estimating
+          the probable future.
+        </OnboardingText>
+        <OnboardingText>
+          AI Score is just one of the +100 algorithms we use for Formula Stocks, but it is very effective on
+          it's own.
+        </OnboardingText>
       </AIReportsTextWrapper>
     </AIReportsWrapper>
   )
@@ -79,56 +82,49 @@ const ReportsOnboarding = ({ amCharts4Loaded, onboardingVisible, setOnboardingVi
     if (windowWidth > 1020) return '480px'
     if (windowWidth < 1020 && windowWidth > 850) return '600px'
     else if (windowWidth > 480) return ''
+
     return windowWidth - 48
   }
 
   const AIScoreIntro = (
     <AIScoreWrapper>
       <AIScoreChart
+        amCharts4Loaded={amCharts4Loaded}
         id="aiScoreBarChart"
         winrate
+        neutralColor="lightGray"
         style={{
           width: getChartWidth(),
-          height: windowWidth > 1020 ? '320px' : '280px',
+          height: windowWidth > 1020 ? '300px' : '280px',
         }}
       />
       <AIScoreTextWrapper>
         <OnboardingHeader>AI Score returns</OnboardingHeader>
         <OnboardingText>
-          The entire stock market is sorted into buckets based on the AI score of each stock. Each of 20 buckets display
-          the average return for an interval of AI scores, e.g. AI score 90 to 100 = 30.15% IRR.
+          The chart on the left shows the stock market sorted into buckets based on the AI score of each stock. Each bar
+          shows the average return for a range of AI scores, e.g. AI score 90 to 100 on returned a 30.15% annual IRR.
         </OnboardingText>
         <ul>
           <li>
             <Bold>IRR</Bold> refers to Internal Rate of Return, geometric.
           </li>
           <li>
-            <Bold>Win rate</Bold> refers to percentage sold with positive return. (grey line).
+            <Bold>Win rate</Bold> refers to percentage of stocks sold with positive return. (gray line).
           </li>
         </ul>
-        <OnboardingText>
-          For a more in depth explanation{' '}
-          <Link href="/dashboard/articles/ai-score">
-            <a>see our article on AI Reports.</a>
-          </Link>
-        </OnboardingText>
       </AIScoreTextWrapper>
     </AIScoreWrapper>
   )
 
   return (
-    <Mutation mutation={UPDATE_USER}>
-      {(updateUser, { data }) => (
-        <OnboardingModal
-          isOpen={onboardingVisible}
-          onRequestClose={onRequestClose.bind(null, updateUser)}
-          activePageIndex={pageIndex}
-          setPageIndex={setPageIndex}
-          pages={[Intro, AIScoreIntro]}
-          position="AIReports"
-        />
-      )}
-    </Mutation>
+    <OnboardingModal
+      isOpen={onboardingVisible}
+      onRequestClose={onRequestClose}
+      activePageIndex={pageIndex}
+      setPageIndex={setPageIndex}
+      pages={[Intro, AIScoreIntro]}
+      position="AIReports"
+    />
   )
 }
 

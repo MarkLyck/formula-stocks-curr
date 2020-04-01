@@ -12,6 +12,6 @@ export const usingMocks = (function() {
   return hasStorage && !!window.sessionStorage.getItem('useMocks')
 })()
 
-export const isClient = (function() {
+export const isBrowser = (function() {
   return typeof window !== 'undefined' && window.location
 })()

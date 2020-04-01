@@ -24,7 +24,7 @@ export const Content = styled.div`
     font-size: 1.8rem;
   }
   h5 {
-    font-weight: 100;
+    font-weight: 300;
   }
 `
 

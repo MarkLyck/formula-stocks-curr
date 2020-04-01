@@ -35,9 +35,15 @@ export const HeroContainer = styled.div`
 export const Bold = styled.span`
   font-weight: bold;
 `
+
+export const Underline = styled.span`
+  text-decoration: underline;
+`
+
 /* eslint-disable */
 export const Overlay = styled.div`
   position: absolute;
+  top: 0;
   height: 100%;
   width: 100%;
   z-index: 4;
@@ -66,18 +72,18 @@ export const Content = styled.div`
     margin: 0 32px;
   }
   .type-wrap {
-    font-weight: 700;
-    font-size: 2.5em;
+    font-weight: 400;
+    font-size: 1.8rem;
     text-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
     display: flex;
     align-items: flex-end;
     p {
-      line-height: 1;
+      line-height: 1.6;
     }
   }
   h1 {
-    font-size: 2em;
-    font-weight: 100;
+    font-size: 2.5em;
+    font-weight: bold;
     text-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
   }
   .typed-cursor {

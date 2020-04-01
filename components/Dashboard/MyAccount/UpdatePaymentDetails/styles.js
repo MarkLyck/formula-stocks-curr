@@ -9,7 +9,7 @@ export const UpdateCardDetailsContainer = styled.div`
   .title {
     padding-left: 16px;
     font-size: 1.2rem;
-    font-weight: 100;
+    font-weight: 300;
   }
 `
 

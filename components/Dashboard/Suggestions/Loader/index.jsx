@@ -35,7 +35,7 @@ const SuggestionsLoader = ({ suggestionsType }) => (
           __html: Loader,
         }}
       />
-      <p>Loading {suggestionsType}...</p>
+      <p>Loading {suggestionsType}s...</p>
     </SuggestionsContainer>
   </Container>
 )

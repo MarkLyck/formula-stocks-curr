@@ -49,7 +49,7 @@ export const Statistic = styled.p`
   align-items: center;
   background: hsla(0, 0%, 100%, 0.75);
   width: 100%;
-  font-weight: 100;
+  font-weight: 300;
   height: 45px;
   margin: 0;
 `

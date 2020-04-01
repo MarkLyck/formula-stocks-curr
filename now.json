@@ -1,6 +1,5 @@
 {
   "version": 2,
-  "name": "Formula Stocks",
   "builds": [{ "src": "next.config.js", "use": "@now/next" }],
   "routes": [
     {

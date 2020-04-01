@@ -22,7 +22,7 @@ class AdminButtons extends Component {
 
     return (
       <AdminButtonsContainer>
-        <AdminButton
+        {/* <AdminButton
           color={activeButton === 'panel' || activeButton === 'admin' ? 'white' : 'primary'}
           variant="raised"
           type={activeButton === 'panel' || activeButton === 'admin' ? 'dark' : 'light'}
@@ -30,7 +30,7 @@ class AdminButtons extends Component {
         >
           <FontAwesomeIcon icon="chart-line" />
           <ButtonTitle>Panel</ButtonTitle>
-        </AdminButton>
+        </AdminButton> */}
         <AdminButton
           color={activeButton === 'users' ? 'white' : 'primary'}
           variant="raised"
@@ -49,7 +49,7 @@ class AdminButtons extends Component {
           <FontAwesomeIcon icon="database" />
           <ButtonTitle>API</ButtonTitle>
         </AdminButton>
-        <AdminButton
+        {/* <AdminButton
           color={activeButton === 'newArticle' ? 'white' : 'primary'}
           variant="raised"
           type={activeButton === 'newArticle' ? 'dark' : 'light'}
@@ -57,7 +57,7 @@ class AdminButtons extends Component {
         >
           <FontAwesomeIcon icon="pencil" />
           <ButtonTitle>New Article</ButtonTitle>
-        </AdminButton>
+        </AdminButton> */}
       </AdminButtonsContainer>
     )
   }

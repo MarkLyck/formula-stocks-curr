@@ -1,3 +1,6 @@
+export const GRAPHQL_ENDPOINT = 'https://api.8base.com/ck34xg5y400ft01l2c12e53x8'
+export const AUTH_PROFILE_ID = 'ck3689vfo00xk01l5g4we1bp1'
+
 export const planIds = {
   ENTRY: 'cj5p4ssvu2b3d0187t68k526j',
   PREMIUM: 'cj5wy9kgl29nq0108o0snly89',

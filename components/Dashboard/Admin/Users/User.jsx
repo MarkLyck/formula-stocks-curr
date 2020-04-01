@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { format, distanceInWordsStrict, isAfter, subMonths } from 'date-fns'
+import { format, formatDistanceStrict, isAfter, subMonths } from 'date-fns'
 import { TableCell, TableRow } from 'ui-components/Table'
 
 const dateLastMonth = subMonths(new Date(), 1)
@@ -16,9 +16,9 @@ const User = ({ user }) => {
         <p>{user.email}</p>
       </TableCell>
       <TableCell>
-        <p>{format(user.createdAt, 'DD/MM/YY')}</p>
+        <p>{format(new Date(user.createdAt), 'dd/MM/yy')}</p>
       </TableCell>
-      <TableCell className={dateClass}>{distanceInWordsStrict(new Date(), user.lastSeen)} ago</TableCell>
+      <TableCell className={dateClass}>{formatDistanceStrict(new Date(), new Date(user.lastSeen))} ago</TableCell>
       <TableCell className={user.type}>{user.type}</TableCell>
     </TableRow>
   )

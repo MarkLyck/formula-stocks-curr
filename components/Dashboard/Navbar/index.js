@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import SlideIn from 'components/Dialogs/SlideIn'
 import SideMenu from 'ui-components/SideMenu'
-import { hasStorage, isClient } from 'common/utils/featureTests'
+import { hasStorage, isBrowser } from 'common/utils/featureTests'
 import PlanMenu from './planMenu'
 import AdminButtons from './adminButtons'
 import ArticlesBackButton from './articlesBackButton'

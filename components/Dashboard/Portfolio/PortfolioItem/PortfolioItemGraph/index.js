@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { format, subDays } from 'date-fns'
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import LineGraph from 'ui-components/Charts/LineGraph'
 import theme from 'common/theme'
@@ -8,8 +9,8 @@ import { GraphContainer, LoadingContainer, FailedContainer } from './styles'
 
 const createChartData = historicPrices =>
   historicPrices.map(point => ({
-    price: point[1],
-    date: new Date(point[0]),
+    price: point.close,
+    date: new Date(point.date),
   }))
 
 const StockChart = ({ historicPrices, ticker, costBasisPrice, action, amCharts4Loaded, daysOwned, loading, error }) => {

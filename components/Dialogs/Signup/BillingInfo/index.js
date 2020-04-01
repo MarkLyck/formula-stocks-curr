@@ -8,6 +8,8 @@ import CheckoutForm from './checkoutForm'
 class BillingInfo extends Component {
   state = {
     termsIsVisible: false,
+    firstName: '',
+    lastName: '',
   }
 
   componentDidMount() {
@@ -17,9 +19,9 @@ class BillingInfo extends Component {
   }
 
   submitBillingInfo = () => {
-    const { name, cardNumber, expiryDate, cvc } = this.state
+    const { firstName, lastName, cardNumber, expiryDate, cvc } = this.state
     const billingDetails = {
-      name,
+      name: `${firstName} ${lastName}`,
       number: cardNumber,
       expiryDate,
       cvc,

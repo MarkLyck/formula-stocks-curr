@@ -12,56 +12,72 @@ const PortfolioHeader = ({
   marketPrices,
   planName,
   portfolio,
+  portfolioHoldingsLoading,
+  launchHistoryLoading,
+  marketLoading,
   allocationMap,
   totalBalance,
   updatedAt,
   amCharts4Loaded,
   hasPlanPerms,
-}) => (
-  <HeaderContainer>
-    <LeftSide>
-      <Header>
-        <h4>Portfolio yields</h4>
-      </Header>
+}) => {
+  let planReturnSince2009 = ''
+  let marketReturnSince2009 = ''
 
-      <PortfolioChart
-        portfolioYields={portfolioYields}
-        marketPrices={marketPrices}
-        totalBalance={totalBalance}
-        updatedAt={updatedAt}
-        planName={planName}
-        amCharts4Loaded={amCharts4Loaded}
-      />
-    </LeftSide>
-    <RightSide>
-      <div className="plan-results results">
-        <h3 className="plan-name">{planName} Formula</h3>
-        <p>
-          <span>+{getIncrease(portfolioYields[0].balance, totalBalance)}% </span>
-          since 2009
-        </p>
-      </div>
-      <div className="market-results results">
-        <div className="market-name">
-          <h3>DJIA</h3>
-          <Tooltip tip={'Dow Jones Industrial Average'} position="left" width="242" />
-        </div>
-        <p>
-          <span>+{getIncrease(marketPrices[0].price, marketPrices[marketPrices.length - 1].price)}% </span>
-          since 2009
-        </p>
-      </div>
-      {hasPlanPerms && (
-        <AllocationChart
-          portfolio={portfolio}
-          id="allocation-chart"
+  if (portfolioYields && portfolioYields.length) {
+    planReturnSince2009 = getIncrease(portfolioYields[0].balance, totalBalance)
+    if (planReturnSince2009 <= 0) planReturnSince2009 = ''
+  }
+  if (marketPrices.length) {
+    marketReturnSince2009 = getIncrease(marketPrices[0].price, marketPrices[marketPrices.length - 1].price)
+  }
+
+  return (
+    <HeaderContainer>
+      <LeftSide>
+        <Header>
+          <h4>Portfolio yields</h4>
+        </Header>
+
+        <PortfolioChart
+          portfolioYields={portfolioYields}
+          marketPrices={marketPrices}
+          totalBalance={totalBalance}
+          updatedAt={updatedAt}
+          planName={planName}
           amCharts4Loaded={amCharts4Loaded}
-          allocationMap={allocationMap}
         />
-      )}
-    </RightSide>
-  </HeaderContainer>
-)
+      </LeftSide>
+      <RightSide>
+        <div className="plan-results results">
+          <h3 className="plan-name">{planName} Formula</h3>
+          <p>
+            <span>+{planReturnSince2009}% </span>
+            since 2009
+          </p>
+        </div>
+        <div className="market-results results">
+          <div className="market-name">
+            <h3>DJIA</h3>
+            <Tooltip tip={'Dow Jones Industrial Average'} position="left" width="242" />
+          </div>
+          <p>
+            <span>+{marketReturnSince2009}% </span>
+            since 2009
+          </p>
+        </div>
+        {hasPlanPerms && (
+          <AllocationChart
+            portfolio={portfolio}
+            id="allocation-chart"
+            amCharts4Loaded={amCharts4Loaded}
+            allocationMap={allocationMap}
+          />
+        )}
+      </RightSide>
+    </HeaderContainer>
+  )
+}
 
 PortfolioHeader.propTypes = {
   portfolioYields: PropTypes.array,

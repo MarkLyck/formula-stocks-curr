@@ -51,20 +51,22 @@ The total allocation in % of this stock in the portfolio, after this and all pre
 `
 
   render() {
-    const { suggestion, stock, amCharts4Loaded, suggestionsType, loading, error } = this.props
+    const { suggestion, amCharts4Loaded, suggestionsType, loading, error } = this.props
+    if (!suggestion) return null
     const { detailsIsVisible } = this.state
 
-    const suggestedPriceName = suggestionsType === 'Trades' ? 'Traded at' : 'Buy below'
+    const suggestedPriceName = suggestionsType === 'trade' ? 'Traded at' : 'Buy below'
     // when it's a suggestion and says "Buy at or below below" add 1 cent.
-    const suggestedPrice = (suggestion.suggested_price + (suggestionsType === 'Trades' ? 0 : 0.01)).toFixed(2)
-    const allocationText = suggestion.percentage_weight ? 'Cash allocation' : `Add in ${format(new Date(), 'MMMM')}`
-    const allocation = suggestion.percentage_weight ? suggestion.percentage_weight : suggestion.portfolio_weight
+    const suggestedPrice = (suggestion.price + (suggestionsType === 'trade' ? 0 : 0.01)).toFixed(2)
+    const allocationText = suggestion.percentageWeight ? 'Cash allocation' : `Add in ${format(new Date(), 'MMMM')}`
+    const allocation = suggestion.percentageWeight ? suggestion.percentageWeight : suggestion.portfolioWeight
 
-    const latestPrice = stock ? stock.latestPrice : suggestion.suggested_price
+    const latestPrice =
+      suggestion.stock && suggestion.stock.latestPrice ? suggestion.stock.latestPrice : suggestion.price
 
     const percentIncrease =
       suggestion.action === 'SELL'
-        ? ((suggestion.suggested_price - suggestion.original_purchase) / suggestion.original_purchase) * 100
+        ? ((suggestion.price - suggestion.original_purchase) / suggestion.original_purchase) * 100
         : null
 
     return (
@@ -74,13 +76,13 @@ The total allocation in % of this stock in the portfolio, after this and all pre
             <span className={`${suggestion.action}-action action`}>{suggestion.action}</span>
             {suggestion.name}
           </SuggestionName>
-          {stock && stock.sixMonthsPrices && <LastPrice>${latestPrice.toFixed(2)}</LastPrice>}
+          {suggestion.stock && suggestion.stock.sixMonthsPrices && <LastPrice>${latestPrice.toFixed(2)}</LastPrice>}
         </SuggHeader>
         <ContentContainer type={suggestion.action}>
           <StockInfoList className="info-list">
             <ListItem name="Ticker" value={suggestion.ticker} />
             {suggestion.action === 'BUY' && <ListItem name={suggestedPriceName} value={`$${suggestedPrice}`} />}
-            {suggestionsType === 'Suggestions' && <ListItem name="Last price" value={`$${latestPrice.toFixed(2)}`} />}
+            {suggestionsType === 'suggestion' && <ListItem name="Last price" value={`$${latestPrice.toFixed(2)}`} />}
             {suggestion.action === 'BUY' && (
               <ListItem
                 name={allocationText}
@@ -89,10 +91,10 @@ The total allocation in % of this stock in the portfolio, after this and all pre
                 tipWidth="345"
               />
             )}
-            {suggestion.action === 'BUY' && suggestion.total_portfolio_weight && (
+            {suggestion.action === 'BUY' && suggestion.totalPortfolioWeight && (
               <ListItem
                 name="Total position"
-                value={`${suggestion.total_portfolio_weight.toFixed(2)}%`}
+                value={`${suggestion.totalPortfolioWeight.toFixed(2)}%`}
                 tip={this.renderTotalAllocationTip()}
                 tipWidth="345"
               />
@@ -103,22 +105,24 @@ The total allocation in % of this stock in the portfolio, after this and all pre
             {suggestion.action === 'SELL' && (
               <ListItem name="Return" value={`${percentIncrease > 0 ? '+' : ''}${percentIncrease.toFixed(2)}%`} />
             )}
-            {suggestion.advanced_data ? (
+            {suggestion.advancedData ? (
               <Button type="light" variant="raised" onClick={this.toggleDetails}>
                 Details
               </Button>
             ) : (
               <React.Fragment>
                 {suggestion.action !== 'SELL' && <Placeholder className="placeholder" />}
-                {suggestionsType === 'Trades' && <Placeholder className="placeholder" />}
+                {suggestionsType === 'trade' && <Placeholder className="placeholder" />}
                 <ButtonPlaceholder className="placeholder" />
               </React.Fragment>
             )}
           </StockInfoList>
           <StockChart
-            sixMonthsPrices={stock ? stock.sixMonthsPrices : []}
+            sixMonthsPrices={
+              suggestion.stock && suggestion.stock.sixMonthsPrices ? suggestion.stock.sixMonthsPrices : []
+            }
             ticker={suggestion.ticker}
-            suggestedPrice={suggestion.suggested_price}
+            suggestedPrice={suggestion.price}
             suggestionsType={suggestionsType}
             action={suggestion.action}
             loading={loading}

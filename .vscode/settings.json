@@ -1,0 +1,23 @@
+{
+    "workbench.colorCustomizations": {
+        "statusBar.background": "#28a5f9",
+        "statusBarItem.hoverBackground": "#068de8",
+        "statusBar.foreground": "#15202b"
+    },
+    "peacock.color": "#28A5F9",
+    "cSpell.words": [
+        "CAGR",
+        "Haderslev",
+        "amcharts",
+        "backtested",
+        "countby",
+        "megadraft",
+        "scroller",
+        "typedjs"
+    ],
+    "cSpell.ignoreWords": [
+        "landevej",
+        "ribe",
+        "winrate"
+    ]
+}

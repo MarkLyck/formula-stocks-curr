@@ -1,7 +1,7 @@
 /* eslint max-len: 0 */
 import React, { Component } from 'react'
 import Router from 'next/router'
-import { isClient } from 'common/utils/featureTests'
+import { isBrowser } from 'common/utils/featureTests'
 import MenuItem from './MenuItem'
 import { MenuList } from './styles'
 
@@ -10,7 +10,7 @@ const routes = [
   { name: 'portfolio', icon: 'chart-line', route: 'portfolio' },
   { name: 'suggestions', icon: 'tasks', route: 'suggestions' },
   { name: 'AI reports', icon: 'brain', route: 'reports', badge: 'new' },
-  { name: 'articles', icon: 'newspaper', route: 'articles' },
+  // { name: 'articles', icon: 'newspaper', route: 'articles' },
   { name: 'admin', icon: 'tachometer', route: 'admin' },
   { name: 'account', icon: 'user', route: 'account' },
   { name: 'logout', icon: 'sign-out-alt', route: 'logout' },
@@ -20,7 +20,7 @@ const routes = [
 class SideMenu extends Component {
   state = { activeRoute: '', isVisible: this.props.isPopOver }
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (isClient) {
+    if (isBrowser) {
       const route = routes.reduce((acc, curr, i) => {
         if (Router.router.pathname.includes(curr.route)) {
           acc = curr.route

@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { isClient } from 'common/utils/featureTests'
+import { isBrowser } from 'common/utils/featureTests'
 import theme from 'common/theme'
 
 const chartData = [
@@ -27,8 +27,8 @@ const chartData = [
 
 const createChart = settings => {
   const { zoomOutButtonMarginRight = 0 } = settings
-  if (!isClient) return () => {}
-  const { id, paddingBottom = 0, irrOposite = false } = settings
+  if (!isBrowser) return () => {}
+  const { id, paddingBottom = 0, irrOpposite = false } = settings
 
   const { am4core, am4charts } = window
 
@@ -38,7 +38,7 @@ const createChart = settings => {
   chart.maskBullets = false
   chart.paddingBottom = paddingBottom
 
-  // AXISs
+  // AXIS
   const categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis())
   categoryAxis.dataFields.category = 'aiScoreMax'
   categoryAxis.title.text = 'AI score'
@@ -70,12 +70,12 @@ const createChart = settings => {
   }
 
   var irrAxis = chart.yAxes.push(new am4charts.ValueAxis())
-  irrAxis.title.text = 'IRR'
+  irrAxis.title.text = 'IRR (Internal Rate of Return)'
   irrAxis.cursorTooltipEnabled = false
   irrAxis.renderer.labels.template.fill = am4core.color(theme.colors.black)
   irrAxis.renderer.labels.template.adapter.add('text', text => `${text}%`)
   irrAxis.renderer.labels.template.fontSize = 14
-  irrAxis.renderer.opposite = irrOposite
+  irrAxis.renderer.opposite = irrOpposite
 
   // Create series
   var irrSeries = chart.series.push(new am4charts.ColumnSeries())
@@ -152,7 +152,7 @@ const createChart = settings => {
   chart.cursor.lineX.fill = am4core.color('#000')
   chart.cursor.lineX.fillOpacity = 0.05
 
-  // Zoomout Button
+  // Zoom out Button
   chart.zoomOutButton.marginTop = 8
   chart.zoomOutButton.marginRight = zoomOutButtonMarginRight
   chart.zoomOutButton.background.fill = am4core.color(theme.colors.black)
@@ -162,7 +162,9 @@ const createChart = settings => {
   return chart
 }
 
-const BarChart = ({ ...settings }) => {
+const BarChart = ({ amCharts4Loaded, ...settings }) => {
+  if (!amCharts4Loaded) return null
+
   let chart
   useEffect(() => {
     const chart = createChart(settings)

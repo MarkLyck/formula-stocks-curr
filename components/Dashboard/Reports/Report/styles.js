@@ -1,6 +1,5 @@
 import styled from '@emotion/styled'
 import Box from 'ui-components/Box'
-import Button from 'ui-components/Button'
 
 export const BesideSection = styled(Box)`
   padding: 12px;
@@ -59,13 +58,4 @@ export const HelpText = styled.p`
   margin-bottom: 8px;
   font-size: 0.8rem;
   font-weight: 500;
-`
-
-export const HowToUseThisButton = styled(Button)`
-  color: ${props => props.theme.colors.primary};
-  margin: 16px auto;
-
-  &:hover {
-    text-decoration: underline;
-  }
 `

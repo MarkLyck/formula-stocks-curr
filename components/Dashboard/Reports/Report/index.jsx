@@ -1,50 +1,82 @@
 import React from 'react'
 import { format } from 'date-fns'
+import styled from '@emotion/styled'
+// import { Mixpanel } from 'common/analytics/mixpanel'
 import AIScore from './AIScore'
 import Score from './Score'
-import { ScoreList, BesideSection, BoldValue, FadedValue, HowToUseThisButton } from './styles'
+import { ScoreList, BesideSection, BoldValue, FadedValue } from './styles'
 import { SectionHeader } from '../styles'
 
-const Report = ({ report, setOnboardingVisible }) => {
-  let { date, name, ticker, stockPrice, scores } = report
+const ReportContainer = styled.div`
+  display: flex;
+  width: 100%;
 
-  // reports JSON is saved as strings with singleQuotes.
-  date = JSON.parse(date.split("'").join('"'))
-  scores = JSON.parse(scores.split("'").join('"'))
+  > div:nth-child(1) {
+    margin-right: 32px;
+  }
 
-  const dateGenerated = format(new Date(date.year, date.month - 1, date.day), 'MM/DD/YYYY')
+  @media (max-width: 800px) {
+    flex-direction: column;
+    padding-right: 50px;
+
+    > div:nth-child(1) {
+      margin-right: 0;
+    }
+  }
+
+  @media (max-width: 600px) {
+    padding-right: 0;
+  }
+`
+
+const ReportPartContainer = styled.div`
+  width: calc(50% - 16px);
+  @media (max-width: 800px) {
+    width: 100%;
+  }
+`
+
+const Report = ({ report }) => {
+  let { date, name, ticker, price, scores } = report
+
+  // useEffect(() => {
+  //   Mixpanel.track('Open Report', {
+  //     ticker,
+  //   })
+  // })
+
+  const dateGenerated = format(new Date(date), 'MM/dd/yyyy')
   return (
-    <React.Fragment>
-      <SectionHeader>AI Investment Report</SectionHeader>
-      <BesideSection>
-        <BoldValue>
-          {ticker} - {name}
-        </BoldValue>
-        <FadedValue>${stockPrice}</FadedValue>
-      </BesideSection>
-      <AIScore value={scores.ai_score} name="AI Score" />
+    <>
+      <ReportContainer>
+        <ReportPartContainer>
+          <SectionHeader>AI Investment Report</SectionHeader>
+          <AIScore value={scores.ai_score} id={`ai-score-${ticker}`} name="AI Score" />
 
-      <SectionHeader>Summary</SectionHeader>
-      <ScoreList>
-        <Score value={scores.ai_reward} name="Reward" />
-        <Score value={scores.ai_safety} name="Safety" />
-      </ScoreList>
+          {/* <SectionHeader>Summary</SectionHeader> */}
+          <ScoreList>
+            <Score value={scores.ai_reward} name="Reward" />
+            <Score value={scores.ai_safety} name="Safety" />
+          </ScoreList>
+        </ReportPartContainer>
 
-      <SectionHeader>AI Scores</SectionHeader>
-      <ScoreList>
-        <Score value={scores.ai_growth} name="Growth" />
-        <Score value={scores.ai_value} name="Value" />
-        <Score value={scores.ai_profitability} name="Profitability" />
-        <Score value={scores.ai_soundness} name="Soundness" />
-        <Score value={scores.ai_soundness} name="Stewardship" />
-      </ScoreList>
+        <ReportPartContainer>
+          <SectionHeader>AI Scores</SectionHeader>
+          <ScoreList>
+            <Score value={scores.ai_growth} name="Growth" />
+            <Score value={scores.ai_value} name="Value" />
+            <Score value={scores.ai_profitability} name="Profitability" />
+            <Score value={scores.ai_soundness} name="Soundness" />
+            <Score value={scores.ai_soundness} name="Stewardship" />
+          </ScoreList>
 
-      <BesideSection>
-        <BoldValue>Report generated</BoldValue>
-        <FadedValue>{dateGenerated}</FadedValue>
-      </BesideSection>
-      <HowToUseThisButton onClick={() => setOnboardingVisible(true)}>How do I use this?</HowToUseThisButton>
-    </React.Fragment>
+          <BesideSection>
+            <BoldValue>Report generated</BoldValue>
+            <FadedValue>{dateGenerated}</FadedValue>
+          </BesideSection>
+        </ReportPartContainer>
+      </ReportContainer>
+    </>
   )
 }
 
