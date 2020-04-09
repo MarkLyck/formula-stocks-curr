@@ -3,6 +3,7 @@ import { InboxOutlined } from '@ant-design/icons'
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import styled from '@emotion/styled'
 import { FILE_STACK_INFO, FILE_CREATE_MUTATION } from 'common/queries'
+import LatestUploads from './LatestUploads'
 const { Dragger } = Upload
 
 const APIContainer = styled.div`
@@ -13,7 +14,7 @@ const StyledDragger = styled(Dragger)`
   padding: 64px;
 `
 
-const customRequest = data => {
+const customRequest = (data) => {
   data.onProgress({ percent: 10 })
   console.log(data)
   return fetch(data.action, {
@@ -23,15 +24,15 @@ const customRequest = data => {
       'Content-type': 'application/json',
     },
   })
-    .then(response => {
+    .then((response) => {
       data.onProgress({ percent: 90 })
       return response.json()
     })
-    .then(response => {
+    .then((response) => {
       console.log('response', response)
       data.onSuccess(response)
     })
-    .catch(err => {
+    .catch((err) => {
       data.onError(err)
       console.error('err', err)
     })
@@ -49,7 +50,7 @@ const Uploader = () => {
   const FILESTACK_PATH = fileStackData.fileUploadInfo.path
   const FILE_STACK_URL = `https://www.filestackapi.com/api/store/S3?key=${FILESTACK_API_KEY}&policy=${FILESTACK_POLICY}&signature=${FILESTACK_SIGNATURE}&path=${FILESTACK_PATH}`
 
-  const handleChange = info => {
+  const handleChange = (info) => {
     console.log('info', info)
     const { status } = info.file
 
@@ -94,6 +95,7 @@ const Uploader = () => {
         <p className="ant-upload-text">Click to browse or drag .json file to upload</p>
         <p className="ant-upload-hint">Support for a single or bulk upload.</p>
       </StyledDragger>
+      <LatestUploads />
     </APIContainer>
   )
 }

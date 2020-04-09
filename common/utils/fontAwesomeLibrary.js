@@ -3,7 +3,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faAngleDown } from '@fortawesome/pro-solid-svg-icons/faAngleDown'
 import { faAngleLeft } from '@fortawesome/pro-solid-svg-icons/faAngleLeft'
 import { faBars } from '@fortawesome/pro-regular-svg-icons/faBars'
-import { faBrain } from '@fortawesome/pro-regular-svg-icons/faBrain'
+import { faBrain } from '@fortawesome/pro-solid-svg-icons/faBrain'
 import { faCalendarTimes } from '@fortawesome/pro-solid-svg-icons/faCalendarTimes'
 import { faChartLine } from '@fortawesome/pro-solid-svg-icons/faChartLine'
 import { faChartPie } from '@fortawesome/pro-solid-svg-icons/faChartPie'
@@ -16,6 +16,7 @@ import { faDollarSign } from '@fortawesome/pro-solid-svg-icons/faDollarSign'
 import { faEnvelope } from '@fortawesome/pro-solid-svg-icons/faEnvelope'
 import { faExclamationCircle } from '@fortawesome/pro-solid-svg-icons/faExclamationCircle'
 import { faFacebookF } from '@fortawesome/free-brands-svg-icons/faFacebookF'
+import { faFileAlt } from '@fortawesome/pro-regular-svg-icons/faFileAlt'
 import { faFlask } from '@fortawesome/pro-solid-svg-icons/faFlask'
 import { faGift } from '@fortawesome/pro-solid-svg-icons/faGift'
 import { faGlobeAmericas } from '@fortawesome/pro-solid-svg-icons/faGlobeAmericas'
@@ -58,6 +59,7 @@ library.add(
   faDollarSign,
   faEnvelope,
   faFacebookF,
+  faFileAlt,
   faFlask,
   faGlobeAmericas,
   faGift,

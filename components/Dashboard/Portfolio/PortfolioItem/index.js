@@ -7,13 +7,13 @@ import PortfolioItemGraph from './PortfolioItemGraph'
 import { ItemRow } from './styles'
 import { STOCK_HISTORY } from 'common/queries'
 
-const numberToFirstDecimal = number => {
+const numberToFirstDecimal = (number) => {
   if (!number) return number // if it's missing from stocks it will be undefined.
   if (number >= 0.01) return number.toFixed(2)
   const decimals = String(number)
     .split('.')[1]
     .split('')
-    .map(num => Number(num))
+    .map((num) => Number(num))
   let foundFistNon0 = false
   let firstNon0Index = 2
   let lastDigit = 0
@@ -62,7 +62,7 @@ const PortfolioItem = ({ stock, allocation, amCharts4Loaded }) => {
       <ItemRow hover onClick={toggleExpanded}>
         <TableCell className="name">
           <h4 className="stock-name">{stock.name}</h4>
-          {ticker !== 'CASH' && <p className="ticker">{ticker}</p>}
+          {ticker !== 'CASH' && <p className="ticker">{ticker.replace('_', '.')}</p>}
         </TableCell>
         <TableCell className="allocation">{stockAllocation}%</TableCell>
         <TableCell className={`return ${percentIncrease >= 0 ? 'positive' : 'negative'}`}>

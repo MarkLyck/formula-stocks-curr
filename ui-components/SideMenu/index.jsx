@@ -33,7 +33,7 @@ class SideMenu extends Component {
     }
   }
 
-  setActiveRoute = route => this.setState({ activeRoute: route })
+  setActiveRoute = (route) => this.setState({ activeRoute: route })
 
   render() {
     const { user, onRequestClose } = this.props
@@ -41,7 +41,7 @@ class SideMenu extends Component {
 
     return (
       <MenuList isVisible={isVisible}>
-        {routes.map(route => (
+        {routes.map((route) => (
           <MenuItem
             setActiveRoute={this.setActiveRoute}
             closeMenu={onRequestClose}

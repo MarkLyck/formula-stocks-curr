@@ -7,13 +7,22 @@ import LineGraph from 'ui-components/Charts/LineGraph'
 import theme from 'common/theme'
 import { GraphContainer, LoadingContainer, FailedContainer } from './styles'
 
-const createChartData = historicPrices =>
-  historicPrices.map(point => ({
+const createChartData = (historicPrices) =>
+  historicPrices.map((point) => ({
     price: point.close,
     date: new Date(point.date),
   }))
 
-const StockChart = ({ historicPrices, ticker, costBasisPrice, action, amCharts4Loaded, daysOwned, loading, error }) => {
+const StockChart = ({
+  historicPrices = [],
+  ticker,
+  costBasisPrice,
+  action,
+  amCharts4Loaded,
+  daysOwned,
+  loading,
+  error,
+}) => {
   if (!amCharts4Loaded || loading) {
     return (
       <LoadingContainer>
@@ -21,7 +30,7 @@ const StockChart = ({ historicPrices, ticker, costBasisPrice, action, amCharts4L
         <h4>Loading</h4>
       </LoadingContainer>
     )
-  } else if ((!loading && !historicPrices.length) || error) {
+  } else if ((!loading && (!historicPrices.length || !Array.isArray(historicPrices))) || error) {
     return (
       <FailedContainer>
         <FontAwesomeIcon icon="chart-line" />

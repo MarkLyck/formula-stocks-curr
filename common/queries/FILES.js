@@ -18,3 +18,15 @@ export const FILE_CREATE_MUTATION = gql`
     }
   }
 `
+
+export const LATEST_FILES = gql`
+  query LATEST_FILES {
+    filesList(first: 28, sort: { createdAt: DESC }) {
+      items {
+        filename
+        downloadUrl
+        createdAt
+      }
+    }
+  }
+`
