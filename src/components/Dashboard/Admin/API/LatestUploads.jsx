@@ -55,7 +55,6 @@ const FileDate = styled.span`
 
 const LatestUploads = () => {
   const { data, error, loading } = useQuery(LATEST_FILES)
-  console.log('data: ', data)
   if (loading || error) return null
   const files = data.filesList.items
   return (
@@ -63,7 +62,6 @@ const LatestUploads = () => {
       <Title>Latest uploads</Title>
       <FileContainer>
         {files.map((file) => {
-          console.log('file: ', file)
           if (!file || !file.filename) return null
           let icon = ['far', 'file-alt']
           if (file.filename.includes('ai_reports')) {
