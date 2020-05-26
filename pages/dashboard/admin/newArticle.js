@@ -1,1 +1,1 @@
-export { default } from 'components/Dashboard/Admin/NewArticle'
+export { default } from '~/components/Dashboard/Admin/NewArticle'

@@ -1,6 +1,6 @@
 import Document, { Head, Main, NextScript } from 'next/document'
 import { extractCritical } from 'emotion-server'
-import GlobalStyles from 'common/GlobalStyles'
+import GlobalStyles from '~/common/GlobalStyles'
 
 export default class FSDocument extends Document {
   static async getInitialProps({ renderPage }) {

@@ -1,0 +1,65 @@
+import React from 'react'
+import PropTypes from 'prop-types'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { formatDistanceStrict } from 'date-fns'
+import { TableCell, TableRow } from '~/ui-components/Table'
+import { Icon, DeviceTableCell, countryStyle, CountryName } from './styles'
+
+const getBrowserIcon = (browser) => {
+  if (!browser) return ''
+  if (browser.includes('Chrome') || browser === 'Blink') return 'Chrome.svg'
+  else if (browser.indexOf('Firefox') > -1) return 'Firefox.png'
+  else if (browser === 'Safari') return 'Safari.svg'
+  else if (browser === 'Microsoft Edge') return 'Edge.svg'
+  else if (browser === 'IE') return 'IE.png'
+  else if (browser === 'Android Browser' || browser === 'Samsung Internet') return 'AndroidBrowser.svg'
+  else if (browser.includes('Opera')) return 'Opera.png'
+  else if (browser === 'PhantomJS') return 'PhantomJS.png'
+
+  return ''
+}
+
+const getOSIcon = (os) => {
+  if (!os) return ''
+  if (os.includes('Windows')) return 'Windows.png'
+  else if (os.includes('Windows Server')) return 'Windows.png'
+  else if (os === 'OS X') return 'MacOS.png'
+  else if (os === 'iOS') return 'IOS.png'
+  else if (os === 'Android') return 'Android.png'
+  else if (os === 'Linux' || os === 'Ubuntu' || os === 'Ubuntu Chromium') return 'Linux.png'
+  else if (os.includes('Chrome')) return 'Chrome.svg'
+
+  return ''
+}
+
+const getDeviceIcon = (device) => {
+  if (device.product === 'iPad') return 'tablet'
+  else if (device.type === 'mobile') return 'mobile'
+  return 'desktop'
+}
+
+const Visitor = ({ visitor }) => (
+  <TableRow key={visitor.id} onClick={() => console.log(visitor)}>
+    <TableCell css={countryStyle}>
+      {visitor.location && visitor.location.country_flag_emoji}
+      <CountryName>{visitor.location && visitor.location.country_name}</CountryName>
+    </TableCell>
+    <TableCell style={{ height: '48px' }}>
+      <p>{visitor.referrer.replace('https://', '').replace('http://', '').replace('www.', '').split('/')[0]}</p>
+    </TableCell>
+    <TableCell style={{ height: '48px' }}>{formatDistanceStrict(new Date(), visitor.createdAt)} ago</TableCell>
+    <DeviceTableCell>
+      {visitor.device.os && <Icon src={`/static/icons/devices/${getOSIcon(visitor.device.os)}`} alt="os" />}
+      {visitor.device.browser && (
+        <Icon src={`/static/icons/devices/${getBrowserIcon(visitor.device.browser)}`} alt="browser" />
+      )}
+      {visitor.device && <FontAwesomeIcon icon={getDeviceIcon(visitor.device)} style={{ width: '32px' }} />}
+    </DeviceTableCell>
+  </TableRow>
+)
+
+Visitor.propTypes = {
+  visitor: PropTypes.object,
+}
+
+export default Visitor
