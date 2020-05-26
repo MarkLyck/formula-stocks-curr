@@ -4,8 +4,9 @@ import Head from 'next/head'
 import withApolloClient from '../lib/withApollo'
 import { ApolloProvider } from '@apollo/react-hooks'
 import Layout from 'lib/layout'
-import 'common/utils/fontAwesomeLibrary'
+import '~/common/utils/fontAwesomeLibrary'
 import 'antd/dist/antd.css'
+
 class MyApp extends App {
   render() {
     const { Component, pageProps, apolloClient } = this.props

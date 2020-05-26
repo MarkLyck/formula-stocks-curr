@@ -1,1 +1,1 @@
-export { default } from 'components/Dashboard/MyAccount'
+export { default } from '~/components/Dashboard/MyAccount'

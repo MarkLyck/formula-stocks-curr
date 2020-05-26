@@ -1,0 +1,22 @@
+import React from 'react'
+import PropTypes from 'prop-types'
+import Tooltip from '~/ui-components/Tooltip'
+
+import { SuggItem } from './styles'
+
+const ListItem = ({ name, value, tip, tipWidth }) => (
+  <SuggItem className="list-item">
+    <p>{name}:</p>
+    <div style={{ display: 'flex' }} className="value">
+      <h4 style={{ marginRight: '8px' }}>{value}</h4>
+      {tip && <Tooltip tip={tip} width={tipWidth} />}
+    </div>
+  </SuggItem>
+)
+
+ListItem.propTypes = {
+  name: PropTypes.string,
+  value: PropTypes.string,
+}
+
+export default ListItem

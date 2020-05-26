@@ -1,3 +1,3 @@
-import ResetPassword from 'components/ResetPassword'
+import ResetPassword from '~/components/ResetPassword'
 
 export default ResetPassword
