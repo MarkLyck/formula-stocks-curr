@@ -52,7 +52,6 @@ The total allocation in % of this stock in the portfolio, after this and all pre
 
   render() {
     const { suggestion, amCharts4Loaded, suggestionsType, loading, error } = this.props
-    console.log('suggestion: ', suggestion)
     if (!suggestion) return null
     const { detailsIsVisible } = this.state
 
@@ -64,7 +63,6 @@ The total allocation in % of this stock in the portfolio, after this and all pre
 
     const latestPrice =
       suggestion.stock && suggestion.stock.latestPrice ? suggestion.stock.latestPrice : suggestion.price
-    console.log('latestPrice: ', latestPrice)
 
     const percentIncrease =
       suggestion.action === 'SELL'
