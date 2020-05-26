@@ -6,6 +6,7 @@ const theme = {
     error: '#F3446C',
     red: '#F3446C',
     warning: '#ec791b',
+    title: '#312E5E',
 
     white: '#FFFFFF',
     polar: '#F3F7FB',
