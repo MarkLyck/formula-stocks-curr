@@ -38,6 +38,7 @@ const Signals = ({ amCharts4Loaded, user, history, activePlan }) => {
   if (error || !data) return <LoadingError error={error} />
 
   const signals = data.signalsList.items
+  console.log('signals: ', signals)
 
   const listStatTitle = type === 'trade' ? 'Trades this month' : 'Suggestions'
   const hasPlanPerms = hasPermissions(activePlan, user)

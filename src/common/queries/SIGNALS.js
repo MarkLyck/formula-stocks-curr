@@ -13,6 +13,7 @@ export const SIGNALS_QUERY = gql`
         ticker
         totalPortfolioWeight
         type
+        boughtAt
         stock {
           ticker
           sixMonthsPrices

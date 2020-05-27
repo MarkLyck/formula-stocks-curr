@@ -65,9 +65,7 @@ The total allocation in % of this stock in the portfolio, after this and all pre
       suggestion.stock && suggestion.stock.latestPrice ? suggestion.stock.latestPrice : suggestion.price
 
     const percentIncrease =
-      suggestion.action === 'SELL'
-        ? ((suggestion.price - suggestion.original_purchase) / suggestion.original_purchase) * 100
-        : null
+      suggestion.action === 'SELL' ? ((suggestion.price - suggestion.boughtAt) / suggestion.boughtAt) * 100 : null
 
     return (
       <SuggContainer>
@@ -102,7 +100,7 @@ The total allocation in % of this stock in the portfolio, after this and all pre
             {suggestion.action === 'SELL' && (
               <ListItem
                 name="Purchase price"
-                value={`$${suggestion.original_purchase ? suggestion.original_purchase.toFixed(2) : 'n/a'}`}
+                value={`${suggestion.boughtAt ? '$' + suggestion.boughtAt.toFixed(2) : 'n/a'}`}
               />
             )}
             {suggestion.action === 'SELL' && (
