@@ -17,9 +17,13 @@
         "typedjs"
     ],
     "cSpell.ignoreWords": [
+        "filestack",
+        "filestack path",
         "landevej",
+        "path",
         "ribe",
         "sugg",
+        "uploader",
         "winrate"
     ]
 }

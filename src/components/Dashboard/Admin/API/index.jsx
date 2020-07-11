@@ -14,28 +14,53 @@ const StyledDragger = styled(Dragger)`
   padding: 64px;
 `
 
-const customRequest = (data) => {
-  data.onProgress({ percent: 10 })
-  console.log(data)
-  return fetch(data.action, {
-    method: 'POST',
-    body: data.file,
-    headers: {
-      'Content-type': 'application/json',
-    },
+function isValidJSON(str) {
+  try {
+    JSON.parse(str)
+  } catch (e) {
+    return false
+  }
+  return true
+}
+
+const readFile = (file) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.readAsText(file)
+    reader.onload = () => {
+      resolve(reader.result)
+    }
+    reader.onerror = (error) => reject(error)
   })
-    .then((response) => {
-      data.onProgress({ percent: 90 })
-      return response.json()
+
+const customRequest = async (data) => {
+  data.onProgress({ percent: 10 })
+  const jsonString = await readFile(data.file)
+  const valid = isValidJSON(jsonString)
+  if (!valid) {
+    message.error(`${data.file.name} Invalid JSON!`, 120)
+    Promise.reject('Invalid JSON')
+  } else {
+    return fetch(data.action, {
+      method: 'POST',
+      body: data.file,
+      headers: {
+        'Content-type': 'application/json',
+      },
     })
-    .then((response) => {
-      console.log('response', response)
-      data.onSuccess(response)
-    })
-    .catch((err) => {
-      data.onError(err)
-      console.error('err', err)
-    })
+      .then((response) => {
+        data.onProgress({ percent: 90 })
+        return response.json()
+      })
+      .then((response) => {
+        console.log('response', response)
+        data.onSuccess(response)
+      })
+      .catch((err) => {
+        data.onError(err)
+        console.error('err', err)
+      })
+  }
 }
 
 const Uploader = () => {
@@ -51,14 +76,11 @@ const Uploader = () => {
   const FILE_STACK_URL = `https://www.filestackapi.com/api/store/S3?key=${FILESTACK_API_KEY}&policy=${FILESTACK_POLICY}&signature=${FILESTACK_SIGNATURE}&path=${FILESTACK_PATH}`
 
   const handleChange = (info) => {
-    console.log('info', info)
     const { status } = info.file
 
     if (status !== 'uploading') {
       console.log(info.file, info.fileList)
     }
-
-    console.log('res', info.file.response)
 
     if (status === 'done' && info.file.response.url) {
       // run MUTATION TO ADD TO 8BASE
