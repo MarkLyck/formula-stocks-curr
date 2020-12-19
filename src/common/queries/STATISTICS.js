@@ -8,25 +8,17 @@ export const BACKTESTED_STATISTICS = gql`
         averageGainPerPosition
         averageLossPerPosition
         averageNumberOfPositionsInPortfolio
-        expectancyRatio
         formulasUsed
         gainToPainRatio
         iRRArithmeticMean
         iRRGeometricMean
-        mARRatio
         maxDrawdown36Months
         maxDrawdown45Years
         positionsSoldWithLoss
         positionsSoldWithProfit
-        rAROC
-        rewardToRiskRatio
         roundtripTradesPerYear
-        sharpeRatio
         sortinoRatio
-        sterlingRatio
         totalReturn
-        ulcerIndex
-        valueAtRisk
         winLossRatio
       }
     }

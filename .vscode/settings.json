@@ -2,8 +2,7 @@
     "workbench.colorCustomizations": {
         "statusBar.background": "#28a5f9",
         "statusBarItem.hoverBackground": "#068de8",
-        "statusBar.foreground": "#15202b",
-        "statusBar.border": "#28a5f9"
+        "statusBar.foreground": "#15202b"
     },
     "peacock.color": "#28A5F9",
     "cSpell.words": [
