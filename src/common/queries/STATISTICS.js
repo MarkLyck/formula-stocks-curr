@@ -1,5 +1,6 @@
 import { gql } from 'apollo-boost'
 
+// updated
 export const BACKTESTED_STATISTICS = gql`
   query BACKTESTED_STATISTICS($planName: String) {
     plan(planID: $planName) {
