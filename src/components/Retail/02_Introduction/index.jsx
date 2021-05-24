@@ -78,8 +78,7 @@ const Introduction = ({ winRatio, portfolioReturn, planName }) => {
               <br />
               Investing using these estimates, cumulative returns since 2009 have been{' '}
               <b>+{Math.floor(portfolioReturn)}%</b>
-              <sup>*</sup> vs. the S&P500's 225%. Our Entry portfolio returned <b>+{returns2016.toFixed(2)}%</b> in 2016
-              and <b>+{returns2017.toFixed(2)}%</b> in 2017. Powered by Artificial Intelligence forecasting, this
+              <sup>*</sup> vs. the S&P500's 396%. Our Entry portfolio returned <b>+{returns2016.toFixed(2)}%</b>. Powered by Artificial Intelligence forecasting, this
               performance strongly exceeds the 6-7% average returns typically expected from the stock market.
               <br />
               <br />
